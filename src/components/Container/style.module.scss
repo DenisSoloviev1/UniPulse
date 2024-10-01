@@ -1,0 +1,12 @@
+@import "./style.module.scss";
+@import "../../shared/Variables.scss";
+
+.container{
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: $color-background-block;
+}
+
+.dark{
+    background-color: $color-background;
+}
