@@ -1,10 +1,17 @@
 @import "../../shared/Variables.scss";
+@import url(https://fonts.googleapis.com/css?family=Playfair+Display:regular,500,600,700,800,900,italic,500italic,600italic,700italic,800italic,900italic);
 
 header {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  h2 {
+    font-size: 30px;
+    font-weight: 700;
+    font-family: "Playfair Display";
+  }
 }
 
 .wrapper {
@@ -13,8 +20,7 @@ header {
   max-width: 1320px;
   padding: 15px 25px 0;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: $color-background;
 }

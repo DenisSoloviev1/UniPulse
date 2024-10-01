@@ -29,12 +29,12 @@ a:visited {
   font-weight: 400;
   color: $color-button;
   text-decoration: inherit;
-  transition: all 0.2s ease-in;
+  transition: all 0.3s ease-in;
   cursor: pointer;
 }
 
 a:hover {
-  color: $color-calendar-action;
+  text-decoration:underline;
 }
 
 /* Common */
@@ -105,10 +105,6 @@ button::-moz-focus-inner {
   border: 0;
 }
 
-label {
-  cursor: pointer;
-}
-
 legend {
   display: block;
 }
@@ -129,22 +125,3 @@ body {
   }
 }
 
-.wrapper {
-  margin: 0 auto;
-  width: 100vw;
-  max-width: 1320px;
-  padding: 15px 25px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: $color-background;
-  overflow-y: auto;
-}
-
-@media screen and (min-width: 1321px) {
-  .wrapper {
-    margin: 20px auto;
-    border-radius: 30px;
-    padding: 20px 40px 0;
-  }
-}
