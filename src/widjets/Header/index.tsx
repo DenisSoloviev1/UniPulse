@@ -1,13 +1,18 @@
 import React from "react";
-import styles from "./style.module.scss";
-import NavBar from "../NavBar";
+import { NavLink } from "react-router-dom";
+import style from "./style.module.scss";
 
 const Header: React.FC = () => {
   return (
     <header>
-      <div className={styles.wrapper}>
+      <div className={style.wrapper}>
         <h2>UniPulse</h2>
-        <NavBar/>
+
+        <nav className={style.nav}>
+          <NavLink to="/">Создание</NavLink>
+          <NavLink to="/myPulse">Профиль</NavLink>
+          <NavLink to="">Вход</NavLink>
+        </nav>
       </div>
     </header>
   );

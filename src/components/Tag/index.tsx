@@ -5,11 +5,12 @@ import Container from "../Container";
 interface PropsTag {
   text: string;
   id: string;
+  color?: string;
 }
 
-const Tag: React.FC<PropsTag> = ({ text, id }) => {
+const Tag: React.FC<PropsTag> = ({ text, id, color }) => {
   return (
-    <Container>
+    <Container className={`br16 ${color}`}>
       <span id={id}>{text}</span>
     </Container>
   );

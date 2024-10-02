@@ -1,11 +1,14 @@
 @import "../../shared/Variables.scss";
 
 .container {
-  display: inline-block;
+  min-height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 10px 15px;
   background-color: $color-background-block;
   border-radius: 8px;
-  white-space: nowrap;
+  gap: 5px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -15,6 +18,9 @@
 }
 
 .dark {
+  background-color: $color-background;
+}
+.dark:hover{
   background-color: $color-background;
 }
 

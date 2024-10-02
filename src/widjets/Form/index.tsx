@@ -5,26 +5,28 @@ import Container from "../../components/Container";
 import Flex from "../../components/Flex";
 import MediaItem from "../../components/MediaItem";
 import Tag from "../../components/Tag";
+import { ArrowSvg, CalendarSvg } from "../../assets/svg";
 
 const Form: React.FC = () => {
   return (
     <form action="" className={style.form}>
-      <Flex>
-        <label htmlFor="text">Уведомление</label>
+      <Flex title={"Уведомление"}>
         <Container className={"br16"} clickId={"text"}>
-          <textarea className={style.textarea} id="text" placeholder="Введите текст" rows={10}></textarea>
+          <textarea
+            className={style.textarea}
+            placeholder="Введите текст"
+            rows={10}
+          ></textarea>
         </Container>
       </Flex>
 
-      <Flex>
-        <label>Прикрепленные медиа</label>
+      <Flex title={"Прикрепленные медиа"}>
         <Flex className={"row"}>
           <MediaItem />
         </Flex>
       </Flex>
 
-      <Flex>
-        <label>Получатели</label>
+      <Flex title={"Получатели"}>
         <Flex className={"row"}>
           <Tag id={"1"} text={"Все преподаватели"} />
           <Tag id={"2"} text={"Студенты"} />
@@ -38,15 +40,21 @@ const Form: React.FC = () => {
         </Flex>
       </Flex>
 
-      <Flex className={"row"}>
+      <Flex className={"row"} title={"Дата отправки"}>
         <Container>
-          <Calendar />
+          <Flex className={"row"}>
+            <Calendar />
+            <CalendarSvg />
+          </Flex>
         </Container>
 
         <Container clickId={"button"}>
-          <button type="submit" id="button">
-            Отправить сейчас
-          </button>
+          <Flex className={"row"}>
+            <button type="submit" id="button">
+              Отправить сейчас
+            </button>
+            <ArrowSvg />
+          </Flex>
         </Container>
       </Flex>
     </form>
