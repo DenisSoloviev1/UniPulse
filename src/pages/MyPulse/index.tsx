@@ -16,7 +16,7 @@ const MyPulse: React.FC = () => {
             <Container>Вконтакте</Container>
             <Container>Телеграм</Container>
           </Flex>
-          <Container>vk.com/id228322</Container>
+          <Container><Flex className={"row"}>vk.com/id228322 </Flex></Container>
         </Flex>
 
         <Flex title={"Мои теги"}>

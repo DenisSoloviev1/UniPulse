@@ -1,17 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import style from "./style.module.scss";
 import Calendar from "../Calendar";
 import Container from "../../components/Container";
 import Flex from "../../components/Flex";
 import MediaItem from "../../components/MediaItem";
 import Tag from "../../components/Tag";
-import { ArrowSvg, CalendarSvg } from "../../assets/svg";
+import { ArrowSvg } from "../../assets/svg";
 
 const Form: React.FC = () => {
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+
   return (
     <form action="" className={style.form}>
       <Flex title={"Уведомление"}>
-        <Container className={"br16"} clickId={"text"}>
+        <Container className={"br16"}>
           <textarea
             className={style.textarea}
             placeholder="Введите текст"
@@ -41,14 +43,13 @@ const Form: React.FC = () => {
       </Flex>
 
       <Flex className={"row"} title={"Дата отправки"}>
-        <Container>
+        <Container onClick={()=>setShowCalendar(!showCalendar)}>
           <Flex className={"row"}>
             <Calendar />
-            <CalendarSvg />
           </Flex>
         </Container>
 
-        <Container clickId={"button"}>
+        <Container>
           <Flex className={"row"}>
             <button type="submit" id="button">
               Отправить сейчас

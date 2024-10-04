@@ -11,6 +11,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AddPulse />} />
+          <Route path="/addPulse" element={<AddPulse />} />
           <Route path="/myPulse" element={<MyPulse />} />
         </Routes>
       </BrowserRouter>

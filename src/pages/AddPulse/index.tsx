@@ -6,6 +6,7 @@ import Flex from "../../components/Flex";
 import PulseItem from "../../widjets/PulseItem";
 
 const AddPulse: React.FC = () => {
+
   return (
     <>
       <Header />
@@ -20,7 +21,7 @@ const AddPulse: React.FC = () => {
             }
             id={"1"}
           />
-        </Flex>          
+        </Flex>
       </Main>
     </>
   );

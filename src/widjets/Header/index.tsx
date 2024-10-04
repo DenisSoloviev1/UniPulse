@@ -9,7 +9,7 @@ const Header: React.FC = () => {
         <h2>UniPulse</h2>
 
         <nav className={style.nav}>
-          <NavLink to="/">Создание</NavLink>
+          <NavLink to="/addPulse">Создание</NavLink>
           <NavLink to="/myPulse">Профиль</NavLink>
           <NavLink to="">Вход</NavLink>
         </nav>

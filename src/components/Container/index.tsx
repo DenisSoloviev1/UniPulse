@@ -5,28 +5,17 @@ import style from "./style.module.scss";
 interface ContainerProps {
   children?: ReactNode;
   className?: string;
-  clickId?: string;
+  onClick?: () => void;
 }
 
-const Container: React.FC<ContainerProps> = ({
-  children,
-  className,
-  clickId,
-}) => {
-  const handleClick = () => {
-    if (clickId) {
-      const element = document.getElementById(clickId);
-      if (element) {
-        element.focus();
-        element.click();
-      }
-    }
-  };
-
+const Container: React.FC<ContainerProps> = ({ children, className, onClick }) => {
   return (
     <div
-    className={classNames(style.container, className?.split(" ").map(c => style[c]))} 
-    onClick={handleClick}
+      className={classNames(
+        style.container,
+        className?.split(" ").map((c) => style[c])
+      )}
+      onClick={onClick}
     >
       {children}
     </div>
