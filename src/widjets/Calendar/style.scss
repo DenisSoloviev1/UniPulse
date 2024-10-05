@@ -17,19 +17,19 @@
   left: 50px;
   bottom: 10px;
   font-family: "Golos Text", sans-serif;
-  background-color: #1F1F1F;
+  background-color: #1f1f1f;
   color: white;
   border-radius: 20px;
   font-size: 16px;
-  border: 1px solid white;
+  border: 1px color white;
   overflow: hidden;
 }
 
 .react-datepicker__header {
-  background-color: #1F1F1F;
+  background-color: #1f1f1f;
   color: white;
   cursor: default;
-  border-radius: 20px;
+  border-radius: 20px 0 0;
 }
 
 .react-datepicker__current-month {
@@ -75,7 +75,13 @@
 
 .react-datepicker__day--disabled:hover {
   background-color: #555;
-  color: #1F1F1F;
+  color: #1f1f1f;
+}
+
+.react-datepicker__day--today {
+  font-weight: 900;
+  color: white;
+  background-color: inherit;
 }
 
 .react-datepicker__header--time {
@@ -87,25 +93,19 @@
 }
 
 .react-datepicker-time__header {
-  background-color: #1F1F1F;
+  background-color: #1f1f1f;
   color: white;
-  border-radius: 0 20px 0 0;
+  border: 0 20px 0 0;
 }
 
 .react-datepicker__time-box {
-  background-color: #1F1F1F;
+  background-color: #1f1f1f;
   color: white;
-  border-radius: 0 0 20px 0;
+  border: 0 0 20px 0;
 }
 
 .react-datepicker__time-container {
   border-radius: 0 20px 20px 0;
-}
-
-.react-datepicker__day--today {
-  font-weight: 900;
-  color: white;
-  background-color: inherit;
 }
 
 .react-datepicker__triangle {

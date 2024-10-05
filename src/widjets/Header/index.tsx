@@ -11,7 +11,7 @@ const Header: React.FC = () => {
         <nav className={style.nav}>
           <NavLink to="/addPulse">Создание</NavLink>
           <NavLink to="/myPulse">Профиль</NavLink>
-          <NavLink to="">Вход</NavLink>
+          <NavLink to="/">Вход</NavLink>
         </nav>
       </div>
     </header>

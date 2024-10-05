@@ -10,7 +10,7 @@ const AddPulse: React.FC = () => {
   return (
     <>
       <Header />
-      <Main title={"Создание пульса"}>
+      <Main title={"Новый пульс"}>
         <Form />
 
         <Flex title={"Отправленные пульсы"}>

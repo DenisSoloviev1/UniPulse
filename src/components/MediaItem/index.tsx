@@ -62,7 +62,22 @@ const MediaItem: React.FC = () => {
             ))}
           </div>
 
-          <Container className={"pd0 br16"} clickId={"input"}>
+          <label htmlFor="input">
+            <Container className={"pd0 br16"}>
+              <input
+                type="file"
+                multiple
+                onChange={handleFileChange}
+                className={style.hiddenInput}
+                id="input"
+              />
+              <div className={style.square}>+</div>
+            </Container>
+          </label>
+        </>
+      ) : (
+        <label htmlFor="input">
+          <Container className={"pd0 br16"}>
             <input
               type="file"
               multiple
@@ -72,18 +87,7 @@ const MediaItem: React.FC = () => {
             />
             <div className={style.square}>+</div>
           </Container>
-        </>
-      ) : (
-        <Container className={"pd0 br16"} clickId={"input"}>
-          <input
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            className={style.hiddenInput}
-            id="input"
-          />
-          <div className={style.square}>+</div>
-        </Container>
+        </label>
       )}
     </>
   );
