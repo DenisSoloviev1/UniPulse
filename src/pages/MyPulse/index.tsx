@@ -1,12 +1,17 @@
-import React from "react";
+import React,{useState} from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import Flex from "../../components/Flex";
 import Container from "../../components/Container";
 import PulseItem from "../../widjets/PulseItem";
 import Tag from "../../components/Tag";
+import AddTag from "../../widjets/AddTag";
+import CustomButton from "../../components/CustomButton";
 
 const MyPulse: React.FC = () => {
+  const [showAddTag, setShowAddTag] = useState<boolean>(false);
+  const handleClick = () => setShowAddTag(!showAddTag);
+
   return (
     <>
       <Header />
@@ -23,6 +28,10 @@ const MyPulse: React.FC = () => {
         <Flex className={"row"}>
           <Tag id={"1"} text={"Все преподаватели"} />
           <Tag id={"2"} text={"Студенты"} />
+          <AddTag show={showAddTag} onClick={handleClick} />
+          <CustomButton color={"blue"} onClick={handleClick}>
+            +
+          </CustomButton>
         </Flex>
       </Flex>
 

@@ -11,7 +11,7 @@ interface FlexProps {
 const Flex: React.FC<FlexProps> = ({ title, children, className }) => {
   return (
     <div className={style.flex}>
-      <h3 className={style.title}>{title}</h3>
+      {title && <h3 className={style.title}>{title}</h3>}
 
       <div className={classNames(style.flex, className && style[className])}>
         {children}

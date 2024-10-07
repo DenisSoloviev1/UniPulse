@@ -1,3 +1,5 @@
+@import "../../shared/Variables.scss";
+
 .calendarContainer {
   display: flex;
   flex-direction: row;
@@ -17,17 +19,17 @@
   left: 50px;
   bottom: 10px;
   font-family: "Golos Text", sans-serif;
-  background-color: #1f1f1f;
-  color: white;
+  background-color: $color-background;
+  color: $color-font-active;
   border-radius: 20px;
   font-size: 16px;
-  border: 1px color white;
+  border: 1px color $color-font-active;
   overflow: hidden;
 }
 
 .react-datepicker__header {
-  background-color: #1f1f1f;
-  color: white;
+  background-color: $color-background;
+  color: $color-font-active;
   cursor: default;
   border-radius: 20px 0 0;
 }
@@ -36,15 +38,12 @@
   font-weight: bold;
   font-size: 18px;
   text-transform: capitalize;
-  color: white;
+  color: $color-font-active;
 }
 
 .react-datepicker__day-names {
   font-weight: bold;
-}
-
-.react-datepicker__day-name {
-  color: white;
+  color: $color-font-active;
 }
 
 .react-datepicker__month {
@@ -52,35 +51,36 @@
 }
 
 .react-datepicker__day {
-  color: white;
+  color: $color-font-active;
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
+  border: 2px solid $color-background;
 }
 
 .react-datepicker__day:hover {
-  background-color: #7ea7dc;
-  color: white;
+  background-color: $color-action!important;
+  color: $color-font-active;
 }
 
 .react-datepicker__day--selected {
   background-color: inherit;
-  border: 2px solid #7ea7dc;
-  color: white;
+  border: 2px solid $color-action;
+  color: $color-font-active;
 }
 
 .react-datepicker__day--disabled {
   cursor: no-drop;
-  color: #555;
+  color: #d5d4d4;
 }
 
 .react-datepicker__day--disabled:hover {
-  background-color: #555;
-  color: #1f1f1f;
+  background-color: #d5d4d4;
+  color: $color-font-active;
 }
 
 .react-datepicker__day--today {
   font-weight: 900;
-  color: white;
+  color: $color-font-active;
   background-color: inherit;
 }
 
@@ -93,14 +93,14 @@
 }
 
 .react-datepicker-time__header {
-  background-color: #1f1f1f;
-  color: white;
+  background-color: $color-background;
+  color: $color-font-active;
   border: 0 20px 0 0;
 }
 
 .react-datepicker__time-box {
-  background-color: #1f1f1f;
-  color: white;
+  background-color: $color-background;
+  color: $color-font-active;
   border: 0 0 20px 0;
 }
 

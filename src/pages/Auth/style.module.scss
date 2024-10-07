@@ -1,43 +1,47 @@
 @import "../../shared/Variables.scss";
 
-.walcoming{
-    display: flex;
-    flex-direction: column;
+.walcoming {
+  display: flex;
+  flex-direction: column;
 }
 
-.message{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 50px;
-    gap: 10px;
+.message {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 50px;
+  gap: 10px;
+  animation: slide 1s ease-in-out;
 
-    img{
-        width: 40px;
-    }
+  svg {
+    width: 40px;
+    height: 40px;
+  }
 }
-svg{
-    width: 40%;
+svg {
+  width: 40%;
+  z-index: 1;
 }
 
 .wrapper {
-    margin: 0 auto;
-    width: 100vw;
-    max-width: 1320px;
-    padding: 20px 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    overflow-y: auto;
-    gap: 30px;
-    color: $color-background;
+  margin: 0 auto;
+  width: 100vw;
+  max-width: 1320px;
+  min-height: 100vh;
+  padding: 20px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  gap: 30px;
+}
+
+@media screen and (min-width: 1321px) {
+  .wrapper {
+    margin: 0 auto 20px;
+    border-radius: 0 0 30px 30px;
+    padding: 20px 40px;
   }
-  
-  @media screen and (min-width: 1321px) {
-    .wrapper {
-      margin: 0 auto 20px;
-      border-radius: 0 0 30px 30px;
-      padding: 20px 40px;
-    }
-  }
+}

@@ -1,5 +1,28 @@
-$color-font: #f1edf3;
-$color-background: #232935;
-$color-background-block: #3c4257;
-$color-button: #4b8cc8;
-$color-calendar-action: #e6c8ad;
+// $color-font: #f1edf3;
+// $color-background: #232935;
+// $color-background-block: #3c4257;
+// $color-button: #4b8cc8;
+// $color-calendar-action: #e6c8ad;
+
+// light mode
+$color-background: #FFFFFF;
+$color-background-container: #EDEDED;
+// $color-line: #EDEDED;
+$color-font-disable: #ADB5BD;
+$color-font-active: #1F161E;
+$color-action: #166FF6;
+//dark mode
+$color-background-dark: #0F1828;
+$color-background-dark-active: #152033;
+
+//animation
+@keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateX(-80%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }

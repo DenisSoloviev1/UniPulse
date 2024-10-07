@@ -7,22 +7,24 @@
   justify-content: center;
   align-items: center;
   padding: 10px 15px;
-  background-color: $color-background-block;
+  color: $color-font-active;
+  background-color: $color-background-container;
   border-radius: 16px;
-  border: 2px solid $color-background-block;
+  border: 2px solid $color-background-container;
   gap: 5px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  
 }
 .customButton:hover {
   background-color: inherit;
 }
 
 .blue{
-    border: 2px solid #1d5d90;
-    background-color: #1d5d90;
+  color: $color-background;
+    border: 2px solid $color-action;
+    background-color: $color-action;
 }
 .blue:hover{
     background-color: inherit;
+    color: $color-action;
 }

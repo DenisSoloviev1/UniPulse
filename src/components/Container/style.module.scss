@@ -6,22 +6,16 @@
   flex-direction: column;
   justify-content: center;
   padding: 10px 15px;
-  background-color: $color-background-block;
+  background-color: $color-background-container;
   border-radius: 8px;
   gap: 5px;
-  cursor: pointer;
   transition: all 0.3s ease-in-out;
-
 }
-
-.container:hover {
-  background-color: #454b61;
+.active:hover{
+  cursor: pointer;
+  background-color: #dfdfdf;
 }
-
-.dark {
-  background-color: $color-background;
-}
-.dark:hover{
+.light {
   background-color: $color-background;
 }
 

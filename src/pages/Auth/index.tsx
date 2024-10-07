@@ -5,8 +5,7 @@ import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import Flex from "../../components/Flex";
 import CustomButton from "../../components/CustomButton";
-import { WalcomingSvg } from "../../assets/svg";
-import logo from "../../assets/logo.png";
+import { WalcomingSvg, LogoDSTU } from "../../assets/svg";
 
 const Auth: React.FC = () => {
   const navigate = useNavigate(); // Использование useNavigate
@@ -31,7 +30,7 @@ const Auth: React.FC = () => {
               <p>Будьте на пульсе жизни университета вместе с нами!</p>
 
               <CustomButton color={"blue"} onClick={handleButtonClick}>
-                <img src={logo} alt="Logo" /> Войти через МОЙДГТУ
+                <LogoDSTU/> Войти через МОЙДГТУ
               </CustomButton>
             </div>
           </Flex>
