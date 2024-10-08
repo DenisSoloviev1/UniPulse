@@ -4,7 +4,7 @@ import Calendar from "../Calendar";
 import Container from "../../components/Container";
 import Flex from "../../components/Flex";
 import MediaItem from "../../components/MediaItem";
-import TagList from "../TagList";
+import TagList from "../tagList";
 import CustomButton from "../../components/CustomButton";
 import { ArrowSvg } from "../../assets/svg";
 

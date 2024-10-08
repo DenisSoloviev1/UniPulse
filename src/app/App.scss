@@ -59,9 +59,12 @@ img {
   vertical-align: top;
 }
 
-img,
-svg {
+img {
   max-width: 100%;
+}
+
+svg {
+  max-width: 40%;
 }
 
 address {
@@ -116,11 +119,18 @@ body {
   width: 100vw;
   min-height: 100vh;
   color: $color-font-active;
+  background-color: #F7F7FC;
 
   #root {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media screen and (min-width: 1321px) {
+  body{
+    overflow: hidden;
   }
 }

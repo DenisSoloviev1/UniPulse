@@ -28,3 +28,13 @@
 .show {
   display: flex;
 }
+
+.slider{
+  display: flex;
+  flex-wrap: wrap;
+  height: 20vh;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  gap: 5px;
+}

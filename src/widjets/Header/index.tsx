@@ -1,12 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import style from "./style.module.scss";
+import { Logo } from "../../assets/svg";
 
 const Header: React.FC = () => {
   return (
     <header>
       <div className={style.wrapper}>
-        <h2>UniPulse</h2>
+        <Logo/>
 
         <nav className={style.nav}>
           <NavLink to="/addPulse">Создание</NavLink>

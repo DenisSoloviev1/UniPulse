@@ -7,27 +7,23 @@ header {
   justify-content: center;
   align-items: center;
 
-  h2 {
-    font-size: 40px;
-    font-weight: 700;
-    font-family: "Playfair Display";
-  }
-
-  .nav{
+  .nav {
     display: flex;
     align-items: center;
     gap: 10px;
-}
+  }
 }
 
 .wrapper {
   margin: 0 auto;
   width: 100vw;
   max-width: 1320px;
-  padding: 15px 25px 0;
+  padding: 15px 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: $color-background;
+  border: 2px solid  $color-background-container;
 }
 
 @media screen and (min-width: 1321px) {
@@ -36,6 +32,6 @@ header {
     justify-content: space-between;
     margin: 20px auto 0;
     border-radius: 30px 30px 0 0;
-    padding: 20px 40px 0;
+    padding: 20px 40px;
   }
 }

@@ -19,12 +19,13 @@
   background-color: inherit;
 }
 
-.blue{
+.blue {
   color: $color-background;
-    border: 2px solid $color-action;
-    background-color: $color-action;
+  border: 2px solid $color-action;
+  background-color: $color-action;
+  padding: 10px 20px;
 }
-.blue:hover{
-    background-color: inherit;
-    color: $color-action;
+.blue:hover {
+  background-color: inherit;
+  color: $color-action;
 }

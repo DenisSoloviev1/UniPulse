@@ -9,7 +9,7 @@ interface TagListProps {
   title: string;
 }
 
-const PulseList: React.FC<TagListProps> = ({ title }) => {
+const TagList: React.FC<TagListProps> = ({ title }) => {
   const [showAddTag, setShowAddTag] = useState<boolean>(false);
   const handleClick = () => setShowAddTag(!showAddTag);
 
@@ -19,7 +19,6 @@ const PulseList: React.FC<TagListProps> = ({ title }) => {
         {arrayTag.map((tag) => (
           <Tag key={tag.id} id={tag.id} name={tag.name} />
         ))}
-
         <AddTag show={showAddTag} onClick={handleClick} />
         <CustomButton color={"blue"} onClick={handleClick}>
           +
@@ -29,4 +28,4 @@ const PulseList: React.FC<TagListProps> = ({ title }) => {
   );
 };
 
-export default PulseList;
+export default TagList;

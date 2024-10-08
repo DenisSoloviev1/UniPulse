@@ -3,8 +3,8 @@ import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import Flex from "../../components/Flex";
 import Container from "../../components/Container";
-import PulseList from "../../widjets/PulseList";
-import TagList from "../../widjets/TagList";
+import PulseList from "../../widjets/pulseList";
+import TagList from "../../widjets/tagList";
 
 const MyPulse: React.FC = () => {
   return (
