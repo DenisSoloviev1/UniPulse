@@ -10,13 +10,25 @@
   border-radius: 8px;
   gap: 5px;
   transition: all 0.3s ease-in-out;
+  p{
+    position: relative;
+    top: -2px;
+  }
 }
+
 .active:hover{
   cursor: pointer;
   background-color: #dfdfdf;
 }
 .light {
   background-color: $color-background;
+  p{
+    position: relative;
+    top: 0;
+  }
+  button{
+    display: none;
+  }
 }
 
 .br16 {
@@ -27,3 +39,19 @@
     padding: 0px;
 }
 
+.close {
+  position: relative;
+  svg {
+    width: 20px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    fill: $color-delete;
+    display: none;
+  }
+}
+.close:hover {
+  svg {
+    display: block;
+  }
+}

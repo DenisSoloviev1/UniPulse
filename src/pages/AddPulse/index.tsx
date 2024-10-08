@@ -2,8 +2,7 @@ import React from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import Form from "../../widjets/Form";
-import Flex from "../../components/Flex";
-import PulseItem from "../../widjets/PulseItem";
+import PulseList from "../../widjets/PulseList";
 
 const AddPulse: React.FC = () => {
 
@@ -13,15 +12,7 @@ const AddPulse: React.FC = () => {
       <Main title={"Новый пульс"}>
         <Form />
 
-        <Flex title={"Отправленные пульсы"}>
-          <PulseItem
-            title={"Окончание зачетной недели"}
-            text={
-              "Дорогие студенты! Через две недели наступает окончание зачетной недели, в связи с чем просим вас досдать все ваши долги"
-            }
-            id={"1"}
-          />
-        </Flex>
+        <PulseList title={"Отправленные пульсы"}/>
       </Main>
     </>
   );

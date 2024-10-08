@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import { ru } from 'date-fns/locale'; // Используйте named import
+import { ru } from 'date-fns/locale'; 
 import "react-datepicker/dist/react-datepicker.css";
-import "./style.scss"; // Импортируем ваши стили
-import { CalendarSvg } from "../../assets/svg"; // Иконка для календаря
+import "./style.scss"; 
+import { CalendarSvg } from "../../assets/svg"; 
 
-// Регистрируем русскую локаль
 registerLocale("ru", ru);
 
 const Calendar: React.FC = () => {

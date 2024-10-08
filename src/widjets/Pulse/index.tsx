@@ -2,28 +2,29 @@ import React from "react";
 import style from "./style.module.scss";
 import Container from "../../components/Container";
 import Flex from "../../components/Flex";
-import Tag from "../../components/Tag";
+import Tag from "../../components/tag";
 
-interface PulseItemProps {
+interface PulseProps {
   title: string;
   text: string;
   id: string;
+  tags: string[];
 }
 
-const PulseItem: React.FC<PulseItemProps> = ({ title, text, id }) => {
+const Pulse: React.FC<PulseProps> = ({ title, text, id, tags }) => {
   return (
-    <article className={style.pulseItem} id={id}>
+    <article className={style.pulse} id={id}>
       <Container active={false}>
         <h4 className={style.title}>{title}</h4>
         <p className={style.text}>{text}</p>
         <Flex className={"row"}>
-          <Tag id={"1"} text={"студенты"} color={"light"} />
-          <Tag id={"2"} text={"преподаватели"} color={"light"} />
-          <Tag id={"3"} text={"работники"} color={"light"} />
+          {tags.map((tag, index) => (
+            <Tag key={`${id}-${index}`} name={tag} id={`${id}-${index}`} color={"light"} />
+          ))}
         </Flex>
       </Container>
     </article>
   );
 };
 
-export default PulseItem;
+export default Pulse;

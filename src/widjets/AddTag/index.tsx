@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import style from "./style.module.scss";
 import Flex from "../../components/Flex";
-import Tag from "../../components/Tag";
+import Tag from "../../components/tag";
 import Container from "../../components/Container";
 import CustomButton from "../../components/CustomButton";
 

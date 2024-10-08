@@ -1,8 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // Импорт useNavigate
 import style from "./style.module.scss";
-import Header from "../../widjets/Header";
-import Main from "../../widjets/Main";
 import Flex from "../../components/Flex";
 import CustomButton from "../../components/CustomButton";
 import { WalcomingSvg, LogoDSTU } from "../../assets/svg";

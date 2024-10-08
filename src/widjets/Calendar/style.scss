@@ -5,7 +5,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
 }
 
 .datePicker {
@@ -79,7 +78,7 @@
 }
 
 .react-datepicker__day--today {
-  font-weight: 900;
+  font-weight: 700;
   color: $color-font-active;
   background-color: inherit;
 }
