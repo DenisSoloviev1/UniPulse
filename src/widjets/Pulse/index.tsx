@@ -1,8 +1,6 @@
 import React from "react";
-import style from "./style.module.scss";
-import Container from "../../components/Container";
-import Flex from "../../components/Flex";
-import Tag from "../../components/tag";
+import styles from "./styles.module.scss";
+import { Container, Flex, Tag } from "../../components";
 
 interface PulseProps {
   title: string;
@@ -13,13 +11,19 @@ interface PulseProps {
 
 const Pulse: React.FC<PulseProps> = ({ title, text, id, tags }) => {
   return (
-    <article className={style.pulse} id={id}>
+    <article className={styles.pulse} id={id}>
       <Container active={false}>
-        <h4 className={style.title}>{title}</h4>
-        <p className={style.text}>{text}</p>
+        <h4 className={styles.title}>{title}</h4>
+        <p className={styles.text}>{text}</p>
         <Flex className={"row"}>
           {tags.map((tag, index) => (
-            <Tag key={`${id}-${index}`} name={tag} id={`${id}-${index}`} color={"light"} isActive={false} />
+            <Tag
+              key={`${id}-${index}`}
+              name={tag}
+              id={`${id}-${index}`}
+              color={"light"}
+              isActive={false}
+            />
           ))}
         </Flex>
       </Container>

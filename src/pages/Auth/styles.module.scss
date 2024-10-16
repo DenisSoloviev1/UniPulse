@@ -14,8 +14,8 @@
   gap: 10px;
   animation: slide-x 1s ease-in-out;
 
-  button:hover{
-    svg{
+  button:hover {
+    svg {
       fill: $color-action;
     }
   }
@@ -44,10 +44,10 @@ svg {
   svg {
     max-width: 40%;
   }
-  h1{
+  h1 {
     font-size: 30px;
   }
-  p{
+  p {
     font-size: 20px;
   }
 }

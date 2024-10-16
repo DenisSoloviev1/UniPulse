@@ -1,5 +1,5 @@
 import React from "react";
-import Flex from "../components/Flex";
+import { Flex } from "../components";
 import Pulse from "./Pulse";
 import { arrayPulse } from "../assets/date";
 
@@ -13,7 +13,7 @@ const PulseList: React.FC<PulseListProps> = ({ title }) => {
       <Flex title={title}>
         {arrayPulse.map((pulseItem) => (
           <Pulse
-            key={pulseItem.id} 
+            key={pulseItem.id}
             title={pulseItem.title}
             text={pulseItem.text}
             id={pulseItem.id}

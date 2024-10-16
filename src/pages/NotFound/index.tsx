@@ -1,12 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import style from "./style.module.scss";
-import Flex from "../../components/Flex";
+import styles from "./styles.module.scss";
+import { Flex } from "../../components";
 import { NotFoundSvg } from "../../assets/svg";
 
-const NotFound: React.FC = () => {
+export const NotFound: React.FC = () => {
   return (
-    <div className={style.wrapper}>
+    <div className={styles.wrapper}>
       <NotFoundSvg />
       <Flex>
         <h1>Ошибка 404: страница не найдена.</h1>
@@ -18,5 +18,3 @@ const NotFound: React.FC = () => {
     </div>
   );
 };
-
-export default NotFound;

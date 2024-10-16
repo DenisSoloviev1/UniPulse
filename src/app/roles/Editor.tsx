@@ -1,13 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import AddPulse from "../../pages/AddPulse";
-import MyPulse from "../../pages/MyPulse";
+import {AddPulse, MyPulse} from "../../pages";
 
 interface EditorProps {
   role: string;
 }
 
-const Editor: React.FC<EditorProps> = ({ role }) => {
+export const Editor: React.FC<EditorProps> = ({ role }) => {
   return (
     <Routes>
       <Route path="/addPulse" element={<AddPulse role={role} />} />
@@ -15,5 +14,3 @@ const Editor: React.FC<EditorProps> = ({ role }) => {
     </Routes>
   );
 };
-
-export default Editor;

@@ -1,13 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import AddPulse from "../../pages/AddPulse";
-import MyPulse from "../../pages/MyPulse";
+import { AddPulse, MyPulse } from "../../pages";
 
 interface MediaProps {
   role: string;
 }
 
-const Media: React.FC<MediaProps> = ({ role }) => {
+export const Media: React.FC<MediaProps> = ({ role }) => {
   return (
     <Routes>
       <Route path="/addPulse" element={<AddPulse role={role} />} />
@@ -15,5 +14,3 @@ const Media: React.FC<MediaProps> = ({ role }) => {
     </Routes>
   );
 };
-
-export default Media;

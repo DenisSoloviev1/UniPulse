@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "./Container";
+import { Container } from "./index";
 import { Close } from "../assets/svg";
 
 interface PropsTag {
@@ -9,7 +9,12 @@ interface PropsTag {
   isActive?: boolean;
 }
 
-const Tag: React.FC<PropsTag> = ({ name, id, color, isActive = true }) => {
+export const Tag: React.FC<PropsTag> = ({
+  name,
+  id,
+  color,
+  isActive = true,
+}) => {
   return (
     <Container className={`br16 close ${color}`} active={isActive}>
       <button>
@@ -19,5 +24,3 @@ const Tag: React.FC<PropsTag> = ({ name, id, color, isActive = true }) => {
     </Container>
   );
 };
-
-export default Tag;

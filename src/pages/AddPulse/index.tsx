@@ -8,18 +8,15 @@ interface AddPulseProps {
   role: string;
 }
 
-const AddPulse: React.FC<AddPulseProps> = ({role}) => {
-
+export const AddPulse: React.FC<AddPulseProps> = ({ role }) => {
   return (
     <>
-      <Header role={role}/>
+      <Header role={role} />
       <Main>
         <Form />
 
-        <PulseList title={"Отправленные пульсы"}/>
+        <PulseList title={"Отправленные пульсы"} />
       </Main>
     </>
   );
 };
-
-export default AddPulse;

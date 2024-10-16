@@ -1,7 +1,7 @@
 @import "../../shared/Variables.scss";
 
 .container {
-  height:fit-content;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,26 +11,29 @@
   gap: 5px;
   transition: all 0.3s ease-in-out;
 
-  p{
+  svg {
+    width: 20px;
+  }
+  p {
     position: relative;
     top: -4px;
   }
-  input{
+  input {
     width: 100%;
   }
 }
 
-.active:hover{
+.active:hover {
   cursor: pointer;
   background-color: #dfdfdf;
 }
 .light {
   background-color: $color-background;
-  p{
+  p {
     position: relative;
     top: -2px;
   }
-  button{
+  button {
     display: none;
   }
 }
@@ -39,8 +42,8 @@
   border-radius: 16px;
 }
 
-.pd0{
-    padding: 0px;
+.pd0 {
+  padding: 0px;
 }
 
 .close {
@@ -59,4 +62,3 @@
     display: block;
   }
 }
-

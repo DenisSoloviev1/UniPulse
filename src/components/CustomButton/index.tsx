@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import classNames from "classnames";
-import style from "./style.module.scss";
+import styles from "./styles.module.scss";
 
 interface CustomButtonProps {
   color?: string;
@@ -9,7 +9,7 @@ interface CustomButtonProps {
   type?: "button" | "submit";
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({
+export const CustomButton: React.FC<CustomButtonProps> = ({
   color,
   onClick,
   children,
@@ -17,7 +17,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   return (
     <button
-      className={classNames(style.customButton, color && style[color])}
+      className={classNames(styles.customButton, color && styles[color])}
       onClick={onClick}
       type={type}
     >
@@ -25,5 +25,3 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     </button>
   );
 };
-
-export default CustomButton;

@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface modalState {
   isOpen: boolean;
@@ -7,14 +7,13 @@ interface modalState {
 }
 
 export const useAddTagStore = create<modalState>((set) => ({
-  isOpen: false,  
-  open: () => set({ isOpen: true }),  
-  close: () => set({ isOpen: false }), 
+  isOpen: false,
+  open: () => set({ isOpen: true }),
+  close: () => set({ isOpen: false }),
 }));
 
-
 export const usePushStore = create<modalState>((set) => ({
-  isOpen: false,  
-  open: () => set({ isOpen: true }),  
-  close: () => set({ isOpen: false }), 
+  isOpen: false,
+  open: () => set({ isOpen: true }),
+  close: () => set({ isOpen: false }),
 }));

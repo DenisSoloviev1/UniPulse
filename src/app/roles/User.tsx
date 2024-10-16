@@ -1,17 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import MyPulse from "../../pages/MyPulse";
+import { MyPulse } from "../../pages";
 
 interface UserProps {
   role: string;
 }
 
-const User: React.FC<UserProps> = ({ role }) => {
+export const User: React.FC<UserProps> = ({ role }) => {
   return (
     <Routes>
       <Route path="/myPulse" element={<MyPulse role={role} />} />
     </Routes>
   );
 };
-
-export default User;

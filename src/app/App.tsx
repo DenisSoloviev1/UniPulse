@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.scss";
-import Auth from "../pages/Auth";
-import NotFound from "../pages/NotFound";
-import Admin from "./roles/Admin";
-import Media from "./roles/Media";
-import Editor from "./roles/Editor";
-import Publisher from "./roles/Publisher";
-import User from "./roles/User";
+import { Auth, NotFound } from "../pages";
+import { Admin, Media, Editor, Publisher, User } from "./roles";
 
 const App: React.FC = () => {
   // Вместо авторизации используем константу для тестирования
@@ -28,11 +23,24 @@ const App: React.FC = () => {
         ) : (
           <>
             {/* Определяем маршруты для каждой роли */}
-            {userRole === "admin" && <Route path="/admin/*" element={<Admin role={userRole}/>} />}
-            {userRole === "media" && <Route path="/media/*" element={<Media role={userRole}/>} />}
-            {userRole === "editor" && <Route path="/editor/*" element={<Editor role={userRole}/>} />}
-            {userRole === "publisher" && <Route path="/publisher/*" element={<Publisher role={userRole}/>} />}
-            {userRole === "user" && <Route path="/user/*" element={<User role={userRole}/>} />}
+            {userRole === "admin" && (
+              <Route path="/admin/*" element={<Admin role={userRole} />} />
+            )}
+            {userRole === "media" && (
+              <Route path="/media/*" element={<Media role={userRole} />} />
+            )}
+            {userRole === "editor" && (
+              <Route path="/editor/*" element={<Editor role={userRole} />} />
+            )}
+            {userRole === "publisher" && (
+              <Route
+                path="/publisher/*"
+                element={<Publisher role={userRole} />}
+              />
+            )}
+            {userRole === "user" && (
+              <Route path="/user/*" element={<User role={userRole} />} />
+            )}
             {/* Перенаправляем на соответствующий маршрут */}
             <Route path="/" element={<Navigate to={`/${userRole}`} />} />
           </>

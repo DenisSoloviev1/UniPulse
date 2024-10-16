@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import style from "./style.module.scss";
+import styles from "./styles.module.scss";
 import PulseList from "../pulseList";
 import { usePushStore } from "../../components/ModalWindow/store";
 import { Back } from "../../assets/svg";
@@ -10,8 +10,8 @@ const Push: React.FC = () => {
   const isOpen = usePushStore((state) => state.isOpen);
 
   return (
-    <div className={classNames(style.push, isOpen ? style.show : "")}>
-      <div className={style.title}>
+    <div className={classNames(styles.push, isOpen ? styles.show : "")}>
+      <div className={styles.title}>
         <button onClick={closePush}>
           <Back />
         </button>

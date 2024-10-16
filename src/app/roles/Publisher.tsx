@@ -1,13 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import AddPulse from "../../pages/AddPulse";
-import MyPulse from "../../pages/MyPulse";
+import { AddPulse, MyPulse } from "../../pages";
 
 interface PublisherProps {
   role: string;
 }
 
-const Publisher: React.FC<PublisherProps> = ({ role }) => {
+export const Publisher: React.FC<PublisherProps> = ({ role }) => {
   return (
     <Routes>
       <Route path="/addPulse" element={<AddPulse role={role} />} />
@@ -15,5 +14,3 @@ const Publisher: React.FC<PublisherProps> = ({ role }) => {
     </Routes>
   );
 };
-
-export default Publisher;

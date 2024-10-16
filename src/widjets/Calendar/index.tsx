@@ -1,31 +1,33 @@
 import React, { useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import { ru } from 'date-fns/locale'; 
+import { ru } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-import "./style.scss"; 
-import { CalendarSvg } from "../../assets/svg"; 
+import "./styles.scss";
+import { CalendarSvg } from "../../assets/svg";
 
 registerLocale("ru", ru);
 
 const Calendar: React.FC = () => {
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-    const handleDateChange = (date: Date | null) => {
-      setSelectedDate(date);
-    };
-  
-    const filterTime = (time: Date) => {
-      const now = new Date();
-      const selectedDateWithoutTime = selectedDate ? new Date(selectedDate) : null;
-  
-      if (selectedDateWithoutTime) {
-        selectedDateWithoutTime.setHours(time.getHours());
-        selectedDateWithoutTime.setMinutes(time.getMinutes());
-        return selectedDateWithoutTime > now;
-      }
-  
-      return true; 
-    };
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
+
+  const filterTime = (time: Date) => {
+    const now = new Date();
+    const selectedDateWithoutTime = selectedDate
+      ? new Date(selectedDate)
+      : null;
+
+    if (selectedDateWithoutTime) {
+      selectedDateWithoutTime.setHours(time.getHours());
+      selectedDateWithoutTime.setMinutes(time.getMinutes());
+      return selectedDateWithoutTime > now;
+    }
+
+    return true;
+  };
 
   return (
     <div className="calendarContainer">

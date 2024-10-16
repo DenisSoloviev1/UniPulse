@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import classNames from "classnames";
-import style from "./style.module.scss";
+import styles from "./styles.module.scss";
 
 interface FlexProps {
   children?: ReactNode;
@@ -8,16 +8,14 @@ interface FlexProps {
   title?: string;
 }
 
-const Flex: React.FC<FlexProps> = ({ title, children, className }) => {
+export const Flex: React.FC<FlexProps> = ({ title, children, className }) => {
   return (
-    <div className={style.flex}>
-      {title && <h3 className={style.title}>{title}</h3>}
+    <div className={styles.flex}>
+      {title && <h3 className={styles.title}>{title}</h3>}
 
-      <div className={classNames(style.flex, className && style[className])}>
+      <div className={classNames(styles.flex, className && styles[className])}>
         {children}
       </div>
     </div>
   );
 };
-
-export default Flex;

@@ -79,10 +79,10 @@ select {
   background-color: transparent;
 }
 
-input[type="radio"]{
-display: none;
+input[type="radio"] {
+  display: none;
 }
-label:hover{
+label:hover {
   cursor: pointer;
 }
 
@@ -122,7 +122,7 @@ body {
   width: 100vw;
   min-height: 100vh;
   color: $color-font-active;
-  background-color: #F7F7FC;
+  background-color: #f7f7fc;
 
   #root {
     width: 100%;
@@ -133,7 +133,7 @@ body {
 }
 
 @media screen and (min-width: 1321px) {
-  body{
+  body {
     overflow: hidden;
   }
 }

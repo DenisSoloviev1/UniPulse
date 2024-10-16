@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./style.module.scss";
+import styles from "./styles.module.scss";
 import { BellOff } from "../../assets/svg";
 
 interface BellProps {
@@ -7,12 +7,12 @@ interface BellProps {
   count: number;
 }
 
-const Bell: React.FC<BellProps> = ({ onClick, count }) => {
+export const Bell: React.FC<BellProps> = ({ onClick, count }) => {
   return (
-    <button onClick={onClick} className={style.bell}>
+    <button onClick={onClick} className={styles.bell}>
       {count && count > 0 ? (
         <>
-          <BellOff /> <div className={style.circle}>{count}</div>
+          <BellOff /> <div className={styles.circle}>{count}</div>
         </>
       ) : (
         <BellOff />
@@ -20,5 +20,3 @@ const Bell: React.FC<BellProps> = ({ onClick, count }) => {
     </button>
   );
 };
-
-export default Bell;

@@ -1,29 +1,27 @@
 import React, { ReactNode } from "react";
 import classNames from "classnames";
-import style from "./style.module.scss";
+import styles from "./styles.module.scss";
 
 interface ContainerProps {
   children?: ReactNode;
   className?: string;
-  active?: boolean; 
+  active?: boolean;
 }
 
-const Container: React.FC<ContainerProps> = ({
+export const Container: React.FC<ContainerProps> = ({
   children,
   className,
-  active = true, 
+  active = true,
 }) => {
   return (
     <div
       className={classNames(
-        style.container,
-        className?.split(" ").map((c) => style[c]),
-        active && style.active
+        styles.container,
+        className?.split(" ").map((c) => styles[c]),
+        active && styles.active
       )}
     >
       {children}
     </div>
   );
 };
-
-export default Container;

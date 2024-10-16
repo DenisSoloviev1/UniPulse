@@ -1,20 +1,17 @@
 import React from "react";
-import style from "./style.module.scss";
+import styles from "./styles.module.scss";
 import Calendar from "../Calendar";
-import Container from "../../components/Container";
-import Flex from "../../components/Flex";
-import MediaItem from "../../components/MediaItem";
+import { Container, Flex, CustomButton, MediaItem } from "../../components";
 import TagList from "../tagList";
-import CustomButton from "../../components/CustomButton";
 import { ArrowSvg } from "../../assets/svg";
 
 const Form: React.FC = () => {
   return (
-    <form action="" className={style.form}>
+    <form action="" className={styles.form}>
       <Flex title={"Уведомление"}>
         <Container className={"br16"}>
           <textarea
-            className={style.textarea}
+            className={styles.textarea}
             placeholder="Введите текст"
             rows={10}
           ></textarea>

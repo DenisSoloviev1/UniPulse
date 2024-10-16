@@ -1,13 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import AddPulse from "../../pages/AddPulse";
-import MyPulse from "../../pages/MyPulse";
+import { AddPulse, MyPulse } from "../../pages";
 
 interface AdminProps {
   role: string;
 }
 
-const Admin: React.FC<AdminProps> = ({ role }) => {
+export const Admin: React.FC<AdminProps> = ({ role }) => {
   return (
     <Routes>
       <Route path="/addPulse" element={<AddPulse role={role} />} />
@@ -15,5 +14,3 @@ const Admin: React.FC<AdminProps> = ({ role }) => {
     </Routes>
   );
 };
-
-export default Admin;

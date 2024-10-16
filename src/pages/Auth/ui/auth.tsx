@@ -1,12 +1,10 @@
-import React, {useEffect } from "react";
-import axios from 'axios';
-import style from "./style.module.scss";
-import Flex from "../../components/Flex";
-import CustomButton from "../../components/CustomButton";
-import { WalcomingSvg, LogoDSTU } from "../../assets/svg";
+import React, { useEffect } from "react";
+import axios from "axios";
+import styles from "../styles.module.scss";
+import { Flex, CustomButton } from "../../../components";
+import { WalcomingSvg, LogoDSTU } from "../../../assets/svg";
 
-const Auth: React.FC = () => {
-
+export const Auth: React.FC = () => {
   const handleAuth = () => {
     const clientId = "724363";
     const redirectUri = encodeURIComponent("https://example.com/callback");
@@ -18,33 +16,33 @@ const Auth: React.FC = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    const code = query.get('code');
-    const state = query.get('state');
+    const code = query.get("code");
+    const state = query.get("state");
 
     if (code) {
       // Отправляем код на сервер для обмена на access_token
-      axios.post('/api/auth/oauth/token', { code, state })
-        .then(response => {
+      axios
+        .post("/api/auth/oauth/token", { code, state })
+        .then((response) => {
           const { access_token } = response.data;
           // Сохраняем токен, например, в localStorage
-          localStorage.setItem('authToken', access_token);
+          localStorage.setItem("authToken", access_token);
           // Перенаправляем пользователя в защищенную часть приложения
         })
-        .catch(error => {
-          console.error('Ошибка при обмене кода на токен:', error);
+        .catch((error) => {
+          console.error("Ошибка при обмене кода на токен:", error);
         });
     }
   }, [location]);
 
-
   return (
     <>
-      <div className={style.wrapper}>
-        <section className={style.walcoming}>
+      <div className={styles.wrapper}>
+        <section className={styles.walcoming}>
           <Flex className={"row"}>
             <WalcomingSvg />
 
-            <div className={style.message}>
+            <div className={styles.message}>
               <h1>Приветствуем вас в UniPulse!</h1>
               <p>
                 В вашем личном вузовском помощнике. Теперь все важные события,
@@ -62,5 +60,3 @@ const Auth: React.FC = () => {
     </>
   );
 };
-
-export default Auth;

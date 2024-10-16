@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import style from "./style.module.scss";
-import Container from "../Container";
+import styles from "./styles.module.scss";
+import { Container } from "../index";
 
-const MediaItem: React.FC = () => {
+export const MediaItem: React.FC = () => {
   const [mediaFiles, setMediaFiles] = useState<
     Array<{ src: string; type: string }>
   >([]);
@@ -40,21 +40,21 @@ const MediaItem: React.FC = () => {
     <>
       {mediaFiles.length > 0 ? (
         <>
-          <div className={style.mediaPreview}>
+          <div className={styles.mediaPreview}>
             {mediaFiles.map((media, index) => (
-              <div key={index} className={style.mediaItem}>
+              <div key={index} className={styles.mediaItem}>
                 {media.type === "image" && (
                   <img
                     src={media.src}
                     alt="Uploaded"
-                    className={style.square}
+                    className={styles.square}
                   />
                 )}
                 {media.type === "video" && (
-                  <video src={media.src} controls className={style.square} />
+                  <video src={media.src} controls className={styles.square} />
                 )}
                 {media.type !== "image" && media.type !== "video" && (
-                  <div className={style.fileItem}>
+                  <div className={styles.fileItem}>
                     <span>{media.src}</span>
                   </div>
                 )}
@@ -68,10 +68,10 @@ const MediaItem: React.FC = () => {
                 type="file"
                 multiple
                 onChange={handleFileChange}
-                className={style.hiddenInput}
+                className={styles.hiddenInput}
                 id="input"
               />
-              <div className={style.square}>+</div>
+              <div className={styles.square}>+</div>
             </Container>
           </label>
         </>
@@ -82,15 +82,13 @@ const MediaItem: React.FC = () => {
               type="file"
               multiple
               onChange={handleFileChange}
-              className={style.hiddenInput}
+              className={styles.hiddenInput}
               id="input"
             />
-            <div className={style.square}>+</div>
+            <div className={styles.square}>+</div>
           </Container>
         </label>
       )}
     </>
   );
 };
-
-export default MediaItem;

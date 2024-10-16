@@ -25,7 +25,7 @@ main {
   overflow-y: auto;
   gap: 30px;
   background-color: $color-background;
-  border: 2px solid  $color-background-container;
+  border: 2px solid $color-background-container;
   border-top: 0;
 }
 
@@ -45,8 +45,7 @@ main {
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: $color-action; 
+    background-color: $color-action;
     border-radius: 10px;
   }
-
 }

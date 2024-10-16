@@ -1,11 +1,7 @@
 import React from "react";
-import Flex from "../components/Flex";
-import Tag from "../components/tag";
-import Container from "../components/Container";
-import ModalWindow from "../components/ModalWindow";
-import CustomButton from "../components/CustomButton";
-import {useAddTagStore} from "../components/ModalWindow/store";
-import style from "../components/ModalWindow/style.module.scss";
+import { Flex, Tag, Container, ModalWindow, CustomButton } from "../components";
+import { useAddTagStore } from "../components/ModalWindow/store";
+import styles from "../components/ModalWindow/styles.module.scss";
 import { arrayTag } from "../assets/date";
 
 interface TagListProps {
@@ -25,7 +21,7 @@ const TagList: React.FC<TagListProps> = ({ title }) => {
 
         <ModalWindow>
           <Flex title={"Существующие теги"} className={"row"}>
-            <div className={style.slider}>
+            <div className={styles.slider}>
               {arrayTag.map((tag) => (
                 <Tag
                   key={tag.id}
