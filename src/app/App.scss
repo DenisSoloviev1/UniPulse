@@ -63,10 +63,6 @@ img {
   max-width: 100%;
 }
 
-svg {
-  max-width: 40%;
-}
-
 address {
   font-style: normal;
 }
@@ -81,6 +77,13 @@ select {
   font-size: inherit;
   color: inherit;
   background-color: transparent;
+}
+
+input[type="radio"]{
+display: none;
+}
+label:hover{
+  cursor: pointer;
 }
 
 input::-ms-clear {

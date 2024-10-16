@@ -1,7 +1,7 @@
 @import "../../shared/Variables.scss";
 
 .container {
-  min-height: 45px;
+  height:fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,9 +10,13 @@
   border-radius: 8px;
   gap: 5px;
   transition: all 0.3s ease-in-out;
+
   p{
     position: relative;
     top: -4px;
+  }
+  input{
+    width: 100%;
   }
 }
 
@@ -42,10 +46,10 @@
 .close {
   position: relative;
   svg {
-    width: 20px;
+    width: 20px !important;
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -5px !important;
+    right: -5px !important;
     fill: $color-delete;
     display: none;
   }
@@ -55,3 +59,4 @@
     display: block;
   }
 }
+

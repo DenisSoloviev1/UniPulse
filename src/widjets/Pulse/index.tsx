@@ -19,7 +19,7 @@ const Pulse: React.FC<PulseProps> = ({ title, text, id, tags }) => {
         <p className={style.text}>{text}</p>
         <Flex className={"row"}>
           {tags.map((tag, index) => (
-            <Tag key={`${id}-${index}`} name={tag} id={`${id}-${index}`} color={"light"} />
+            <Tag key={`${id}-${index}`} name={tag} id={`${id}-${index}`} color={"light"} isActive={false} />
           ))}
         </Flex>
       </Container>

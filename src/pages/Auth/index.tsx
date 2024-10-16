@@ -1,16 +1,41 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // Импорт useNavigate
+import React, {useEffect } from "react";
+import axios from 'axios';
 import style from "./style.module.scss";
 import Flex from "../../components/Flex";
 import CustomButton from "../../components/CustomButton";
 import { WalcomingSvg, LogoDSTU } from "../../assets/svg";
 
 const Auth: React.FC = () => {
-  const navigate = useNavigate(); // Использование useNavigate
 
-  const handleButtonClick = () => {
-    navigate("/addPulse"); // Перейти на /addPulse при нажатии кнопки
+  const handleAuth = () => {
+    const clientId = "724363";
+    const redirectUri = encodeURIComponent("https://example.com/callback");
+    const state = "Ert2q5Z";
+    const authUrl = `https://edu.donstu.ru/WebApp/#/Authorize?client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
+
+    window.open(authUrl, "_blank", "width=500,height=600");
   };
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const code = query.get('code');
+    const state = query.get('state');
+
+    if (code) {
+      // Отправляем код на сервер для обмена на access_token
+      axios.post('/api/auth/oauth/token', { code, state })
+        .then(response => {
+          const { access_token } = response.data;
+          // Сохраняем токен, например, в localStorage
+          localStorage.setItem('authToken', access_token);
+          // Перенаправляем пользователя в защищенную часть приложения
+        })
+        .catch(error => {
+          console.error('Ошибка при обмене кода на токен:', error);
+        });
+    }
+  }, [location]);
+
 
   return (
     <>
@@ -27,8 +52,8 @@ const Auth: React.FC = () => {
               </p>
               <p>Будьте на пульсе жизни университета вместе с нами!</p>
 
-              <CustomButton color={"blue"} onClick={handleButtonClick}>
-                <LogoDSTU/> Войти через МОЙДГТУ
+              <CustomButton color={"blue"} onClick={handleAuth}>
+                <LogoDSTU /> Войти через ЭИОС ДГТУ
               </CustomButton>
             </div>
           </Flex>
@@ -39,4 +64,3 @@ const Auth: React.FC = () => {
 };
 
 export default Auth;
-

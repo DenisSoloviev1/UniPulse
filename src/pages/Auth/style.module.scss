@@ -12,8 +12,13 @@
   align-items: flex-start;
   margin-left: 50px;
   gap: 10px;
-  animation: slide 1s ease-in-out;
+  animation: slide-x 1s ease-in-out;
 
+  button:hover{
+    svg{
+      fill: $color-action;
+    }
+  }
   svg {
     width: 40px;
     height: 40px;
@@ -35,6 +40,16 @@ svg {
   align-items: flex-start;
   overflow-y: auto;
   gap: 30px;
+
+  svg {
+    max-width: 40%;
+  }
+  h1{
+    font-size: 30px;
+  }
+  p{
+    font-size: 20px;
+  }
 }
 
 @media screen and (min-width: 1321px) {

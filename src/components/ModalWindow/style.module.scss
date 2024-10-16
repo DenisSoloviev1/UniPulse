@@ -1,6 +1,6 @@
 @import "../../shared/Variables.scss";
 
-.addTag {
+.modalWindow {
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -15,26 +15,41 @@
   z-index: 2;
 }
 .content {
-  width: 400px;
+  width: 80%;
   display: flex;
   flex-direction: column;
   border-radius: 16px;
   background-color: $color-background;
   padding: 20px;
   border: 1px solid $color-font-disable;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
+  gap: 5px;
+  position: relative;
+
+  svg {
+    width: 30px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    fill: $color-delete;
+  }
+}
+.slider {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 5px;
+  width: 100%;
+  max-height: 100px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   gap: 5px;
 }
-
 .show {
   display: flex;
 }
 
-.slider{
-  display: flex;
-  flex-wrap: wrap;
-  height: 20vh;
-  width: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  gap: 5px;
+@media screen and (min-width: 1321px) {
+  .content {
+    width: 30%;
+  }
 }

@@ -4,12 +4,16 @@ import Main from "../../widjets/Main";
 import Form from "../../widjets/Form";
 import PulseList from "../../widjets/pulseList";
 
-const AddPulse: React.FC = () => {
+interface AddPulseProps {
+  role: string;
+}
+
+const AddPulse: React.FC<AddPulseProps> = ({role}) => {
 
   return (
     <>
-      <Header />
-      <Main title={"Новый пульс"}>
+      <Header role={role}/>
+      <Main>
         <Form />
 
         <PulseList title={"Отправленные пульсы"}/>

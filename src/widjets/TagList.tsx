@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Flex from "../components/Flex";
 import Tag from "../components/tag";
-import AddTag from "./AddTag";
+import Container from "../components/Container";
+import ModalWindow from "../components/ModalWindow";
 import CustomButton from "../components/CustomButton";
+import {useAddTagStore} from "../components/ModalWindow/store";
+import style from "../components/ModalWindow/style.module.scss";
 import { arrayTag } from "../assets/date";
 
 interface TagListProps {
@@ -10,8 +13,8 @@ interface TagListProps {
 }
 
 const TagList: React.FC<TagListProps> = ({ title }) => {
-  const [showAddTag, setShowAddTag] = useState<boolean>(false);
-  const handleClick = () => setShowAddTag(!showAddTag);
+  const openModal = useAddTagStore((state) => state.open);
+  const closeModal = useAddTagStore((state) => state.close);
 
   return (
     <article>
@@ -19,8 +22,35 @@ const TagList: React.FC<TagListProps> = ({ title }) => {
         {arrayTag.map((tag) => (
           <Tag key={tag.id} id={tag.id} name={tag.name} />
         ))}
-        <AddTag show={showAddTag} onClick={handleClick} />
-        <CustomButton color={"blue"} onClick={handleClick}>
+
+        <ModalWindow>
+          <Flex title={"Существующие теги"} className={"row"}>
+            <div className={style.slider}>
+              {arrayTag.map((tag) => (
+                <Tag
+                  key={tag.id}
+                  id={tag.id}
+                  name={tag.name}
+                  isActive={false}
+                />
+              ))}
+            </div>
+          </Flex>
+
+          <Flex title={"Новый тег"}>
+            <Container>
+              <input type="text" placeholder="Название тега" />
+            </Container>
+            <Container>
+              <input type="text" placeholder="Контингент" />
+            </Container>
+            <CustomButton onClick={closeModal} color={"blue"}>
+              Создать
+            </CustomButton>
+          </Flex>
+        </ModalWindow>
+
+        <CustomButton color={"blue"} onClick={openModal}>
           +
         </CustomButton>
       </Flex>

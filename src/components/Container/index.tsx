@@ -5,13 +5,13 @@ import style from "./style.module.scss";
 interface ContainerProps {
   children?: ReactNode;
   className?: string;
-  active?: boolean; // Сделаем action необязательным
+  active?: boolean; 
 }
 
 const Container: React.FC<ContainerProps> = ({
   children,
   className,
-  active = true, // Значение по умолчанию для action - true
+  active = true, 
 }) => {
   return (
     <div

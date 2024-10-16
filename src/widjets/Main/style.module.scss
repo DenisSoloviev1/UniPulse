@@ -16,8 +16,9 @@ main {
 .wrapper {
   margin: 0 auto;
   width: 100vw;
+  min-width: 320px;
   max-width: 1320px;
-  padding: 20px 25px;
+  padding: 20px 15px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -32,19 +33,19 @@ main {
   .wrapper {
     margin: 0 auto 20px;
     border-radius: 0 0 30px 30px;
-    padding: 20px 40px;
+    padding: 20px 30px;
     height: 84vh;
     overflow-y: auto;
-    clip-path: inset(0px 0px 0px 0px round 0px 0px 30px 30px);
+    overflow-x: hidden;
+    // clip-path: inset(0px 0px 0px 0px round 0px 0px 30px 30px);
   }
 
-  /* Кастомизация скроллбара внутри медиазапроса */
   ::-webkit-scrollbar {
     width: 3px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: $color-action; /* Цвет ползунка */
+    background-color: $color-action; 
     border-radius: 10px;
   }
 

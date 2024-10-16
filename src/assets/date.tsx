@@ -43,16 +43,24 @@ export const arrayPulse: ArrayPulse[] = [
 ];
 
 export const arrayTag: ArrayTag[] = [
-    {
-        id: "1",
-        name: "студенты",
-      },
-    {
-        id: "2",
-        name: "преподаватели",
-      },
-    {
-        id: "3",
-        name: "сотрудники",
-      },
+  {
+    id: "1",
+    name: "студенты",
+  },
+  {
+    id: "2",
+    name: "преподаватели",
+  },
+  {
+    id: "3",
+    name: "сотрудники",
+  },
+  {
+    id: "4",
+    name: "первокусники",
+  },
+  {
+    id: "5",
+    name: "все",
+  },
 ];
