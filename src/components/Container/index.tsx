@@ -6,12 +6,14 @@ interface ContainerProps {
   children?: ReactNode;
   className?: string;
   active?: boolean;
+  onClick?: () => void;
 }
 
 export const Container: React.FC<ContainerProps> = ({
   children,
   className,
   active = true,
+  onClick,
 }) => {
   return (
     <div
@@ -20,6 +22,7 @@ export const Container: React.FC<ContainerProps> = ({
         className?.split(" ").map((c) => styles[c]),
         active && styles.active
       )}
+      onClick={onClick}
     >
       {children}
     </div>

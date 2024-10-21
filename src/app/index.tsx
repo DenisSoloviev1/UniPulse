@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import "./App.scss";
+import "./styles.scss";
 import { Auth, NotFound } from "../pages";
 import { Admin, Media, Editor, Publisher, User } from "./roles";
 

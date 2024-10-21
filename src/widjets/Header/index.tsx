@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ role }) => {
       <div className={styles.wrapper}>
         <Logo />
         <Push />
-        <h3>{role}</h3>
+        {/* <h3>{role}</h3> */}
 
         <nav className={styles.nav}>
           <Bell onClick={isOpen ? closePush : openPush} count={5} />

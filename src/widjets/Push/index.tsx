@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./styles.module.scss";
-import PulseList from "../pulseList";
+import PulseList from "../PulseList";
 import { usePushStore } from "../../components/ModalWindow/store";
 import { Back } from "../../assets/svg";
 

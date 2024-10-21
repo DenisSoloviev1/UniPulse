@@ -3,21 +3,21 @@ import classNames from "classnames";
 import styles from "./styles.module.scss";
 
 interface CustomButtonProps {
-  color?: string;
+  className?: string;
   onClick?: () => void;
   children: ReactNode;
   type?: "button" | "submit";
 }
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
-  color,
+  className,
   onClick,
   children,
   type = "button",
 }) => {
   return (
     <button
-      className={classNames(styles.customButton, color && styles[color])}
+      className={classNames(styles.customButton, className && styles[className])}
       onClick={onClick}
       type={type}
     >

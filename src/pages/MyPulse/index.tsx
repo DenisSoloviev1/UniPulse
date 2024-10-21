@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import { Flex, Container } from "../../components";
-import PulseList from "../../widjets/pulseList";
-import TagList from "../../widjets/tagList";
+import { Container, Flex, CustomButton } from "../../components";
+import { useAddTagStore } from "../../components/ModalWindow/store";
+import PulseList from "../../widjets/PulseList";
+import TagList from "../../widjets/TagList";
+import { Cat } from "../../assets/svg";
 
 interface MyPulseProps {
   role: string;
@@ -20,6 +22,8 @@ export const MyPulse: React.FC<MyPulseProps> = ({ role }) => {
   const handleUserIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserId(event.target.value);
   };
+
+  const closeModal = useAddTagStore((state) => state.close);
 
   return (
     <>
@@ -62,7 +66,14 @@ export const MyPulse: React.FC<MyPulseProps> = ({ role }) => {
           </Container>
         </Flex>
 
-        <TagList title={"Мои теги"} />
+        <TagList title={"Мои теги"}>
+          <>
+            <Cat />
+            <CustomButton onClick={closeModal} className={"blue"}>
+              Готово
+            </CustomButton>
+          </>
+        </TagList>
 
         <PulseList title={"Полученные пульсы"} />
       </Main>

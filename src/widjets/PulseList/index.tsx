@@ -1,7 +1,7 @@
 import React from "react";
-import { Flex } from "../components";
-import Pulse from "./Pulse";
-import { arrayPulse } from "../assets/date";
+import { Flex } from "../../components";
+import Pulse from "../Pulse";
+import { arrayPulse } from "../../assets/date";
 
 interface PulseListProps {
   title: string;

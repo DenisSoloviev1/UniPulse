@@ -11,11 +11,14 @@ header {
   position: relative;
 
   .nav {
-    display: none;
+    display: flex;
     align-items: center;
     gap: 10px;
     font-size: 20px;
 
+    a {
+      display: none;
+    }
     .active {
       text-decoration: underline;
     }
@@ -39,7 +42,9 @@ header {
 @media screen and (min-width: 551px) {
   .wrapper {
     .nav {
-      display: flex;
+      a {
+        display: flex;
+      }
     }
   }
 }

@@ -2,10 +2,13 @@ import React from "react";
 import styles from "./styles.module.scss";
 import Calendar from "../Calendar";
 import { Container, Flex, CustomButton, MediaItem } from "../../components";
-import TagList from "../tagList";
+import { useAddTagStore } from "../../components/ModalWindow/store";
+import TagList from "../TagList";
 import { ArrowSvg } from "../../assets/svg";
 
 const Form: React.FC = () => {
+  const closeModal = useAddTagStore((state) => state.close);
+
   return (
     <form action="" className={styles.form}>
       <Flex title={"Уведомление"}>
@@ -24,7 +27,19 @@ const Form: React.FC = () => {
         </Flex>
       </Flex>
 
-      <TagList title={"Получатели"} />
+      <TagList title={"Получатели"}>
+        <Flex title={"Новый тег"}>
+          <Container>
+            <input type="text" placeholder="Название тега" />
+          </Container>
+          <Container>
+            <input type="text" placeholder="Контингент" />
+          </Container>
+          <CustomButton onClick={closeModal} className={"blue"}>
+            Создать
+          </CustomButton>
+        </Flex>
+      </TagList>
 
       <Flex className={"row"} title={"Дата отправки"}>
         <Container className={"br16"}>
@@ -33,7 +48,7 @@ const Form: React.FC = () => {
           </Flex>
         </Container>
 
-        <CustomButton type={"submit"}>
+        <CustomButton type={"submit"} className={"gray"}>
           Отправить сейчас <ArrowSvg />
         </CustomButton>
       </Flex>
