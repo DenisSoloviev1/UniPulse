@@ -3,6 +3,7 @@ import { handleAuth } from "../api";
 import styles from "../styles.module.scss";
 import { Flex, CustomButton } from "../../../components";
 import { WalcomingSvg, LogoDSTU } from "../../../assets/svg";
+import { Callback } from "./callback";
 
 export const Auth: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ export const Auth: React.FC = () => {
               </p>
               <p>Будьте на пульсе жизни университета вместе с нами!</p>
 
+              <Callback/>
               <CustomButton className={"blue"} onClick={handleAuth}>
                 <LogoDSTU /> Войти через ЭИОС ДГТУ
               </CustomButton>
