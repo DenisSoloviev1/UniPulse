@@ -1,9 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { MyPulse } from "../../pages";
+import { Roles } from "../../shared/types";
 
 interface UserProps {
-  role: string;
+  role: Roles;
 }
 
 export const User: React.FC<UserProps> = ({ role }) => {

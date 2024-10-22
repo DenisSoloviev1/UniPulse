@@ -1,9 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import {AddPulse, MyPulse} from "../../pages";
+import { Roles } from "../../shared/types";
 
 interface EditorProps {
-  role: string;
+  role: Roles;
 }
 
 export const Editor: React.FC<EditorProps> = ({ role }) => {

@@ -10,7 +10,7 @@ export const Callback: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 5000);
+    const timer = setTimeout(() => setLoading(false), 3000 );
     return () => clearTimeout(timer);
   }, []);
 
@@ -31,17 +31,15 @@ export const Callback: React.FC = () => {
           const { access_token } = response.data;
           // Сохраняем токен, например, в localStorage
           localStorage.setItem("authToken", access_token);
-          // Перенаправляем пользователя в защищенную часть приложения
-          //   role === "user"
-          //     ? (window.location.href = `/${role}/myPulse`)
-          //     : (window.location.href = `/${role}/addPulse`);
+          // Перенаправляем пользователя
+            role === "user"
+              ? (window.location.href = `/${role}/myPulse`)
+              : (window.location.href = `/${role}/addPulse`);
+            console.log("no routing");
         })
         .catch((error) => {
           console.error("Ошибка при обмене кода на токен:", error);
         })
-        .finally(() => {
-          setLoading(false); // Отключаем загрузку после выполнения запроса
-        });
     } else {
       setLoading(false); // Если нет кода, отключаем загрузку
     }

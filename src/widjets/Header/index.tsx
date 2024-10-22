@@ -19,26 +19,30 @@ const Header: React.FC<HeaderProps> = ({ role }) => {
     <header>
       <div className={styles.wrapper}>
         <Logo />
-        <Push />
-        {/* <h3>{role}</h3> */}
 
         <nav className={styles.nav}>
-          <Bell onClick={isOpen ? closePush : openPush} count={5} />
-          {/* как-то поменять отображение на телефонах, сейчас его не видно*/}
-
-          <NavLink
-            to={`/${role}/addPulse`}
-            className={({ isActive }) => (isActive ? styles.active : "")}
-          >
-            Создание
-          </NavLink>
-
-          <NavLink
-            to={`/${role}/myPulse`}
-            className={({ isActive }) => (isActive ? styles.active : "")}
-          >
-            Профиль
-          </NavLink>
+          {role && role === "user" ? (
+            <></>
+          ) : (
+            <>
+              <Push />
+              
+              <Bell onClick={isOpen ? closePush : openPush} count={5} />
+              {/* как-то поменять отображение на телефонах, сейчас его не видно*/}
+              <NavLink
+                to={`/${role}/addPulse`}
+                className={({ isActive }) => (isActive ? styles.active : "")}
+              >
+                Создание
+              </NavLink>
+              <NavLink
+                to={`/${role}/myPulse`}
+                className={({ isActive }) => (isActive ? styles.active : "")}
+              >
+                Профиль
+              </NavLink>
+            </>
+          )}
 
           <NavLink to="/">Выйти</NavLink>
         </nav>

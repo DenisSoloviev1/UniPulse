@@ -1,31 +1,56 @@
-.pulse::after,
-.pulse::before {
-  content: '';
-  position: absolute;
-  border: 2px solid #3D64FF;
-  left: -20px;
-  opacity: 0;
-  right: -20px;
-  top: -20px;
-  bottom: -20px;
-  border-radius: 50%;
-  animation: pulse 2.5s linear infinite;
-}
+@import "../../shared/Variables.scss";
 
-.pulse::after {
-  animation-delay: 1.25s;
+.container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  .pulse {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: $color-action;
+
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      border: 2px solid $color-action;
+      opacity: 0;
+      border-radius: 50%;
+      animation: pulse 1.5s linear infinite;
+    }
+
+    &::after {
+      animation-delay: .7s; /* Задержка для второго круга */
+    }
+  }
+
+  h2{
+    font-size: 30px;
+  }
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(0.5);
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0;
   }
   50% {
     opacity: 1;
   }
   100% {
-    transform: scale(1.2);
+    transform: translate(-50%, -50%) scale(2); /* Увеличение до 1.5 */
     opacity: 0;
   }
 }
