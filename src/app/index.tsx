@@ -1,48 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./styles.scss";
-import { Auth, NotFound } from "../pages";
+import { Auth, Callback, NotFound, useAuthStore } from "../pages";
 import { Admin, Media, Editor, Publisher, User } from "./roles";
 
 const App: React.FC = () => {
   // Вместо авторизации используем константу для тестирования
-  const [userRole, setUserRole] = useState<string | null>("admin"); // Начальное состояние - нет роли
+  const { role, setRole } = useAuthStore();
 
-  // Функция для установки роли (например, после успешной авторизации)
-  const handleLogin = (role: string) => {
-    setUserRole(role); // Устанавливаем роль пользователя
-  };
+  // const userRole = use
 
   return (
     <BrowserRouter>
       <Routes>
         {/* Если роль не определена, показываем страницу авторизации */}
         <Route path="/" element={<Auth />} />
-        {!userRole ? (
+        {!role ? (
           <Route path="/" element={<Auth />} />
         ) : (
           <>
             {/* Определяем маршруты для каждой роли */}
-            {userRole === "admin" && (
-              <Route path="/admin/*" element={<Admin role={userRole} />} />
+            {role === "admin" && (
+              <Route path="/admin/*" element={<Admin role={role} />} />
             )}
-            {userRole === "media" && (
-              <Route path="/media/*" element={<Media role={userRole} />} />
+            {role === "media" && (
+              <Route path="/media/*" element={<Media role={role} />} />
             )}
-            {userRole === "editor" && (
-              <Route path="/editor/*" element={<Editor role={userRole} />} />
+            {role === "editor" && (
+              <Route path="/editor/*" element={<Editor role={role} />} />
             )}
-            {userRole === "publisher" && (
+            {role === "publisher" && (
               <Route
                 path="/publisher/*"
-                element={<Publisher role={userRole} />}
+                element={<Publisher role={role} />}
               />
             )}
-            {userRole === "user" && (
-              <Route path="/user/*" element={<User role={userRole} />} />
+            {role === "user" && (
+              <Route path="/user/*" element={<User role={role} />} />
             )}
             {/* Перенаправляем на соответствующий маршрут */}
-            <Route path="/" element={<Navigate to={`/${userRole}`} />} />
+            {/* <Route path="/" element={<Navigate to={`/${userRole}`} />} /> */}
+            <Route path="/callback" element={<Callback  />} />
           </>
         )}
         {/* Страница не найдена */}
