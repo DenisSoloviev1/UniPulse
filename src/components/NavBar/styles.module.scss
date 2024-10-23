@@ -1,0 +1,13 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+
+  a {
+    display: flex;
+  }
+  .active {
+    text-decoration: underline;
+  }
+}

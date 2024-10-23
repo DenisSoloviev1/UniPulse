@@ -1,13 +1,5 @@
 import React, { lazy } from "react";
-import { IRoute, Roles, RolesDict } from "../../shared/types";
-
-export enum Route {
-  ADMIN = "/admin/*",
-  MEDIA = "/media/*",
-  EDITOR = "/editor/*",
-  PUBLISHER = "/publisher/*",
-  USER = "/user/*",
-}
+import { IRoute, Roles, RolesDict, Routes } from "../../shared/types";
 
 const withRole = (Component: React.FC<{ role: Roles }>, role: Roles) => {
   return (props: any) => <Component role={role} {...props} />;
@@ -61,7 +53,7 @@ export const routes: IRoute[] = [
   },
   {
     id: 3,
-    path: Route.ADMIN,
+    path: Routes.ADMIN,
     component: lazy(() =>
       import("../../app/roles").then((module) => ({ default: withRole(module.Admin, RolesDict.ADMIN) }))
     ),
@@ -70,7 +62,7 @@ export const routes: IRoute[] = [
   },
   {
     id: 4,
-    path: Route.MEDIA,
+    path: Routes.MEDIA,
     component: lazy(() =>
       import("../../app/roles").then((module) => ({ default: withRole(module.Media, RolesDict.MEDIA) }))
     ),    isPublic: false,
@@ -78,7 +70,7 @@ export const routes: IRoute[] = [
   },
   {
     id: 5,
-    path: Route.EDITOR,
+    path: Routes.EDITOR,
     component: lazy(() =>
       import("../../app/roles").then((module) => ({ default: withRole(module.Editor, RolesDict.EDITOR) }))
     ),    isPublic: false,
@@ -86,7 +78,7 @@ export const routes: IRoute[] = [
   },
   {
     id: 6,
-    path: Route.PUBLISHER,
+    path: Routes.PUBLISHER,
     component: lazy(() =>
       import("../../app/roles").then((module) => ({ default: withRole(module.Publisher, RolesDict.PUBLISHER) }))
     ),    isPublic: false,
@@ -94,7 +86,7 @@ export const routes: IRoute[] = [
   },
   {
     id: 7,
-    path: Route.USER,
+    path: Routes.USER,
     component: lazy(() =>
       import("../../app/roles").then((module) => ({ default: withRole(module.User, RolesDict.USER) }))
     ),    isPublic: false,

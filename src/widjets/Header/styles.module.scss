@@ -9,20 +9,6 @@ header {
   z-index: 1;
   background-color: #f7f7fc;
   position: relative;
-
-  .nav {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 20px;
-
-    a {
-      display: none;
-    }
-    .active {
-      text-decoration: underline;
-    }
-  }
 }
 
 .wrapper {
@@ -39,15 +25,6 @@ header {
   border: 2px solid $color-background-container;
 }
 
-@media screen and (min-width: 551px) {
-  .wrapper {
-    .nav {
-      a {
-        display: flex;
-      }
-    }
-  }
-}
 @media screen and (min-width: 1321px) {
   .wrapper {
     margin: 20px auto 0;

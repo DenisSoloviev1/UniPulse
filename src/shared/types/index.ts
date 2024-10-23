@@ -1,6 +1,25 @@
 import React, { LazyExoticComponent } from "react";
 
+type NavItem = {
+  [key: string]: string;
+};
+
+export const NavItem: NavItem = {
+"/employee": "Работник",
+"/student": "Студент",
+"/applicant": "Соискатель",
+};
+
 type ValueOf<T> = T[keyof T];
+
+
+export enum Routes {
+  ADMIN = "/admin/*",
+  MEDIA = "/media/*",
+  EDITOR = "/editor/*",
+  PUBLISHER = "/publisher/*",
+  USER = "/user/*",
+}
 
 // roles
 
