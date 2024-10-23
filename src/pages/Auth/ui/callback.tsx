@@ -5,7 +5,7 @@ import { useAuthStore } from "../model/store";
 import {Loader} from "../../../components"
 
 export const Callback: React.FC = () => {
-  const { role } = useAuthStore();
+  // const { role } = useAuthStore();
   const location = useLocation();
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -28,7 +28,7 @@ export const Callback: React.FC = () => {
       axios
         .post(`${baseUrl}/api/auth/oauth/token`, { code, state })
         .then((response) => {
-          const { access_token } = response.data;
+          const { access_token, role } = response.data;
           // Сохраняем токен, например, в localStorage
           localStorage.setItem("authToken", access_token);
           // Перенаправляем пользователя
