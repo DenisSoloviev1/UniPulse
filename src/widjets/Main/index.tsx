@@ -8,7 +8,9 @@ interface MainProps {
 const Main: React.FC<MainProps> = ({ children }) => {
   return (
     <main>
-      <div className={styles.wrapper}>{children}</div>
+      <div className={styles.wrapper}>
+        <div className={styles.slider}>{children}</div>
+      </div>
     </main>
   );
 };

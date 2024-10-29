@@ -18,8 +18,9 @@ const Push: React.FC = () => {
 
         <h4>Уведомления</h4>
       </div>
-
-      <PulseList title={"Неподтвержденные пульсы"} />
+      <div className={styles.slider}>
+        <PulseList title={"Неподтвержденные пульсы"} />
+      </div>
     </div>
   );
 };

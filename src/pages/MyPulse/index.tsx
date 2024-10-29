@@ -7,11 +7,7 @@ import PulseList from "../../widjets/PulseList";
 import TagList from "../../widjets/TagList";
 import { Cat } from "../../assets/svg";
 
-interface MyPulseProps {
-  role: string;
-}
-
-export const MyPulse: React.FC<MyPulseProps> = ({ role }) => {
+export const MyPulse: React.FC = () => {
   const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
   const [userId, setUserId] = useState<string>("");
 
@@ -25,9 +21,12 @@ export const MyPulse: React.FC<MyPulseProps> = ({ role }) => {
 
   const closeModal = useAddTagStore((state) => state.close);
 
+  // const {role} = useAuthStore();
+  // console.log(role);
+
   return (
     <>
-      <Header role={role} />
+      <Header />
       <Main>
         <Flex title={"Место отправки уведомлений"}>
           <Flex className={"row"}>

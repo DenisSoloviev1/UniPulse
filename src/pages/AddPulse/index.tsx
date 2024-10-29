@@ -4,14 +4,10 @@ import Main from "../../widjets/Main";
 import Form from "../../widjets/Form";
 import PulseList from "../../widjets/PulseList";
 
-interface AddPulseProps {
-  role: string;
-}
-
-export const AddPulse: React.FC<AddPulseProps> = ({ role }) => {
+export const AddPulse: React.FC = () => {
   return (
     <>
-      <Header role={role} />
+      <Header />
       <Main>
         <Form />
 

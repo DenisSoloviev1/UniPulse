@@ -1,7 +1,10 @@
+@import "../../shared/variables.scss";
+
 .pulse {
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 15px;
 
   .title {
     font-size: 20px;
@@ -12,6 +15,18 @@
     width: 100%;
     font-size: 20px;
     padding-left: 10px;
+  }
+
+  .toggle {
+    fill: $color-action;
+    color: $color-action;
+    cursor: pointer;
+    margin-left: 2px;
+
+    svg {
+      position: relative;
+      top: 5px;
+    }
   }
 }
 

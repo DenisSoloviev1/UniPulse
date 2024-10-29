@@ -9,7 +9,7 @@ interface IAuthState {
 
 export const useAuthStore = create<IAuthState>((set) => ({
   isAuth: false,
-  // role: '' as Roles,
-  role: RolesDict.ADMIN,
+  role: '' as Roles,
+  // role: RolesDict.ADMIN,
   setRole: (newRole: Roles) => set({ isAuth: true, role: newRole }),
 }));

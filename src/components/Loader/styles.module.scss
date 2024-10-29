@@ -32,11 +32,11 @@
     }
 
     &::after {
-      animation-delay: .7s; /* Задержка для второго круга */
+      animation-delay: 0.7s; /* Задержка для второго круга */
     }
   }
 
-  h2{
+  h2 {
     font-size: 30px;
   }
 }

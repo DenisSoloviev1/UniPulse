@@ -49,7 +49,7 @@ const Form: React.FC = () => {
         </Container>
 
         <CustomButton type={"submit"} className={"gray"}>
-          Отправить сейчас <ArrowSvg />
+          Отправить <ArrowSvg />
         </CustomButton>
       </Flex>
     </form>

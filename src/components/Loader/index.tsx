@@ -1,12 +1,14 @@
 import React from "react";
 import styles from "./styles.module.scss";
 
-export const Loader: React.FC = () => {
+interface LoaderProps {
+  message?: string;
+}
+export const Loader: React.FC<LoaderProps> = ({ message }) => {
   return (
     <div className={styles.container}>
       <div className={styles.pulse}></div>
-
-      <h2>Авторизация</h2>
+      <h2>{message}</h2>
     </div>
   );
 };

@@ -20,7 +20,7 @@ export const Tag: React.FC<PropsTag> = ({
   close = false,
 }) => {
   return (
-    <Container className={`br16 ${color}`} active={isActive} onClick={onClick}>
+    <Container className={`br16 ${color} pdSmall`} active={isActive} onClick={onClick}>
       <CustomButton type={"button"} className={close? "close": "noClose"}
       >
         <Close />

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import { Container, Flex, Tag } from "../../components";
+import { Back } from "../../assets/svg";
 
 interface PulseProps {
   title: string;
@@ -10,11 +11,28 @@ interface PulseProps {
 }
 
 const Pulse: React.FC<PulseProps> = ({ title, text, id, tags }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const toggleText = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
   return (
-    <article className={styles.pulse} id={id}>
-      <Container active={false}>
+    <Container active={false}>
+      <article className={styles.pulse} id={id}>
         <h4 className={styles.title}>{title}</h4>
-        <p className={styles.text}>{text}</p>
+        <p className={`${styles.text} ${isExpanded ? styles.expanded : ""}`}>
+          {isExpanded ? text : `${text.slice(0, 100)}`}
+          {!isExpanded && text.length > 100 && (
+            <span className={styles.toggle} onClick={toggleText}>
+              ...
+            </span>
+          )}
+          {isExpanded && (
+            <span className={styles.toggle} onClick={toggleText}>
+              <Back />
+            </span>
+          )}
+        </p>
         <Flex className={"row"}>
           {tags.map((tag, index) => (
             <Tag
@@ -26,8 +44,8 @@ const Pulse: React.FC<PulseProps> = ({ title, text, id, tags }) => {
             />
           ))}
         </Flex>
-      </Container>
-    </article>
+      </article>
+    </Container>
   );
 };
 

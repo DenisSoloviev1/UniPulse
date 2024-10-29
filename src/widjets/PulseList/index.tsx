@@ -9,7 +9,7 @@ interface PulseListProps {
 
 const PulseList: React.FC<PulseListProps> = ({ title }) => {
   return (
-    <article>
+    <article style={{width: "100%"}}>
       <Flex title={title}>
         {arrayPulse.map((pulseItem) => (
           <Pulse

@@ -1,2 +1,2 @@
 export * from "./constants";
-export {NavBar} from "./ui";
+export {Nav} from "./ui";
