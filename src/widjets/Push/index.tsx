@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./styles.module.scss";
-import PulseList from "../PulseList";
-import { usePushStore } from "../../components/ModalWindow/store";
+import {PulseList} from "../../entities/pulseList";
+import { usePushStore } from "../../shared/ui/ModalWindow/store";
 import { Back } from "../../assets/svg";
 
 const Push: React.FC = () => {

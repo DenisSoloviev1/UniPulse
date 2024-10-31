@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import { Logo } from "../../assets/svg";
-import { Bell, Nav } from "../../components";
+import { Bell, Nav } from "../../shared/ui";
 import Push from "../../widjets/Push";
-import { usePushStore } from "../../components/ModalWindow/store";
+import { usePushStore } from "../../shared/ui/ModalWindow/store";
 
 const Header: React.FC = () => {
   const closePush = usePushStore((state) => state.close);

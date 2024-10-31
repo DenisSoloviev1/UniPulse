@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import Form from "../../widjets/Form";
-import PulseList from "../../widjets/PulseList";
+import { PulseList } from "../../entities/pulseList";
 
 export const AddPulse: React.FC = () => {
   return (

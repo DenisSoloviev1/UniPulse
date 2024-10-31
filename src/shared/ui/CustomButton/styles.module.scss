@@ -1,0 +1,78 @@
+@import "../../variables.scss";
+
+.customButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 16px;
+  transition: all 0.3s ease-in-out;
+
+  svg {
+    width: auto;
+    fill: $color-background;
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.gray{
+  padding: 10px 15px;
+  color: $color-font-active;
+  background-color: $color-background-container;
+  border: 2px solid $color-background-container;
+  gap: 5px;
+}
+
+.gray:hover {
+  background-color: inherit;
+}
+
+.blue {
+  color: $color-background;
+  border: 2px solid $color-action;
+  background-color: $color-action;
+  padding: 10px 20px;
+  gap: 5px;
+}
+.blue:hover {
+  background-color: inherit;
+  color: $color-action;
+}
+
+//классы для кнопки закрытия
+.close, .close:hover {
+  background-color: transparent;
+  border: 0;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  padding: 0;
+  display: none;
+
+  svg {
+    width: 20px;
+    fill: $color-delete;
+  }
+}
+
+.closeBig, .closeBig:hover{
+  background-color: transparent;
+  border: 0;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 0; 
+
+  svg {
+    width: 30px;   
+    fill: $color-delete;
+  }
+}
+
+.noClose{
+  display: none!important;
+}
+.noClose:active{
+  border: 2px solid $color-action;
+}

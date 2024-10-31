@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./styles.module.scss";
-import { Flex } from "../../components";
+import { Flex } from "../../shared/ui";
 import { NotFoundSvg } from "../../assets/svg";
 import { Routes } from "../../shared/types";
 

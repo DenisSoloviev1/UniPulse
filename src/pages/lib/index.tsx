@@ -7,7 +7,7 @@ export const privateRoutes: IPrivateRoute[] = [
     id: 0,
     path: "/callback",
     component: lazy(() =>
-      import("../Auth/ui/callback").then((module) => ({
+      import("../../entities/auth/api/callback").then((module) => ({
         default: module.Callback,
       }))
     ),

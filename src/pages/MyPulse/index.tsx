@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import { Container, Flex, CustomButton } from "../../components";
-import { useAddTagStore } from "../../components/ModalWindow/store";
-import PulseList from "../../widjets/PulseList";
-import TagList from "../../widjets/TagList";
+import { Container, Flex, CustomButton } from "../../shared/ui";
+import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
+import { PulseList } from "../../entities/pulseList";
+import { TagList } from "../../entities/tagList";
 import { Cat } from "../../assets/svg";
+import { useAuthStore } from "../../entities/auth";
 
 export const MyPulse: React.FC = () => {
   const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
@@ -21,8 +22,9 @@ export const MyPulse: React.FC = () => {
 
   const closeModal = useAddTagStore((state) => state.close);
 
-  // const {role} = useAuthStore();
+  const { isAuth } = useAuthStore();
   // console.log(role);
+  console.log(isAuth);
 
   return (
     <>

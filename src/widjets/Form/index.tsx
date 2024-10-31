@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import Calendar from "../Calendar";
-import { Container, Flex, CustomButton, MediaItem } from "../../components";
-import { useAddTagStore } from "../../components/ModalWindow/store";
-import TagList from "../TagList";
+import { Container, Flex, CustomButton, MediaItem } from "../../shared/ui";
+import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
+import { TagList } from "../../entities/tagList";
 import { ArrowSvg } from "../../assets/svg";
 
 const Form: React.FC = () => {

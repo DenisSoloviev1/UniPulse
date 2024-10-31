@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
-import { Container, Flex, Tag } from "../../components";
+import { Container, Flex, Tag } from "../../shared/ui";
 import { Back } from "../../assets/svg";
 
 interface PulseProps {
