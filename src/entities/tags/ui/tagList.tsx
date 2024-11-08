@@ -1,5 +1,6 @@
 import React, { useState, ReactNode } from "react";
-import { Flex, Tag, ModalWindow, CustomButton } from "../../../shared/ui";
+import { Flex, ModalWindow, CustomButton } from "../../../shared/ui";
+import { Tag } from "./index";
 import { useAddTagStore } from "../../../shared/ui/ModalWindow/store";
 import styles from "./styles.module.scss";
 import { arrayTag } from "../../../assets/date";
@@ -52,7 +53,6 @@ export const TagList: React.FC<TagListProps> = ({ title, children }) => {
           <p>Теги не выбраны</p>
         )}
 
-        {/* Модальное окно */}
         <ModalWindow>
           <Flex title={"Существующие теги"} className={"row"}>
             <div className={styles.slider}>

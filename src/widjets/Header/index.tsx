@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import { Logo } from "../../assets/svg";
+import { Logo } from "../../shared/ui/Icon";
 import { Bell, Nav } from "../../shared/ui";
 import Push from "../../widjets/Push";
 import { usePushStore } from "../../shared/ui/ModalWindow/store";

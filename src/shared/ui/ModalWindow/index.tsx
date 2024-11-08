@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import classNames from "classnames";
 import styles from "./styles.module.scss";
 import { useAddTagStore } from "../ModalWindow/store";
-import { Close } from "../../../assets/svg";
+import { Close } from "../Icon";
 import { CustomButton } from "../CustomButton";
 
 interface ModalWindowProps {

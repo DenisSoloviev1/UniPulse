@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
-import { Container, Flex, Tag } from "../../shared/ui";
-import { Back } from "../../assets/svg";
+import { Container, Flex } from "../../shared/ui";
+import {Tag} from "../../entities/tags"
+import { Back } from "../../shared/ui/Icon";
 
 interface PulseProps {
   title: string;

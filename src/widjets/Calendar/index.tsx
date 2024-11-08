@@ -3,7 +3,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.scss";
-import { CalendarSvg } from "../../assets/svg";
+import { CalendarSvg } from "../../shared/ui/Icon";
 
 registerLocale("ru", ru);
 

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import { BellSvg } from "../../../assets/svg";
+import { BellSvg } from "../Icon";
 
 interface BellProps {
   onClick: () => void;

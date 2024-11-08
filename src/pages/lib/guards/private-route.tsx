@@ -1,23 +1,20 @@
 import { ComponentType, FC } from "react";
-import { Auth, useAuthStore, NotFound } from "../../index"; 
-import { Roles } from "../../../shared/types"; 
+import { Auth, NotFound } from "../../index";
+import { useAuthStore } from "../../../entities/auth";
+import { Roles } from "../../../shared/types";
 
 interface IPrivateRoute {
-  element: ComponentType;  
-  roles: Roles[];  
+  element: ComponentType;
+  roles: Roles[];
   isPublic: boolean;
 }
 
 export const PrivateRoute: FC<IPrivateRoute> = ({
-  element: RouteComponent, 
+  element: RouteComponent,
   roles,
-  isPublic
+  isPublic,
 }) => {
-  const { isAuth, role } = useAuthStore((state) => state); 
- 
-  // console.log(`isAuth: ${isAuth}`);
-  // console.log(`role: ${role}`);
-  // console.log(`roles array: ${roles}`);
+  const { isAuth, role } = useAuthStore((state) => state);
 
   // Если страница публичная, рендерим её без проверок
   if (isPublic) {

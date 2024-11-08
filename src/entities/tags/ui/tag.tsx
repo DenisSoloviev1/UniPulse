@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, CustomButton } from "../index";
-import { Close } from "../../../assets/svg";
+import { Container, CustomButton } from "../../../shared/ui";
+import { Close } from "../../../shared/ui/Icon";
 
 interface PropsTag {
   name: string;

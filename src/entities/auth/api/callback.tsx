@@ -4,6 +4,8 @@ import axios from "axios";
 import { Loader } from "../../../shared/ui";
 import { RolesDict, Roles } from "../../../shared/types";
 import { useAuthStore } from "../model/store";
+import { baseUrl } from "../../../shared/config";
+
 
 export const Callback: React.FC = () => {
   const { role, setRole } = useAuthStore();
@@ -14,7 +16,6 @@ export const Callback: React.FC = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    const baseUrl = "https://ddt.donstu.ru/notif";
     const code = query.get("code");
     const state = query.get("state");
 
@@ -25,7 +26,7 @@ export const Callback: React.FC = () => {
           const { access_token, role } = response.data;
 
           if (Object.values(RolesDict).includes(role)) {
-            localStorage.setItem("authToken", access_token); // сохраняем токен
+            localStorage.setItem("authToken", access_token);
             setRole(role as Roles);
             setIsRoleSaved(true);
           } else {

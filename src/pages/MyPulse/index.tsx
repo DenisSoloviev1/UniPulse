@@ -3,9 +3,9 @@ import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import { Container, Flex, CustomButton } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
-import { PulseList } from "../../entities/pulseList";
-import { TagList } from "../../entities/tagList";
-import { Cat } from "../../assets/svg";
+import { PulseList } from "../../entities/notification";
+import { TagList } from "../../entities/tags";
+import { Cat } from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
 
 export const MyPulse: React.FC = () => {

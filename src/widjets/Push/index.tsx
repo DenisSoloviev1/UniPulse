@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./styles.module.scss";
-import {PulseList} from "../../entities/pulseList";
+import { PulseList } from "../../entities/notification";
 import { usePushStore } from "../../shared/ui/ModalWindow/store";
-import { Back } from "../../assets/svg";
+import { Back } from "../../shared/ui/Icon";
 
 const Push: React.FC = () => {
   const closePush = usePushStore((state) => state.close);

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./styles.module.scss";
 import { Flex } from "../../shared/ui";
-import { NotFoundSvg } from "../../assets/svg";
+import { NotFoundSvg } from "../../shared/ui/Icon";
 import { Routes } from "../../shared/types";
 
 export const NotFound: React.FC = () => {

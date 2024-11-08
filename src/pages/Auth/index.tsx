@@ -1,8 +1,8 @@
 import React from "react";
 import { handleAuth } from "../../entities/auth/api";
-import styles from "../styles.module.scss";
+import styles from "./styles.module.scss";
 import { Flex, CustomButton } from "../../shared/ui";
-import { WalcomingSvg, LogoDSTU } from "../../assets/svg";
+import { WalcomingSvg, LogoDSTU } from "../../shared/ui/Icon";
 import { Callback } from "../../entities/auth/api/callback";
 import { useAuthStore } from "../../entities/auth";
 

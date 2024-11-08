@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useAuthStore } from "../../../pages";
-import styles from "../styles.module.scss";
+import { useAuthStore } from "../../../entities/auth";
+import styles from "./styles.module.scss";
 import { NavItems, INav } from "./constants";
 
 export const Nav: React.FC = () => {
