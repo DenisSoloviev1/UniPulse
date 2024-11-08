@@ -1,18 +1,15 @@
-:root {
-  /* Light mode */
-  --color-background: #ffffff;
-  --color-background-container: #ededed;
-  --color-font-disable: #adb5bd;
-  --color-font-active: #1f161e;
-  --color-action: #166ff6;
-  --color-delete: #e94242;
+// light mode
+$color-background: #ffffff;
+$color-background-container: #ededed;
+$color-font-disable: #adb5bd;
+$color-font-active: #1f161e;
+$color-action: #166ff6;
+$color-delete: #e94242;
+//dark mode
+$color-background-dark: #0f1828;
+$color-background-dark-active: #152033;
 
-  /* Dark mode */
-  --color-background-dark: #0f1828;
-  --color-background-dark-active: #152033;
-}
-
-/* Animation */
+//animation
 @keyframes slide-x {
   0% {
     opacity: 0;
@@ -32,11 +29,11 @@
   }
   99% {
     opacity: 1;
-    z-index: -1;
+    z-index: -1; /* Остается под объектом до самого конца */
     transform: translateY(0);
   }
   100% {
-    z-index: 2;
+    z-index: 2; /* Выходит на передний план */
     transform: translateY(0);
   }
 }
