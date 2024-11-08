@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import Calendar from "../Calendar";
-import { Container, Flex, CustomButton, MediaItem } from "../../components";
-import { useAddTagStore } from "../../components/ModalWindow/store";
-import TagList from "../TagList";
-import { ArrowSvg } from "../../assets/svg";
+import { Container, Flex, CustomButton, MediaItem } from "../../shared/ui";
+import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
+import { TagList } from "../../entities/tags";
+import { ArrowSvg } from "../../shared/ui/Icon";
 
 const Form: React.FC = () => {
   const closeModal = useAddTagStore((state) => state.close);
@@ -49,7 +49,7 @@ const Form: React.FC = () => {
         </Container>
 
         <CustomButton type={"submit"} className={"gray"}>
-          Отправить сейчас <ArrowSvg />
+          Отправить <ArrowSvg />
         </CustomButton>
       </Flex>
     </form>

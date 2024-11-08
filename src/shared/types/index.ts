@@ -5,20 +5,18 @@ type NavItem = {
 };
 
 export const NavItem: NavItem = {
-"/employee": "Работник",
-"/student": "Студент",
-"/applicant": "Соискатель",
+  "/": "Выйти",
+  "/addPulse": "Создание",
+  "/myPulse": "Профиль",
 };
 
 type ValueOf<T> = T[keyof T];
 
-
 export enum Routes {
-  ADMIN = "/admin/*",
-  MEDIA = "/media/*",
-  EDITOR = "/editor/*",
-  PUBLISHER = "/publisher/*",
-  USER = "/user/*",
+  AUTH =  "/",
+  NOTFOUND = "*",
+  ADDPULSE =  "/addPulse",
+  MYPULSE = "/myPulse",
 }
 
 // roles
@@ -35,10 +33,10 @@ export type Roles = ValueOf<typeof RolesDict>;
 
 // router types
 
-export interface IRoute {
+export interface IPrivateRoute {
   id: number;
   path: string;
   isPublic: boolean;
-  component: LazyExoticComponent<React.FC<any>>; 
+  component: LazyExoticComponent<React.FC<any>>;
   roles: Roles[];
 }

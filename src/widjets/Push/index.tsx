@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./styles.module.scss";
-import PulseList from "../PulseList";
-import { usePushStore } from "../../components/ModalWindow/store";
-import { Back } from "../../assets/svg";
+import { PulseList } from "../../entities/notification";
+import { usePushStore } from "../../shared/ui/ModalWindow/store";
+import { Back } from "../../shared/ui/Icon";
 
 const Push: React.FC = () => {
   const closePush = usePushStore((state) => state.close);
@@ -18,8 +18,9 @@ const Push: React.FC = () => {
 
         <h4>Уведомления</h4>
       </div>
-
-      <PulseList title={"Неподтвержденные пульсы"} />
+      <div className={styles.slider}>
+        <PulseList title={"Неподтвержденные пульсы"} />
+      </div>
     </div>
   );
 };

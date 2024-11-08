@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import { Container, Flex, CustomButton } from "../../components";
-import { useAddTagStore } from "../../components/ModalWindow/store";
-import PulseList from "../../widjets/PulseList";
-import TagList from "../../widjets/TagList";
-import { Cat } from "../../assets/svg";
+import { Container, Flex, CustomButton } from "../../shared/ui";
+import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
+import { PulseList } from "../../entities/notification";
+import { TagList } from "../../entities/tags";
+import { Cat } from "../../shared/ui/Icon";
+import { useAuthStore } from "../../entities/auth";
 
-interface MyPulseProps {
-  role: string;
-}
-
-export const MyPulse: React.FC<MyPulseProps> = ({ role }) => {
+export const MyPulse: React.FC = () => {
   const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
   const [userId, setUserId] = useState<string>("");
 
@@ -25,9 +22,13 @@ export const MyPulse: React.FC<MyPulseProps> = ({ role }) => {
 
   const closeModal = useAddTagStore((state) => state.close);
 
+  const { isAuth } = useAuthStore();
+  // console.log(role);
+  console.log(isAuth);
+
   return (
     <>
-      <Header role={role} />
+      <Header />
       <Main>
         <Flex title={"Место отправки уведомлений"}>
           <Flex className={"row"}>

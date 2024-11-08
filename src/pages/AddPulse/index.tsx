@@ -2,16 +2,12 @@ import React from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import Form from "../../widjets/Form";
-import PulseList from "../../widjets/PulseList";
+import { PulseList } from "../../entities/notification";
 
-interface AddPulseProps {
-  role: string;
-}
-
-export const AddPulse: React.FC<AddPulseProps> = ({ role }) => {
+export const AddPulse: React.FC = () => {
   return (
     <>
-      <Header role={role} />
+      <Header />
       <Main>
         <Form />
 
