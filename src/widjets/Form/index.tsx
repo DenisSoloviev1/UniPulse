@@ -35,20 +35,20 @@ const Form: React.FC = () => {
           <Container>
             <input type="text" placeholder="Контингент" />
           </Container>
-          <CustomButton onClick={closeModal} className={"blue"}>
+          <CustomButton onClick={closeModal} $color={"blue"}>
             Создать
           </CustomButton>
         </Flex>
       </TagList>
 
       <Flex className={"row"} title={"Дата отправки"}>
-        <Container className={"br16"}>
+        <Container $border={16}>
           <Flex className={"row"}>
             <Calendar />
           </Flex>
         </Container>
 
-        <CustomButton type={"submit"} className={"gray"}>
+        <CustomButton type={"submit"} $color={"gray"}>
           Отправить <ArrowSvg />
         </CustomButton>
       </Flex>

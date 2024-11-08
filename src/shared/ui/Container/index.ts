@@ -5,7 +5,7 @@ export const Container = styled.div<{
   $color?: string;
   $border?: number;
   $gap?: number;
-  $padding?: number;
+  $padding?: number | number[];
 }>`
   height: fit-content;
   display: flex;
@@ -17,7 +17,13 @@ export const Container = styled.div<{
       : `var(--color-background-container)`};
   border-radius: ${(props) => (props.$border ? `${props.$border}px` : "8px")};
   gap: ${(props) => (props.$gap ? `${props.$gap}px` : "5px")};
-  padding: ${(props) => (props.$padding ? `${props.$padding}px` : "10px 15px")};
+  padding: ${(props) => {
+    if (Array.isArray(props.$padding)) {
+      const [top, right = top, bottom = top, left = right] = props.$padding;
+      return `${top}px ${right}px ${bottom}px ${left}px`;
+    }
+    return `${props.$padding || 10}px ${props.$padding || 15}px`;
+  }};
   transition: all 0.3s ease-in-out;
   position: relative;
 
