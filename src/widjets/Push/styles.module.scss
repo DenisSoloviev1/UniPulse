@@ -8,11 +8,11 @@
   position: absolute;
   top: 65px;
   right: 0;
+  border-radius: 0 0 30px 30px;
   background-color: $color-background;
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
   gap: 15px;
   padding: 5px 10px;
-
   overflow-x: hidden;
 
   .slider {
@@ -58,7 +58,6 @@
     top: 72px;
     border: 2px solid $color-background-container;
     border-top: 0;
-    border-radius: 0 0 30px 30px;
     padding: 10px 20px;
   }
 }

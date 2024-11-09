@@ -4,7 +4,7 @@ import { Close } from "../../../shared/ui/Icon";
 
 interface PropsTag {
   name: string;
-  id: string;
+  id: number;
   color?: string;
   isActive?: boolean;
   onClick?: () => void;
@@ -25,7 +25,7 @@ export const Tag: React.FC<PropsTag> = ({
       >
         <Close />
       </CustomButton>
-      <p id={id}>{name}</p>
+      <p id={`${id}`}>{name}</p>
     </Container>
   );
 };

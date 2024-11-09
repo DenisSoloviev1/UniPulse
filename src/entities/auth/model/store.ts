@@ -6,7 +6,7 @@ interface IAuthState {
   role: Roles;
   setRole: (newRole: Roles) => void;
   setAuthStatus: (authStatus: boolean) => void;
-  resetAuth: () => void; 
+  resetAuth: () => void;
 }
 
 const initialAuth = localStorage.getItem("authToken") ? true : false;
@@ -15,11 +15,11 @@ const initialRole = (localStorage.getItem("userRole") as Roles) || "";
 export const useAuthStore = create<IAuthState>((set) => ({
   isAuth: initialAuth,
   role: initialRole,
+  setAuthStatus: (authStatus: boolean) => set({ isAuth: authStatus }),
   setRole: (newRole: Roles) => {
-    localStorage.setItem("userRole", newRole); 
+    localStorage.setItem("userRole", newRole);
     set({ isAuth: true, role: newRole });
   },
-  setAuthStatus: (authStatus: boolean) => set({ isAuth: authStatus }),
   resetAuth: () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userRole");

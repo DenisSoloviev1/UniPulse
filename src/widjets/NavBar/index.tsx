@@ -1,14 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useAuthStore } from "../../../entities/auth";
+import { useAuthStore } from "../../entities/auth";
 import styles from "./styles.module.scss";
 import { NavItems, INav } from "./constants";
 
-export const Nav: React.FC = () => {
+export const NavBar: React.FC = () => {
   const { role, resetAuth } = useAuthStore((state) => state);
 
   return (
-    <nav className={styles.nav}>
+    <nav className={styles.navBar}>
       {NavItems.filter(
         (link: INav) =>
           Array.isArray(link.allowedRoles) && link.allowedRoles.includes(role)

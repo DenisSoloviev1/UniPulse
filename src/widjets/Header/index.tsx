@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import { Logo } from "../../shared/ui/Icon";
-import { Bell, Nav } from "../../shared/ui";
+import { Bell } from "../../shared/ui";
+import { NavBar } from "../NavBar";
 import Push from "../../widjets/Push";
 import { usePushStore } from "../../shared/ui/ModalWindow/store";
 
@@ -17,10 +18,10 @@ const Header: React.FC = () => {
 
         <Push />
 
-        <div className={styles.navBar}>
+        <div className={styles.nav}>
           <Bell onClick={isOpen ? closePush : openPush} count={5} />
 
-          <Nav />
+          <NavBar />
         </div>
       </div>
     </header>

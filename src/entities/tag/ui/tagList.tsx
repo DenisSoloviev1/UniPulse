@@ -1,9 +1,10 @@
-import React, { useState, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
+import { getTags } from "../api";
 import { Flex, ModalWindow, CustomButton } from "../../../shared/ui";
-import { Tag } from "./index";
+import { Tag } from "../ui";
+import { useTagStore } from "../model";
 import { useAddTagStore } from "../../../shared/ui/ModalWindow/store";
 import styles from "./styles.module.scss";
-import { arrayTag } from "../../../assets/date";
 
 interface TagListProps {
   title: string;
@@ -11,12 +12,26 @@ interface TagListProps {
 }
 
 export const TagList: React.FC<TagListProps> = ({ title, children }) => {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
+  const { tags, setTags } = useTagStore();
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
   const openModal = useAddTagStore((state) => state.open);
 
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const tagsData = await getTags();
+        setTags(tagsData); // Устанавливаем массив тегов
+        console.log("Загруженные теги:", tagsData);
+      } catch (error) {
+        console.error("Ошибка загрузки тегов:", error);
+      }
+    };
+  
+    fetchTags();
+  }, [setTags]);
+
   // Функция для выбора/снятия выделения тега
-  const addTagSelect = (id: string) => {
+  const addTagSelect = (id: number) => {
     setSelectedTags((prevSelectedTags) =>
       !prevSelectedTags.includes(id)
         ? [...prevSelectedTags, id]
@@ -24,12 +39,11 @@ export const TagList: React.FC<TagListProps> = ({ title, children }) => {
     );
   };
 
-  const deleteTagSelect = (id: string) => {
-    setSelectedTags(
-      (prevSelectedTags) =>
-        prevSelectedTags.includes(id)
-          ? prevSelectedTags.filter((tagId) => tagId !== id) // Убираем тег, если он выбран
-          : prevSelectedTags // Возвращаем неизменённый массив, если тега нет
+  const deleteTagSelect = (id: number) => {
+    setSelectedTags((prevSelectedTags) =>
+      prevSelectedTags.includes(id)
+        ? prevSelectedTags.filter((tagId) => tagId !== id)
+        : prevSelectedTags
     );
   };
 
@@ -38,7 +52,7 @@ export const TagList: React.FC<TagListProps> = ({ title, children }) => {
       <Flex title={title} className={"row"}>
         {selectedTags.length > 0 ? (
           selectedTags.map((id) => {
-            const selectedTag = arrayTag.find((tag) => tag.id === id);
+            const selectedTag = tags.find((tag) => tag.id === id);
             return selectedTag ? (
               <Tag
                 key={id}
@@ -56,15 +70,19 @@ export const TagList: React.FC<TagListProps> = ({ title, children }) => {
         <ModalWindow>
           <Flex title={"Существующие теги"} className={"row"}>
             <div className={styles.slider}>
-              {arrayTag.map((tag) => (
-                <Tag
-                  key={tag.id}
-                  id={tag.id}
-                  name={tag.name}
-                  isActive={true}
-                  onClick={() => addTagSelect(tag.id)}
-                />
-              ))}
+              {tags.length > 0 ? (
+                tags.map((tag) => (
+                  <Tag
+                    key={tag.id}
+                    id={tag.id}
+                    name={tag.name}
+                    isActive={true}
+                    onClick={() => addTagSelect(tag.id)}
+                  />
+                ))
+              ) : (
+                <p>Теги не найдены</p>
+              )}
             </div>
           </Flex>
 

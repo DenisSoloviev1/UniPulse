@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import Calendar from "../Calendar";
 import { Container, Flex, CustomButton, MediaItem } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
-import { TagList } from "../../entities/tags";
+import { TagList } from "../../entities/tag";
 import { ArrowSvg } from "../../shared/ui/Icon";
 
 const Form: React.FC = () => {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getPulsList } from "../api";
+import { getPuls } from "../api";
 import { Flex } from "../../../shared/ui";
-import Pulse from "../../../widjets/Pulse";
+import Pulse from "./pulse";
 import { arrayPulse } from "../../../assets/date";
 import { typeTag } from "../model/type";
 
 interface PulseData {
-  data: typeTag[]; 
+  data: typeTag[];
 }
 
 export const PulseList: React.FC<{ title: string }> = ({ title }) => {
@@ -15,7 +15,7 @@ export const PulseList: React.FC<{ title: string }> = ({ title }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getPulsList();
+        const result = await getPuls();
         setData(result); // Сохранение данных в состоянии
       } catch (error) {
         console.error("Ошибка при получении данных:", error);
@@ -23,7 +23,7 @@ export const PulseList: React.FC<{ title: string }> = ({ title }) => {
     };
 
     fetchData();
-  }, []); 
+  }, []);
   return (
     <article style={{ width: "100%" }}>
       <Flex title={title}>

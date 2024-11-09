@@ -1,4 +1,4 @@
-import { Routes, RolesDict } from "../../types";
+import { Routes, RolesDict } from "../../shared/types";
 
 export interface INav {
   id: number;
