@@ -1,9 +1,14 @@
 import axios from "axios";
 import { baseUrl } from "../../../shared/config";
 
-export const getPulsList = async () => {
+export const getPuls = async () => {
   try {
-    const response = await axios.get(`${baseUrl}/api/notification`);
+    const token = localStorage.getItem("authToken");
+    const response = await axios.get(`${baseUrl}/api/notification/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data; // если нужно вернуть данные из функции
   } catch (error) {
     console.error("Ошибка:", error);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import styles from "./styles.module.scss";
-import { Container } from "../index";
+import { Square, MediaPreview, FileItem } from "./style.ts";
+import { Container, Flex } from "../index";
 
 export const MediaItem: React.FC = () => {
   const [mediaFiles, setMediaFiles] = useState<
@@ -13,7 +13,7 @@ export const MediaItem: React.FC = () => {
       const newMediaFiles: Array<{ src: string; type: string }> = [];
 
       Array.from(files).forEach((file) => {
-        const fileType = file.type.split("/")[0]; // image, video, application (e.g., PDF)
+        const fileType = file.type.split("/")[0];
         const reader = new FileReader();
 
         reader.onload = (e) => {
@@ -22,14 +22,16 @@ export const MediaItem: React.FC = () => {
               src: e.target.result as string,
               type: fileType,
             });
+            // Устанавливаем новое состояние один раз, после цикла
             setMediaFiles((prev) => [...prev, ...newMediaFiles]);
           }
         };
 
         if (fileType === "image" || fileType === "video") {
-          reader.readAsDataURL(file); // Для изображений и видео
+          reader.readAsDataURL(file);
         } else {
-          newMediaFiles.push({ src: file.name, type: fileType }); // Для остальных файлов просто отображаем имя
+          // Обработка не-медиа файлов (например, PDF)
+          newMediaFiles.push({ src: file.name, type: fileType });
           setMediaFiles((prev) => [...prev, ...newMediaFiles]);
         }
       });
@@ -37,58 +39,40 @@ export const MediaItem: React.FC = () => {
   };
 
   return (
-    <>
-      {mediaFiles.length > 0 ? (
-        <>
-          <div className={styles.mediaPreview}>
-            {mediaFiles.map((media, index) => (
-              <div key={index} className={styles.mediaItem}>
-                {media.type === "image" && (
-                  <img
-                    src={media.src}
-                    alt="Uploaded"
-                    className={styles.square}
-                  />
-                )}
-                {media.type === "video" && (
-                  <video src={media.src} controls className={styles.square} />
-                )}
-                {media.type !== "image" && media.type !== "video" && (
-                  <div className={styles.fileItem}>
-                    <span>{media.src}</span>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+    <Flex $direction={"row"}>
+      <MediaPreview>
+        {mediaFiles.map((media, index) => (
+          <FileItem key={index}>
+            {media.type === "image" && (
+              <Square>
+                <img src={media.src} alt="Uploaded" />
+              </Square>
+            )}
+            {media.type === "video" && (
+              <Square>
+                <video src={media.src} controls />
+              </Square>
+            )}
+            {media.type !== "image" && media.type !== "video" && (
+              <span>{media.src}</span>
+            )}
+          </FileItem>
+        ))}
+      </MediaPreview>
 
-          <label htmlFor="input">
-            <Container className={"pd0 br16"}>
-              <input
-                type="file"
-                multiple
-                onChange={handleFileChange}
-                className={styles.hiddenInput}
-                id="input"
-              />
-              <div className={styles.square}>+</div>
-            </Container>
-          </label>
-        </>
-      ) : (
-        <label htmlFor="input">
-          <Container className={"pd0 br16"}>
-            <input
-              type="file"
-              multiple
-              onChange={handleFileChange}
-              className={styles.hiddenInput}
-              id="input"
-            />
-            <div className={styles.square}>+</div>
-          </Container>
-        </label>
-      )}
-    </>
+      {/* Кнопка для загрузки */}
+      <label htmlFor="input">
+        <Container $padding={[0]} $border={16}>
+          <input
+            type="file"
+            multiple
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+            id="input"
+          />
+          <Square>+</Square>
+        </Container>
+      </label>
+    </Flex>
   );
 };

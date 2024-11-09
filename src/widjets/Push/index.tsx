@@ -1,8 +1,9 @@
 import React from "react";
-import classNames from "classnames";
-import styles from "./styles.module.scss";
 import { PulseList } from "../../entities/notification";
 import { usePushStore } from "../../shared/ui/ModalWindow/store";
+import { PushContainer } from "./style.ts";
+import { Slider } from "../Main/style";
+import { Flex } from "../../shared/ui";
 import { Back } from "../../shared/ui/Icon";
 
 const Push: React.FC = () => {
@@ -10,18 +11,18 @@ const Push: React.FC = () => {
   const isOpen = usePushStore((state) => state.isOpen);
 
   return (
-    <div className={classNames(styles.push, isOpen ? styles.show : "")}>
-      <div className={styles.title}>
+    <PushContainer $show={isOpen}>
+      <Flex $justify={"row"}>
         <button onClick={closePush}>
           <Back />
         </button>
 
         <h4>Уведомления</h4>
-      </div>
-      <div className={styles.slider}>
+      </Flex>
+      <Slider>
         <PulseList title={"Неподтвержденные пульсы"} />
-      </div>
-    </div>
+      </Slider>
+    </PushContainer>
   );
 };
 

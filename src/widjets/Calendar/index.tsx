@@ -2,8 +2,19 @@ import React, { useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-import "./styles.scss";
+import "./style.scss";
+import styled from "styled-components";
 import { CalendarSvg } from "../../shared/ui/Icon";
+
+export const CalendarContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 220px;
+  height: 300px
+  font-size: 16px;
+}`;
 
 registerLocale("ru", ru);
 
@@ -30,22 +41,21 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="calendarContainer">
+    <CalendarContainer>
       <DatePicker
-        selected={selectedDate}
+        selected={selectedDate || null}
         onChange={handleDateChange}
         showTimeSelect // Показ времени
-        dateFormat="d MMMM yyyy HH:mm" // Формат даты и времени
+        dateFormat="d MMMM yyyy  HH:mm" // Формат даты и времени
         timeFormat="HH:mm" // 24-часовой формат
         minDate={new Date()}
         locale="ru" // Указываем локализацию
-        placeholderText="Выберите дату и время"
+        placeholderText="__ ______ ____  __:__"
         timeIntervals={30} // Интервалы времени (например, каждые 30 минут)
-        className="datePicker" // Ваши кастомные стили
         filterTime={filterTime} // Применение фильтра для времени
       />
       <CalendarSvg />
-    </div>
+    </CalendarContainer>
   );
 };
 

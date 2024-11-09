@@ -1,22 +1,18 @@
 import React from "react";
 import { handleAuth } from "../../entities/auth/api";
-import styles from "./styles.module.scss";
 import { Flex, CustomButton } from "../../shared/ui";
+import { Wrapper, Message } from "../style";
 import { WalcomingSvg, LogoDSTU } from "../../shared/ui/Icon";
 import { Callback } from "../../entities/auth/api/callback";
-import { useAuthStore } from "../../entities/auth";
 
 export const Auth: React.FC = () => {
-  const {isAuth} = useAuthStore();
-  console.log(isAuth)
-
   return (
-    <div className={styles.wrapper}>
-      <section className={styles.walcoming}>
-        <Flex className={"row"}>
+    <Wrapper>
+      <Flex>
+        <Flex $direction={"row"}>
           <WalcomingSvg />
 
-          <div className={styles.message}>
+          <Message>
             <h1>Приветствуем вас в UniPulse!</h1>
             <p>
               В вашем личном вузовском помощнике. Теперь все важные события,
@@ -26,11 +22,11 @@ export const Auth: React.FC = () => {
 
             <Callback />
             <CustomButton className={"blue"} onClick={handleAuth}>
-              <LogoDSTU /> Войти через ЭИОС ДГТУ
+              <LogoDSTU /> Войти через lk.donst.ru
             </CustomButton>
-          </div>
+          </Message>
         </Flex>
-      </section>
-    </div>
+      </Flex>
+    </Wrapper>
   );
 };

@@ -1,58 +1,85 @@
 import React from "react";
-import styles from "./styles.module.scss";
+import { Form, Textarea } from "./style.ts";
+import {
+  Container,
+  Flex,
+  CustomButton,
+  MediaItem,
+  PlainTitle,
+  ModalWindow,
+} from "../../shared/ui";
 import Calendar from "../Calendar";
-import { Container, Flex, CustomButton, MediaItem } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
-import { TagList } from "../../entities/tags";
+import { TagList } from "../../entities/tag";
 import { ArrowSvg } from "../../shared/ui/Icon";
 
-const Form: React.FC = () => {
+const CreatNotif: React.FC = () => {
+  const openModal = useAddTagStore((state) => state.open);
   const closeModal = useAddTagStore((state) => state.close);
 
   return (
-    <form action="" className={styles.form}>
-      <Flex title={"Уведомление"}>
-        <Container className={"br16"}>
-          <textarea
-            className={styles.textarea}
-            placeholder="Введите текст"
-            rows={10}
-          ></textarea>
+    <Form>
+      <Flex>
+        <PlainTitle>Уведомление</PlainTitle>
+        <Container $border={16} $width={"100%"}>
+          <Textarea placeholder="Введите текст" rows={10}></Textarea>
         </Container>
       </Flex>
 
-      <Flex title={"Прикрепленные медиа"}>
-        <Flex className={"row"}>
-          <MediaItem />
+      <Flex>
+        <PlainTitle>Прикрепленные медиа</PlainTitle>
+        <MediaItem />
+      </Flex>
+
+      <Flex>
+        <PlainTitle>Получатели</PlainTitle>
+
+        <Flex $direction={"row"} $align={"center"}>
+          <TagList />
+
+          <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
+            +
+          </CustomButton>
+
+          <ModalWindow>
+            <Flex>
+              <PlainTitle>Новый тег</PlainTitle>
+              <TagList />
+
+              <Container $width={"100%"}>
+                <input type="text" placeholder="Название тега" />
+              </Container>
+              <Container $width={"100%"}>
+                <input type="text" placeholder="Контингент" />
+              </Container>
+              <CustomButton
+                type={"button"}
+                onClick={closeModal}
+                $style={"blue"}
+              >
+                Создать
+              </CustomButton>
+            </Flex>
+          </ModalWindow>
         </Flex>
       </Flex>
 
-      <TagList title={"Получатели"}>
-        <Flex title={"Новый тег"}>
-          <Container>
-            <input type="text" placeholder="Название тега" />
+      <Flex>
+        <PlainTitle>Дата отправки</PlainTitle>
+
+        <Flex $direction={"row"}>
+          <Container $border={16}>
+            <Flex $direction={"row"}>
+              <Calendar />
+            </Flex>
           </Container>
-          <Container>
-            <input type="text" placeholder="Контингент" />
-          </Container>
-          <CustomButton onClick={closeModal} $color={"blue"}>
-            Создать
+
+          <CustomButton type={"submit"} $style={"blue"}>
+            Отправить <ArrowSvg />
           </CustomButton>
         </Flex>
-      </TagList>
-
-      <Flex className={"row"} title={"Дата отправки"}>
-        <Container $border={16}>
-          <Flex className={"row"}>
-            <Calendar />
-          </Flex>
-        </Container>
-
-        <CustomButton type={"submit"} $color={"gray"}>
-          Отправить <ArrowSvg />
-        </CustomButton>
       </Flex>
-    </form>
+    </Form>
   );
 };
-export default Form;
+export default CreatNotif;

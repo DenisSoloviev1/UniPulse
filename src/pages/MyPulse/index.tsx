@@ -4,7 +4,7 @@ import Main from "../../widjets/Main";
 import { Container, Flex, CustomButton } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { PulseList } from "../../entities/notification";
-import { TagList } from "../../entities/tags";
+import { TagList } from "../../entities/tag";
 import { Cat } from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
 

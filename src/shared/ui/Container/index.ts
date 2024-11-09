@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 export const Container = styled.div<{
+  $width?: string;
   $active?: boolean;
   $color?: string;
   $border?: number;
   $gap?: number;
   $padding?: number | number[];
 }>`
+  width: ${(props) => props.$width};
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -37,7 +39,7 @@ export const Container = styled.div<{
   }
 
   svg {
-    width: 20px;
+    width: 25px;
   }
 
   input {
