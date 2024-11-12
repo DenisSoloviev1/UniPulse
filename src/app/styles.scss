@@ -27,7 +27,7 @@ a:link,
 a:visited {
   text-decoration: none;
   font-weight: 400;
-  color: $color-action;
+  color: var(--color-action);
   transition: all 0.3s ease-in;
   cursor: pointer;
 }
@@ -122,7 +122,7 @@ body {
   min-width: 320px;
   width: 100vw;
   min-height: 100vh;
-  color: $color-font-active;
+  color: var(--color-font-active);
   background-color: #f7f7fc;
 
   #root {

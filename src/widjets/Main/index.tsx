@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
-import styles from "./styles.module.scss";
+import { MainContainer, MainWrapper } from "./style.ts";
+import { Slider } from "../../shared/ui";
 
 interface MainProps {
   children?: ReactNode;
@@ -7,11 +8,11 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ children }) => {
   return (
-    <main>
-      <div className={styles.wrapper}>
-        <div className={styles.slider}>{children}</div>
-      </div>
-    </main>
+    <MainContainer>
+      <MainWrapper>
+        <Slider $padding={20} $gap={30}>{children}</Slider>
+      </MainWrapper>
+    </MainContainer>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPuls } from "../api";
-import { Flex } from "../../../shared/ui";
+import { Flex, PlainTitle } from "../../../shared/ui";
 import Pulse from "./pulse";
 import { arrayPulse } from "../../../assets/date";
 import { typeTag } from "../model/type";
@@ -26,7 +26,8 @@ export const PulseList: React.FC<{ title: string }> = ({ title }) => {
   }, []);
   return (
     <article style={{ width: "100%" }}>
-      <Flex title={title}>
+      <Flex>
+        <PlainTitle>{title}</PlainTitle>
         {arrayPulse.map((pulseItem) => (
           <Pulse
             key={pulseItem.id}

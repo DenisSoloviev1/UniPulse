@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
-import classNames from "classnames";
-import styles from "./styles.module.scss";
+import { Modal, ModalContent } from "./style.ts";
 import { useAddTagStore } from "../ModalWindow/store";
 import { Close } from "../Icon";
 import { CustomButton } from "../CustomButton";
@@ -14,16 +13,13 @@ export const ModalWindow: React.FC<ModalWindowProps> = ({ children }) => {
   const isOpen = useAddTagStore((state) => state.isOpen);
 
   return (
-    <div
-      className={classNames(styles.modalWindow, isOpen ? styles.show : "")}
-      onClick={closeModal}
-    >
-      <div className={styles.content} onClick={(e) => e.stopPropagation()}>
-        <CustomButton onClick={closeModal} type={"button"} className={"closeBig"}>
+    <Modal $show={isOpen} onClick={closeModal}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        <CustomButton onClick={closeModal} type={"button"} $close={"big"}>
           <Close />
         </CustomButton>
         {children}
-      </div>
-    </div>
+      </ModalContent>
+    </Modal>
   );
 };

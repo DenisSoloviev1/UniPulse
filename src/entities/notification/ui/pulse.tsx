@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./styles.module.scss";
+import { Notif, Title, Text, Toggle } from "./style";
 import { Container, Flex } from "../../../shared/ui";
 import { Tag } from "../../tag";
 import { Back } from "../../../shared/ui/Icon";
@@ -7,7 +7,7 @@ import { Back } from "../../../shared/ui/Icon";
 interface PulseProps {
   title: string;
   text: string;
-  id: string;
+  id: number;
   tags: string[];
 }
 
@@ -18,34 +18,32 @@ const Pulse: React.FC<PulseProps> = ({ title, text, id, tags }) => {
   };
 
   return (
-    <Container active={false}>
-      <article className={styles.pulse} id={id}>
-        <h4 className={styles.title}>{title}</h4>
-        <p className={`${styles.text} ${isExpanded ? styles.expanded : ""}`}>
+    <Container $active={false} $width={"100%"}>
+      <Notif>
+        <Title>{title}</Title>
+        <Text>
           {isExpanded ? text : `${text.slice(0, 100)}`}
           {!isExpanded && text.length > 100 && (
-            <span className={styles.toggle} onClick={toggleText}>
-              ...
-            </span>
+            <Toggle onClick={toggleText}>...</Toggle>
           )}
           {isExpanded && (
-            <span className={styles.toggle} onClick={toggleText}>
+            <Toggle onClick={toggleText}>
               <Back />
-            </span>
+            </Toggle>
           )}
-        </p>
-        <Flex className={"row"}>
+        </Text>
+        <Flex $direction={"row"}>
           {tags.map((tag, index) => (
             <Tag
               key={`${id}-${index}`}
               name={tag}
-              id={`${id}-${index}`}
+              id={id - index}
               color={"light"}
               isActive={false}
             />
           ))}
         </Flex>
-      </article>
+      </Notif>
     </Container>
   );
 };

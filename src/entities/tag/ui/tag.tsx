@@ -8,7 +8,7 @@ interface PropsTag {
   color?: string;
   isActive?: boolean;
   onClick?: () => void;
-  close?: boolean;
+  close?: "no" | "small" | "big";
 }
 
 export const Tag: React.FC<PropsTag> = ({
@@ -17,15 +17,15 @@ export const Tag: React.FC<PropsTag> = ({
   color,
   isActive = true,
   onClick,
-  close = false,
+  close = "no",
 }) => {
   return (
-    <Container className={`br16 ${color} pdSmall`} active={isActive} onClick={onClick}>
-      <CustomButton type={"button"} className={close? "close": "noClose"}
+    <Container $color={color} $border={16} $padding={[10, 15]} $active={isActive} onClick={onClick}>
+      <CustomButton type={"button"} $close={close}
       >
         <Close />
       </CustomButton>
-      <p id={`${id}`}>{name}</p>
+      <p id={`${id}`} style={ { whiteSpace: "nowrap"}}>{name}</p>
     </Container>
   );
 };

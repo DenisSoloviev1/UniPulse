@@ -1,10 +1,7 @@
-@import "../../variables.scss";
+import styled from "styled-components";
+import "../../variables.scss";
 
-.hiddenInput {
-  display: none;
-}
-
-.square {
+export const Square = styled.div`
   width: 64px;
   height: 64px;
   display: flex;
@@ -13,21 +10,14 @@
   border-radius: 16px;
   font-size: 30px;
   object-fit: cover;
-}
-
-.mediaPreview {
+`;
+export const MediaPreview = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-}
+`;
 
-.mediaContent {
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-}
-
-.fileItem {
+export const FileItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,4 +26,4 @@
   text-align: center;
   padding: 10px;
   word-break: break-word;
-}
+`;

@@ -4,14 +4,12 @@ import { Flex, ModalWindow, CustomButton } from "../../../shared/ui";
 import { Tag } from "../ui";
 import { useTagStore } from "../model";
 import { useAddTagStore } from "../../../shared/ui/ModalWindow/store";
-import styles from "./styles.module.scss";
 
 interface TagListProps {
-  title: string;
   children?: ReactNode;
 }
 
-export const TagList: React.FC<TagListProps> = ({ title, children }) => {
+export const TagList: React.FC<TagListProps> = ({ children }) => {
   const { tags, setTags } = useTagStore();
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
   const openModal = useAddTagStore((state) => state.open);
@@ -49,8 +47,8 @@ export const TagList: React.FC<TagListProps> = ({ title, children }) => {
 
   return (
     <article>
-      <Flex title={title} className={"row"}>
-        {selectedTags.length > 0 ? (
+      <Flex $direction={"row"}>
+        {/* {selectedTags.length > 0 ? (
           selectedTags.map((id) => {
             const selectedTag = tags.find((tag) => tag.id === id);
             return selectedTag ? (
@@ -59,16 +57,28 @@ export const TagList: React.FC<TagListProps> = ({ title, children }) => {
                 id={id}
                 name={selectedTag.name}
                 onClick={() => deleteTagSelect(id)}
-                close={true}
+                close={"small"}
               />
             ) : null;
           })
-        ) : (
-          <p>Теги не выбраны</p>
+        )  */}
+        {tags.length > 0 ? (
+                tags.map((tag) => (
+                  <Tag
+                    key={tag.id}
+                    id={tag.id}
+                    name={tag.name}
+                    isActive={true}
+                    onClick={() => addTagSelect(tag.id)}
+                  />
+                ))
+              )
+        : (
+          <p>Загрузка...</p>
         )}
 
-        <ModalWindow>
-          <Flex title={"Существующие теги"} className={"row"}>
+        {/* <ModalWindow>
+          <Flex title={"Существующие теги"} $direction={"row"}>
             <div className={styles.slider}>
               {tags.length > 0 ? (
                 tags.map((tag) => (
@@ -87,11 +97,8 @@ export const TagList: React.FC<TagListProps> = ({ title, children }) => {
           </Flex>
 
           {children}
-        </ModalWindow>
+        </ModalWindow> */}
 
-        <CustomButton className={"blue"} onClick={openModal}>
-          +
-        </CustomButton>
       </Flex>
     </article>
   );

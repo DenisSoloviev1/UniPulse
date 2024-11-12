@@ -5,4 +5,5 @@ export { Flex } from "./Flex";
 export { MediaItem } from "./MediaItem";
 export { ModalWindow } from "./ModalWindow";
 export { Loader } from "./Loader";
-export * from "../../widjets/NavBar";
+export { PlainTitle } from "./PlainTitle";
+export { Slider } from "./Slider";
