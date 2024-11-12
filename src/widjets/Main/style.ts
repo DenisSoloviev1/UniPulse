@@ -34,16 +34,3 @@ export const MainWrapper = styled.div`
     height: 84vh;
   }
 `;
-
-export const Slider = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  overflow-y: auto;
-  gap: 30px;
-  padding: 20px 15px;
-
-  @media screen and (min-width: 1321px) {
-   20px 30px; }   
-`;

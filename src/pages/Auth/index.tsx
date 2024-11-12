@@ -8,24 +8,22 @@ import { Callback } from "../../entities/auth/api/callback";
 export const Auth: React.FC = () => {
   return (
     <Wrapper>
-      <Flex>
-        <Flex $direction={"row"}>
-          <WalcomingSvg />
+      <Flex $direction={"row"} $align={"center"}>
+        <WalcomingSvg />
 
-          <Message>
-            <h1>Приветствуем вас в UniPulse!</h1>
-            <p>
-              В вашем личном вузовском помощнике. Теперь все важные события,
-              новости и изменения у вас под рукой.
-            </p>
-            <p>Будьте на пульсе жизни университета вместе с нами!</p>
+        <Message>
+          <h1>Приветствуем вас в UniPulse!</h1>
+          <p>
+            В вашем личном вузовском помощнике. Теперь все важные события,
+            новости и изменения у вас под рукой.
+          </p>
+          <p>Будьте на пульсе жизни университета вместе с нами!</p>
 
-            <Callback />
-            <CustomButton className={"blue"} onClick={handleAuth}>
-              <LogoDSTU /> Войти через lk.donst.ru
-            </CustomButton>
-          </Message>
-        </Flex>
+          <Callback />
+          <CustomButton $style={"blue"} onClick={handleAuth}>
+            <LogoDSTU /> Войти через lk.donst.ru
+          </CustomButton>
+        </Message>
       </Flex>
     </Wrapper>
   );

@@ -23,6 +23,7 @@ export const HeaderWrapper = styled.div`
   background-color: var(--color-background);
   border: 2px solid var(--color-background-container);
 
+
   @media screen and (min-width: 1321px) {
     margin: 20px auto 0;
     border-radius: 30px 30px 0 0;

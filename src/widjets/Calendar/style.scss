@@ -7,7 +7,7 @@
   bottom: 10px;
   font-family: "Golos Text", sans-serif;
   background-color: var(--color-background);
-  color: var(--color-font-active);
+  color: var(--color-active);
   border-radius: 20px;
   font-size: 16px;
   overflow: hidden;
@@ -15,7 +15,7 @@
 
 .react-datepicker__header {
   background-color: var(--color-background);
-  color: var(--color-font-active);
+  color: var(--color-active);
   cursor: default;
   border-radius: 20px 0 0;
 }
@@ -24,12 +24,12 @@
   font-weight: bold;
   font-size: 18px;
   text-transform: capitalize;
-  color: var(--color-font-active);
+  color: var(--color-active);
 }
 
 .react-datepicker__day-names {
   font-weight: bold;
-  color: var(--color-font-active);
+  color: var(--color-active);
 }
 
 .react-datepicker__month {
@@ -37,7 +37,7 @@
 }
 
 .react-datepicker__day {
-  color: var(--color-font-active);
+  color: var(--color-active);
   border-radius: 8px;
   transition: all 0.2s ease-in-out;
   border: 2px solid var(--color-background);
@@ -45,13 +45,13 @@
 
 .react-datepicker__day:hover {
   background-color: var(--color-action) !important;
-  color: var(--color-font-active);
+  color: var(--color-active);
 }
 
 .react-datepicker__day--selected {
   background-color: inherit;
   border: 2px solid var(--color-action);
-  color: var(--color-font-active);
+  color: var(--color-active);
 }
 
 .react-datepicker__day--disabled {
@@ -61,12 +61,12 @@
 
 .react-datepicker__day--disabled:hover {
   background-color: #d5d4d4;
-  color: var(--color-font-active);
+  color: var(--color-active);
 }
 
 .react-datepicker__day--today {
   font-weight: 700;
-  color: var(--color-font-active);
+  color: var(--color-active);
   background-color: inherit;
 }
 
@@ -80,13 +80,13 @@
 
 .react-datepicker-time__header {
   background-color: var(--color-background);
-  color: var(--color-font-active);
+  color: var(--color-active);
   border: 0 20px 0 0;
 }
 
 .react-datepicker__time-box {
   background-color: var(--color-background);
-  color: var(--color-font-active);
+  color: var(--color-active);
   border: 0 0 20px 0;
 }
 

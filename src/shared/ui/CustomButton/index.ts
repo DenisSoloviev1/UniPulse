@@ -4,8 +4,10 @@ import "../../variables.scss";
 export const CustomButton = styled.button<{
   $style?: "gray" | "blue";
   $close?: "no" | "small" | "big";
+  $width?: string;
 }>`
   ${(props) => (props.$close === "no" ? `display: none;` : `display: flex;`)}
+  width: ${(props) => (props.$width ? `${props.$width}` : ``)};
   flex-direction: row;
   justify-content: center;
   align-items: center;

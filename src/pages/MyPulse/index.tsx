@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import { Container, Flex, CustomButton } from "../../shared/ui";
+import AddTag from "../../widjets/AddTag";
+import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { PulseList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
-import { Cat } from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
 
 export const MyPulse: React.FC = () => {
@@ -20,7 +20,7 @@ export const MyPulse: React.FC = () => {
     setUserId(event.target.value);
   };
 
-  const closeModal = useAddTagStore((state) => state.close);
+  const openModal = useAddTagStore((state) => state.open);
 
   const { isAuth } = useAuthStore();
   // console.log(role);
@@ -30,8 +30,9 @@ export const MyPulse: React.FC = () => {
     <>
       <Header />
       <Main>
-        <Flex title={"Место отправки уведомлений"}>
-          <Flex className={"row"}>
+        <Flex>
+          <PlainTitle>Место отправки уведомлений</PlainTitle>
+          <Flex $direction={"row"}>
             <Container>
               <label>
                 <input
@@ -67,15 +68,18 @@ export const MyPulse: React.FC = () => {
           </Container>
         </Flex>
 
-        <TagList title={"Мои теги"}>
-          <>
-            <Cat />
-            <CustomButton onClick={closeModal} className={"blue"}>
-              Готово
-            </CustomButton>
-          </>
-        </TagList>
+        
+        <Flex $direction={"row"} $align={"center"}>
+        <PlainTitle>Мои подписки</PlainTitle>
 
+          <TagList />
+
+          <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
+            +
+          </CustomButton>
+
+          <AddTag />
+        </Flex>
         <PulseList title={"Полученные пульсы"} />
       </Main>
     </>

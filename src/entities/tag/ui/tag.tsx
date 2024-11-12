@@ -25,7 +25,7 @@ export const Tag: React.FC<PropsTag> = ({
       >
         <Close />
       </CustomButton>
-      <p id={`${id}`}>{name}</p>
+      <p id={`${id}`} style={ { whiteSpace: "nowrap"}}>{name}</p>
     </Container>
   );
 };

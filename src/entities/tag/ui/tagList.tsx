@@ -4,7 +4,6 @@ import { Flex, ModalWindow, CustomButton } from "../../../shared/ui";
 import { Tag } from "../ui";
 import { useTagStore } from "../model";
 import { useAddTagStore } from "../../../shared/ui/ModalWindow/store";
-import styles from "./styles.module.scss";
 
 interface TagListProps {
   children?: ReactNode;
@@ -49,7 +48,7 @@ export const TagList: React.FC<TagListProps> = ({ children }) => {
   return (
     <article>
       <Flex $direction={"row"}>
-        {selectedTags.length > 0 ? (
+        {/* {selectedTags.length > 0 ? (
           selectedTags.map((id) => {
             const selectedTag = tags.find((tag) => tag.id === id);
             return selectedTag ? (
@@ -62,8 +61,20 @@ export const TagList: React.FC<TagListProps> = ({ children }) => {
               />
             ) : null;
           })
-        ) : (
-          <p>Пусто</p>
+        )  */}
+        {tags.length > 0 ? (
+                tags.map((tag) => (
+                  <Tag
+                    key={tag.id}
+                    id={tag.id}
+                    name={tag.name}
+                    isActive={true}
+                    onClick={() => addTagSelect(tag.id)}
+                  />
+                ))
+              )
+        : (
+          <p>Загрузка...</p>
         )}
 
         {/* <ModalWindow>

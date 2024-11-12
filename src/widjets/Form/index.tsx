@@ -6,16 +6,15 @@ import {
   CustomButton,
   MediaItem,
   PlainTitle,
-  ModalWindow,
 } from "../../shared/ui";
 import Calendar from "../Calendar";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { TagList } from "../../entities/tag";
 import { ArrowSvg } from "../../shared/ui/Icon";
+import AddTag from "../AddTag/index.tsx";
 
 const CreatNotif: React.FC = () => {
   const openModal = useAddTagStore((state) => state.open);
-  const closeModal = useAddTagStore((state) => state.close);
 
   return (
     <Form>
@@ -41,26 +40,7 @@ const CreatNotif: React.FC = () => {
             +
           </CustomButton>
 
-          <ModalWindow>
-            <Flex>
-              <PlainTitle>Новый тег</PlainTitle>
-              <TagList />
-
-              <Container $width={"100%"}>
-                <input type="text" placeholder="Название тега" />
-              </Container>
-              <Container $width={"100%"}>
-                <input type="text" placeholder="Контингент" />
-              </Container>
-              <CustomButton
-                type={"button"}
-                onClick={closeModal}
-                $style={"blue"}
-              >
-                Создать
-              </CustomButton>
-            </Flex>
-          </ModalWindow>
+          <AddTag />
         </Flex>
       </Flex>
 

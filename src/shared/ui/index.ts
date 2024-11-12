@@ -6,3 +6,4 @@ export { MediaItem } from "./MediaItem";
 export { ModalWindow } from "./ModalWindow";
 export { Loader } from "./Loader";
 export { PlainTitle } from "./PlainTitle";
+export { Slider } from "./Slider";

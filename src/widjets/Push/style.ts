@@ -17,21 +17,7 @@ export const PushContainer = styled.div<{
   right: 0;
   background-color: var(--color-background);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
-  gap: 15px;
-  padding: 5px 10px;
   overflow-x: hidden;
-
-  h4 {
-    font-size: 20px;
-  }
-  button {
-    position: absolute;
-    left: 0;
-    width: 30px;
-  }
-  svg {
-    fill: var(--color-action);
-  }
 
   @media screen and (min-width: 1321px) {
     width: 50%;
@@ -40,6 +26,26 @@ export const PushContainer = styled.div<{
     border: 2px solid var(--color-background-container);
     border-top: 0;
     border-radius: 0 0 30px 30px;
-    padding: 10px 20px;
+  }
+`;
+
+export const Head = styled.div`
+  width: 100%;
+  text-align: center;
+  position: relative;
+  padding: 5px 15px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+z-index: 2;
+
+  h4 {
+    font-size: 20px;
+  }
+  button {
+    position: absolute;
+    left: 15px;
+    width: 30px;
+  }
+  svg {
+    fill: var(--color-action);
   }
 `;

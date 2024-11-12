@@ -8,13 +8,16 @@ import { Routes } from "../../shared/types";
 export const NotFound: React.FC = () => {
   return (
     <Wrapper>
-      <NotFoundSvg />
-      <Flex>
-        <h2>Ошибка 404: страница не найдена.</h2>
-        <p>Запрашиваемая страница была удалена или никогда не существовала.</p>
-        <p>
-          Вернуться на <NavLink to={Routes.AUTH}>главную</NavLink>.
-        </p>
+      <Flex $direction={"row"} $align={"center"}>
+        <NotFoundSvg />
+
+        <Flex>
+          <h2>Ошибка 404: страница не найдена.</h2>
+
+          <p>
+            Вернуться на <NavLink to={Routes.AUTH}>главную</NavLink>.
+          </p>
+        </Flex>
       </Flex>
     </Wrapper>
   );
