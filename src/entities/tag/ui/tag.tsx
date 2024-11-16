@@ -17,15 +17,16 @@ export const Tag: React.FC<PropsTag> = ({
   color,
   isActive = true,
   onClick,
-  close = "no",
 }) => {
   return (
-    <Container $color={color} $border={16} $padding={[10, 15]} $active={isActive} onClick={onClick}>
-      <CustomButton type={"button"} $close={close}
-      >
-        <Close />
-      </CustomButton>
-      <p id={`${id}`} style={ { whiteSpace: "nowrap"}}>{name}</p>
+    <Container
+      $color={color}
+      $border={16}
+      $padding={[10, 15]}
+      $active={isActive}
+      onClick={onClick}
+    >
+      <p id={`${id}`}>{name}</p>
     </Container>
   );
 };

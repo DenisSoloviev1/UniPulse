@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Flex, PlainTitle } from "../../../shared/ui";
 import Pulse from "./pulse";
 import { arrayPulse } from "../../../assets/date";
-import { typeTag } from "../model/type";
+import { typeTag } from "../model/types";
 
 interface PulseData {
   data: typeTag[];

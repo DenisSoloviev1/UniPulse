@@ -1,2 +1,3 @@
 export * from "./get-tags";
-export * from "./create-tag";
+export * from "./add-tag";
+export * from "./get-subscriptions";

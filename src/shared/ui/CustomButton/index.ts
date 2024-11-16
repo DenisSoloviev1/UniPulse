@@ -3,10 +3,10 @@ import "../../variables.scss";
 
 export const CustomButton = styled.button<{
   $style?: "gray" | "blue";
-  $close?: "no" | "small" | "big";
+  $close?: boolean;
   $width?: string;
 }>`
-  ${(props) => (props.$close === "no" ? `display: none;` : `display: flex;`)}
+  display: flex;
   width: ${(props) => (props.$width ? `${props.$width}` : ``)};
   flex-direction: row;
   justify-content: center;
@@ -53,26 +53,9 @@ export const CustomButton = styled.button<{
       }
   `}
 
-  //кнопка закрытия
-
-
   ${(props) =>
-    props.$close === "small"
-      ? `
-          background-color: transparent;
-          border: 0;
-          position: absolute;
-          top: -5px;
-          right: -5px;
-          padding: 0;
-  
-          svg {
-            width: 20px;
-            fill: var(--color-delete);
-          }
-        `
-      : props.$close === "big"
-      ? `background-color: transparent;
+    props.$close &&
+    `background-color: transparent;
           border: 0;
           position: absolute;
           top: -10px;
@@ -83,6 +66,5 @@ export const CustomButton = styled.button<{
             width: 30px;
             fill: var(--color-delete);
           }
-        `
-      : ` `}
+        `}
 `;

@@ -8,6 +8,7 @@ export const Slider = styled.div<{
 }>`
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
   min-height: 100px;
   height:${(props) => (props.$height ? `${props.$height}px` : ``)};
   overflow-y: scroll;

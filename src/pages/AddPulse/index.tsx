@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import Form from "../../widjets/Form";
+import CreatNotif from "../../widjets/CreatNotif";
 import { PulseList } from "../../entities/notification";
 
 export const AddPulse: React.FC = () => {
@@ -9,7 +9,7 @@ export const AddPulse: React.FC = () => {
     <>
       <Header />
       <Main>
-        <Form />
+        <CreatNotif />
 
         <PulseList title={"Отправленные пульсы"} />
       </Main>

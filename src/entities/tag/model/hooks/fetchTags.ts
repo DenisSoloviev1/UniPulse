@@ -1,17 +1,19 @@
 import { useEffect } from "react";
 import { getTags } from "../../api";
-import { useTagStore } from "../../model";
+import { useTagStore } from "..";
 
 export const useFetchTags = () => {
   const { setFetchTags } = useTagStore();
   const token = localStorage.getItem("authToken") || "";
 
   useEffect(() => {
+    if (!token) return;
+
     const fetchTags = async () => {
       try {
-        const tagsData = await getTags(token);
-        setFetchTags(tagsData);
-        console.log("Загруженные теги:", tagsData);
+        const responseData = await getTags(token);
+        setFetchTags(responseData);
+        console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
       }

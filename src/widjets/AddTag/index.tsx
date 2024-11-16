@@ -9,11 +9,11 @@ import {
   Slider,
 } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
-import { Tag } from "../../entities/tag";
-import { createTags } from "../../entities/tag";
+import { TagList } from "../../entities/tag";
+import { addTag } from "../../entities/tag";
 import { Cat, DoneSvg } from "../../shared/ui/Icon";
 import { Loader } from "../../shared/ui";
-import { useTagStore, useTagSelect, useFetchTags } from "../../entities/tag";
+import { useTagStore, useFetchTags } from "../../entities/tag";
 
 const AddTag: React.FC = () => {
   const location = useLocation();
@@ -27,7 +27,6 @@ const AddTag: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const { tags, selectedTags } = useTagStore();
-  const toggleTagSelect = useTagSelect();
 
   // Вызовите useFetchTags для загрузки тегов
   useFetchTags();
@@ -35,7 +34,7 @@ const AddTag: React.FC = () => {
   const handleCreateTag = async () => {
     setIsLoading(true);
     try {
-      const response = await createTags(tagName, tagDescription);
+      const response = await addTag(tagName, tagDescription);
       const error = response.error;
 
       if (!error) {
@@ -61,67 +60,57 @@ const AddTag: React.FC = () => {
         <Loader $size="200px" />
       ) : isSuccess ? (
         <DoneSvg />
+      ) : isAddPulsePath ? (
+        <>
+          <Flex>
+            <PlainTitle>Существующие теги</PlainTitle>
+            <Slider $height={90}>
+              <TagList initialTags={tags} />
+            </Slider>
+          </Flex>
+          <Flex>
+            <PlainTitle>Новый тег</PlainTitle>
+            <Container $width={"100%"}>
+              <input
+                type="text"
+                placeholder="название"
+                value={tagName}
+                onChange={(e) => setTagName(e.target.value)}
+              />
+            </Container>
+            <Container $width={"100%"}>
+              <input
+                type="text"
+                placeholder="описание"
+                value={tagDescription}
+                onChange={(e) => setTagDescription(e.target.value)}
+              />
+            </Container>
+            <CustomButton
+              type={"button"}
+              onClick={handleCreateTag}
+              $style={"blue"}
+              $width={"100%"}
+            >
+              Создать
+            </CustomButton>
+          </Flex>
+        </>
       ) : (
         <>
           <Flex>
-            <PlainTitle>
-              {isAddPulsePath ? "Существующие теги" : "Подписаться на тег"}
-            </PlainTitle>
+            <PlainTitle>Подписаться на тег</PlainTitle>
             <Slider $height={90}>
-              {tags.map((tag) => (
-                <Tag
-                  key={tag.id}
-                  id={tag.id}
-                  name={tag.name}
-                  isActive={selectedTags.some(
-                    (selectedTag) => selectedTag.id === tag.id
-                  )}
-                  onClick={() => toggleTagSelect(tag.id)}
-                />
-              ))}
+              <TagList initialTags={selectedTags} />
             </Slider>
           </Flex>
 
-          {isAddPulsePath ? (
-            <Flex>
-              <PlainTitle>Новый тег</PlainTitle>
-              <Container $width={"100%"}>
-                <input
-                  type="text"
-                  placeholder="название"
-                  value={tagName}
-                  onChange={(e) => setTagName(e.target.value)}
-                />
-              </Container>
-              <Container $width={"100%"}>
-                <input
-                  type="text"
-                  placeholder="описание"
-                  value={tagDescription}
-                  onChange={(e) => setTagDescription(e.target.value)}
-                />
-              </Container>
-              <CustomButton
-                type={"button"}
-                onClick={handleCreateTag}
-                $style={"blue"}
-                $width={"100%"}
-              >
-                Создать
-              </CustomButton>
-            </Flex>
-          ) : (
-            <Flex $align={"center"}>
-              <Cat />
-              <CustomButton
-                onClick={closeModal}
-                $style={"blue"}
-                $width={"100%"}
-              >
-                Готово
-              </CustomButton>
-            </Flex>
-          )}
+          <Flex $align={"center"}>
+            <Cat />
+            <CustomButton onClick={closeModal} $style={"blue"} $width={"100%"}>
+              Готово
+            </CustomButton>
+          </Flex>
         </>
       )}
     </ModalWindow>

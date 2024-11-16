@@ -33,10 +33,6 @@ export const Container = styled.div<{
     ${(props) => props.$active && `cursor: pointer; background-color: #dfdfdf;`}
   }
 
-  p {
-    position: relative;
-    top: -2px;
-  }
 
   svg {
     width: 25px;

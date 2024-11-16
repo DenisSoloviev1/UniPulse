@@ -6,12 +6,12 @@ import {
   CustomButton,
   MediaItem,
   PlainTitle,
-} from "../../shared/ui";
-import Calendar from "../Calendar";
-import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
-import { useTagStore } from "../../entities/tag";
-import { TagList } from "../../entities/tag";
-import { ArrowSvg } from "../../shared/ui/Icon";
+} from "../../shared/ui/index.ts";
+import Calendar from "../Calendar/index.tsx";
+import { useAddTagStore } from "../../shared/ui/ModalWindow/store.ts";
+import { useTagStore } from "../../entities/tag/index.ts";
+import { TagList } from "../../entities/tag/index.ts";
+import { ArrowSvg } from "../../shared/ui/Icon/index.tsx";
 import AddTag from "../AddTag/index.tsx";
 
 const CreatNotif: React.FC = () => {
@@ -36,7 +36,7 @@ const CreatNotif: React.FC = () => {
         <PlainTitle>Получатели</PlainTitle>
 
         <Flex>
-          <TagList />
+          <TagList initialTags={selectedTags}/>
 
           <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
             +

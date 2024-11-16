@@ -6,7 +6,7 @@ import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { PulseList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
-import { useAuthStore } from "../../entities/auth";
+import { useTagStore, useFetchSubscriptions } from "../../entities/tag"; 
 
 export const MyPulse: React.FC = () => {
   const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
@@ -21,10 +21,9 @@ export const MyPulse: React.FC = () => {
   };
 
   const openModal = useAddTagStore((state) => state.open);
-
-  const { isAuth } = useAuthStore();
-  // console.log(role);
-  console.log(isAuth);
+  useFetchSubscriptions();
+  const { subscriptionTags } = useTagStore();
+  console.log(`мои подписки: ${subscriptionTags}`)
 
   return (
     <>
@@ -72,7 +71,7 @@ export const MyPulse: React.FC = () => {
           <PlainTitle>Мои подписки</PlainTitle>
 
           <Flex >
-            <TagList />
+            <TagList initialTags={subscriptionTags}/>
             <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
               +
             </CustomButton>
