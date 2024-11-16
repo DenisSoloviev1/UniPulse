@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getPuls } from "../api";
+// import { getPuls } from "../api";
 import { Flex, PlainTitle } from "../../../shared/ui";
 import Pulse from "./pulse";
 import { arrayPulse } from "../../../assets/date";
@@ -12,18 +12,18 @@ interface PulseData {
 export const PulseList: React.FC<{ title: string }> = ({ title }) => {
   const [data, setData] = useState<PulseData | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getPuls();
-        setData(result); // Сохранение данных в состоянии
-      } catch (error) {
-        console.error("Ошибка при получении данных:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await getPuls();
+  //       setData(result); // Сохранение данных в состоянии
+  //     } catch (error) {
+  //       console.error("Ошибка при получении данных:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   return (
     <article style={{ width: "100%" }}>
       <Flex>

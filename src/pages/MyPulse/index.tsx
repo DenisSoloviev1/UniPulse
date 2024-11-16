@@ -68,17 +68,16 @@ export const MyPulse: React.FC = () => {
           </Container>
         </Flex>
 
-        
-        <Flex $direction={"row"} $align={"center"}>
-        <PlainTitle>Мои подписки</PlainTitle>
+        <Flex>
+          <PlainTitle>Мои подписки</PlainTitle>
 
-          <TagList />
-
-          <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
-            +
-          </CustomButton>
-
-          <AddTag />
+          <Flex >
+            <TagList />
+            <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
+              +
+            </CustomButton>
+            <AddTag />
+          </Flex>
         </Flex>
         <PulseList title={"Полученные пульсы"} />
       </Main>

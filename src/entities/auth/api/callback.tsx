@@ -48,7 +48,7 @@ export const Callback: React.FC = () => {
   }, [isRoleSaved, role, navigate]);
 
   if (loading) {
-    return <Loader message={"Авторизация"} />;
+    return <Loader $size={"200px"}/>;
   }
 
   return null;

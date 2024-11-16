@@ -21,7 +21,7 @@ export const Auth: React.FC = () => {
 
           <Callback />
           <CustomButton $style={"blue"} onClick={handleAuth}>
-            <LogoDSTU /> Войти через lk.donst.ru
+            <LogoDSTU /> Войти через edu.donst.ru
           </CustomButton>
         </Message>
       </Flex>

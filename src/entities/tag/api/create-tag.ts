@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "../../../shared/config";
 
-export const addTags = async (name: string, description: string) => {
+export const createTags = async (name: string, description: string) => {
   try {
     const token = localStorage.getItem("authToken");
 
@@ -10,6 +10,7 @@ export const addTags = async (name: string, description: string) => {
       {
         name,
         description,
+        subscriptable: true,
       },
       {
         headers: {

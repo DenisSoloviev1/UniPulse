@@ -1,2 +1,2 @@
 export * from "./get-tags";
-export * from "./add-tag";
+export * from "./create-tag";

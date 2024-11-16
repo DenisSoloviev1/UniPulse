@@ -1,104 +1,29 @@
-import React, { useState, useEffect, ReactNode } from "react";
-import { getTags } from "../api";
-import { Flex, ModalWindow, CustomButton } from "../../../shared/ui";
+import React, { useState, useEffect } from "react";
+import { Flex } from "../../../shared/ui";
 import { Tag } from "../ui";
-import { useTagStore } from "../model";
-import { useAddTagStore } from "../../../shared/ui/ModalWindow/store";
+import { ITag, useTagStore, useFetchTags } from "../model";
+import { Loader } from "../../../shared/ui";
 
 interface TagListProps {
-  children?: ReactNode;
+  initialTags?: ITag[];
 }
 
-export const TagList: React.FC<TagListProps> = ({ children }) => {
-  const { tags, setTags } = useTagStore();
-  const [selectedTags, setSelectedTags] = useState<number[]>([]);
-  const openModal = useAddTagStore((state) => state.open);
-
-  useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const tagsData = await getTags();
-        setTags(tagsData); // Устанавливаем массив тегов
-        console.log("Загруженные теги:", tagsData);
-      } catch (error) {
-        console.error("Ошибка загрузки тегов:", error);
-      }
-    };
-  
-    fetchTags();
-  }, [setTags]);
-
-  // Функция для выбора/снятия выделения тега
-  const addTagSelect = (id: number) => {
-    setSelectedTags((prevSelectedTags) =>
-      !prevSelectedTags.includes(id)
-        ? [...prevSelectedTags, id]
-        : prevSelectedTags
-    );
-  };
-
-  const deleteTagSelect = (id: number) => {
-    setSelectedTags((prevSelectedTags) =>
-      prevSelectedTags.includes(id)
-        ? prevSelectedTags.filter((tagId) => tagId !== id)
-        : prevSelectedTags
-    );
-  };
+export const TagList: React.FC= () => {
+  const { selectedTags } = useTagStore();
 
   return (
     <article>
-      <Flex $direction={"row"}>
-        {/* {selectedTags.length > 0 ? (
-          selectedTags.map((id) => {
-            const selectedTag = tags.find((tag) => tag.id === id);
-            return selectedTag ? (
-              <Tag
-                key={id}
-                id={id}
-                name={selectedTag.name}
-                onClick={() => deleteTagSelect(id)}
-                close={"small"}
-              />
-            ) : null;
-          })
-        )  */}
-        {tags.length > 0 ? (
-                tags.map((tag) => (
-                  <Tag
-                    key={tag.id}
-                    id={tag.id}
-                    name={tag.name}
-                    isActive={true}
-                    onClick={() => addTagSelect(tag.id)}
-                  />
-                ))
-              )
-        : (
-          <p>Загрузка...</p>
-        )}
-
-        {/* <ModalWindow>
-          <Flex title={"Существующие теги"} $direction={"row"}>
-            <div className={styles.slider}>
-              {tags.length > 0 ? (
-                tags.map((tag) => (
-                  <Tag
-                    key={tag.id}
-                    id={tag.id}
-                    name={tag.name}
-                    isActive={true}
-                    onClick={() => addTagSelect(tag.id)}
-                  />
-                ))
-              ) : (
-                <p>Теги не найдены</p>
-              )}
-            </div>
-          </Flex>
-
-          {children}
-        </ModalWindow> */}
-
+      <Flex $direction={"row"} $wrap={true}>
+        {selectedTags.map((tag) => (
+          <Tag
+            key={tag.id}
+            id={tag.id}
+            name={tag.name}
+            isActive={selectedTags.some(
+              (selectedTag) => selectedTag.id === tag.id
+            )}
+          />
+        ))}
       </Flex>
     </article>
   );

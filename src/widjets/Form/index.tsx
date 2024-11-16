@@ -9,12 +9,14 @@ import {
 } from "../../shared/ui";
 import Calendar from "../Calendar";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
+import { useTagStore } from "../../entities/tag";
 import { TagList } from "../../entities/tag";
 import { ArrowSvg } from "../../shared/ui/Icon";
 import AddTag from "../AddTag/index.tsx";
 
 const CreatNotif: React.FC = () => {
   const openModal = useAddTagStore((state) => state.open);
+  const { selectedTags } = useTagStore();
 
   return (
     <Form>
@@ -33,7 +35,7 @@ const CreatNotif: React.FC = () => {
       <Flex>
         <PlainTitle>Получатели</PlainTitle>
 
-        <Flex $direction={"row"} $align={"center"}>
+        <Flex>
           <TagList />
 
           <CustomButton type={"button"} $style={"blue"} onClick={openModal}>

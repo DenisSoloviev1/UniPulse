@@ -8,10 +8,10 @@ import { Routes } from "../../shared/types";
 export const NotFound: React.FC = () => {
   return (
     <Wrapper>
-      <Flex $direction={"row"} $align={"center"}>
+      <Flex $direction={"row"} $align={"center"} $justify={"center"} $wrap={false}>
         <NotFoundSvg />
 
-        <Flex>
+        <Flex >
           <h2>Ошибка 404: страница не найдена.</h2>
 
           <p>

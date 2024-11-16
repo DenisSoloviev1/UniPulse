@@ -119,16 +119,18 @@ html{
 body {
   font-family: "Golos Text", sans-serif;
   font-weight: 400;
-  min-width: 320px;
   width: 100vw;
+  min-width: 320px;
   min-height: 100vh;
   color: var(--color-font-active);
   background-color: #f7f7fc;
 
   #root {
     width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
 }

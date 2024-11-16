@@ -21,16 +21,18 @@ export const Modal = styled.div<{
 export const ModalContent = styled.div`
   height: 330px;
   width: 80%;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   border-radius: 16px;
   background-color: var(--color-background);
   padding: 10px 20px 20px;
   border: 1px solid var(--color-font-disable);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
-  gap: 5px;
   position: relative;
+  gap:10px;
 
   @media screen and (min-width: 600px) {
     width: 50%;
