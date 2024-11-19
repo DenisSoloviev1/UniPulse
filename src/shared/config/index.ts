@@ -1,1 +1,2 @@
-export const baseUrl = "https://ddt.donstu.ru/notif";
+export * from "./params";
+export * from "./api";

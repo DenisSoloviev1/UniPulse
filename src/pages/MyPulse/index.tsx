@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import AddTag from "../../widjets/AddTag";
@@ -6,9 +6,12 @@ import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { PulseList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
-import { useTagStore, useFetchSubscriptions } from "../../entities/tag"; 
+import { useTagStore, getSubscriptions } from "../../entities/tag";
 
 export const MyPulse: React.FC = () => {
+  const { setSubscriptionTags } = useTagStore();
+  const token = localStorage.getItem("authToken") || "";
+
   const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
   const [userId, setUserId] = useState<string>("");
 
@@ -21,9 +24,23 @@ export const MyPulse: React.FC = () => {
   };
 
   const openModal = useAddTagStore((state) => state.open);
-  useFetchSubscriptions();
+
+  useEffect(() => {
+    if (!token) return;
+
+    const fetchSubscriptions = async () => {
+      try {
+        const responseData = await getSubscriptions();
+        setSubscriptionTags(responseData);
+        console.log("Загруженные подписки:", responseData);
+      } catch (error) {
+        console.error("Ошибка загрузки подписок:", error);
+      }
+    };
+
+    fetchSubscriptions();
+  }, [token, setSubscriptionTags]);
   const { subscriptionTags } = useTagStore();
-  console.log(`мои подписки: ${subscriptionTags}`)
 
   return (
     <>
@@ -70,8 +87,8 @@ export const MyPulse: React.FC = () => {
         <Flex>
           <PlainTitle>Мои подписки</PlainTitle>
 
-          <Flex >
-            <TagList initialTags={subscriptionTags}/>
+          <Flex>
+            <TagList initialTags={subscriptionTags} />
             <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
               +
             </CustomButton>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   Container,
@@ -13,11 +13,12 @@ import { TagList } from "../../entities/tag";
 import { addTag } from "../../entities/tag";
 import { Cat, DoneSvg } from "../../shared/ui/Icon";
 import { Loader } from "../../shared/ui";
-import { useTagStore, useFetchTags } from "../../entities/tag";
+import { useTagStore, getTags } from "../../entities/tag";
 
 const AddTag: React.FC = () => {
   const location = useLocation();
   const isAddPulsePath = location.pathname.includes("addPulse");
+  const token = localStorage.getItem("authToken") || "";
 
   const [tagName, setTagName] = useState<string>("");
   const [tagDescription, setTagDescription] = useState<string>("");
@@ -26,27 +27,39 @@ const AddTag: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const { tags, selectedTags } = useTagStore();
+  const { tags, selectedTags, setFetchTags } = useTagStore();
 
-  // Вызовите useFetchTags для загрузки тегов
-  useFetchTags();
+
+  useEffect(() => {
+    if (!token) return;
+
+    const fetchTags = async () => {
+      try {
+        const responseData = await getTags();
+        setFetchTags(responseData);
+        console.log("Загруженные теги:", responseData);
+      } catch (error) {
+        console.error("Ошибка загрузки тегов:", error);
+      }
+    };
+
+    fetchTags();
+  }, [token, setFetchTags]);
 
   const handleCreateTag = async () => {
     setIsLoading(true);
     try {
-      const response = await addTag(tagName, tagDescription);
-      const error = response.error;
+      await addTag(tagName, tagDescription);
 
-      if (!error) {
-        setTagDescription("");
-        setTagName("");
-        setIsSuccess(true);
+      // Очистка формы и показ успеха
+      setTagDescription("");
+      setTagName("");
+      setIsSuccess(true);
 
-        setTimeout(() => {
-          closeModal();
-          setIsSuccess(false);
-        }, 1500);
-      }
+      setTimeout(() => {
+        closeModal();
+        setIsSuccess(false);
+      }, 1500);
     } catch (error) {
       console.error("Ошибка создания тега:", error);
     } finally {
