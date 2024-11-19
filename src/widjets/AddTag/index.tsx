@@ -12,8 +12,8 @@ import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { TagList } from "../../entities/tag";
 import { addTag } from "../../entities/tag";
 import { Cat, DoneSvg } from "../../shared/ui/Icon";
-import { Loader } from "../../shared/ui";
-import { useTagStore, getTags } from "../../entities/tag";
+import { Loader, Skeleton } from "../../shared/ui";
+import { useTagStore, getTags, subscribeToTag } from "../../entities/tag";
 
 const AddTag: React.FC = () => {
   const location = useLocation();
@@ -25,21 +25,24 @@ const AddTag: React.FC = () => {
 
   const closeModal = useAddTagStore((state) => state.close);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true); // Новый флаг для загрузки тегов
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const { tags, setFetchTags } = useTagStore();
-
+  const { tags, selectedTags, setFetchTags, setSelectedTags } = useTagStore();
 
   useEffect(() => {
     if (!token) return;
 
     const fetchTags = async () => {
+      setIsLoadingTags(true);
       try {
         const responseData = await getTags();
         setFetchTags(responseData);
         console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
+      } finally {
+        setIsLoadingTags(false); // Окончание загрузки тегов
       }
     };
 
@@ -67,6 +70,40 @@ const AddTag: React.FC = () => {
     }
   };
 
+  const handleSubscriptionTag = async () => {
+    setIsLoading(true);
+
+    if (selectedTags.length === 0) {
+      console.error("Ошибка: не выбран ни один тег.");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      // Подписываемся на все выбранные теги
+      await Promise.all(
+        selectedTags.map(async (tag) => {
+          if (tag.id) {
+            await subscribeToTag(tag.id);
+          }
+        })
+      );
+
+      // Очистка формы и показ успеха
+      setSelectedTags([]);
+      setIsSuccess(true);
+
+      setTimeout(() => {
+        closeModal();
+        setIsSuccess(false);
+      }, 1500);
+    } catch (error) {
+      console.error("Ошибка подписки на тег:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <ModalWindow>
       {isLoading ? (
@@ -78,7 +115,13 @@ const AddTag: React.FC = () => {
           <Flex>
             <PlainTitle>Существующие теги</PlainTitle>
             <Slider $height={90}>
-              <TagList initialTags={tags} />
+              {isLoadingTags ? (
+                Array.from({ length: 7 }).map((_, index) => (
+                  <Skeleton key={index} $width="130px" />
+                ))
+              ) : (
+                <TagList initialTags={tags} />
+              )}
             </Slider>
           </Flex>
           <Flex>
@@ -114,13 +157,23 @@ const AddTag: React.FC = () => {
           <Flex>
             <PlainTitle>Подписаться на тег</PlainTitle>
             <Slider $height={90}>
-              <TagList initialTags={tags} />
+              {isLoadingTags ? (
+                Array.from({ length: 7 }).map((_, index) => (
+                  <Skeleton key={index} $width="130px"/>
+                ))
+              ) : (
+                <TagList initialTags={tags} />
+              )}
             </Slider>
           </Flex>
 
           <Flex $align={"center"}>
             <Cat />
-            <CustomButton onClick={closeModal} $style={"blue"} $width={"100%"}>
+            <CustomButton
+              onClick={handleSubscriptionTag}
+              $style={"blue"}
+              $width={"100%"}
+            >
               Готово
             </CustomButton>
           </Flex>
