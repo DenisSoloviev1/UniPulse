@@ -27,7 +27,7 @@ const AddTag: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const { tags, selectedTags, setFetchTags } = useTagStore();
+  const { tags, setFetchTags } = useTagStore();
 
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const AddTag: React.FC = () => {
           <Flex>
             <PlainTitle>Подписаться на тег</PlainTitle>
             <Slider $height={90}>
-              <TagList initialTags={selectedTags} />
+              <TagList initialTags={tags} />
             </Slider>
           </Flex>
 

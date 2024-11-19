@@ -2,15 +2,10 @@ import React, { useEffect, useState } from "react";
 // import { getPuls } from "../api";
 import { Flex, PlainTitle } from "../../../shared/ui";
 import Pulse from "./pulse";
-import { arrayPulse } from "../../../assets/date";
-import { typeTag } from "../model/types";
-
-interface PulseData {
-  data: typeTag[];
-}
+import { arrayPulse } from "../../../shared/date";
 
 export const PulseList: React.FC<{ title: string }> = ({ title }) => {
-  const [data, setData] = useState<PulseData | null>(null);
+  const [data, setData] = useState(null);
 
   // useEffect(() => {
   //   const fetchData = async () => {
