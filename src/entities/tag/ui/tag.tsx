@@ -1,14 +1,14 @@
 import React from "react";
 import { Container, CustomButton } from "../../../shared/ui";
 import { Close } from "../../../shared/ui/Icon";
+import { ITag } from "../model";
 
 interface PropsTag {
-  name: string;
-  id: number;
+  name: ITag["name"];
+  id: ITag["id"];
   color?: string;
   isActive?: boolean;
   onClick?: () => void;
-  close?: "no" | "small" | "big";
 }
 
 export const Tag: React.FC<PropsTag> = ({
