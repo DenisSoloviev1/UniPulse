@@ -24,7 +24,7 @@ export const TagList: React.FC<TagListProps> = ({ initialTags = [] }) => {
   return (
     <article>
       <Flex $direction={"row"} $wrap={true}>
-        {initialTags.map((tag) => (
+        {initialTags.length!==0?(initialTags.map((tag) => (
           <Tag
             key={tag.id}
             id={tag.id}
@@ -32,7 +32,7 @@ export const TagList: React.FC<TagListProps> = ({ initialTags = [] }) => {
             isActive={true}
             onClick={() => toggleTagSelect(tag.id)}
           />
-        ))}
+        ))):<p>пусто</p>}
       </Flex>
     </article>
   );

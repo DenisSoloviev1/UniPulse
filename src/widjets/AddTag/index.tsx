@@ -117,7 +117,7 @@ const AddTag: React.FC = () => {
             <Slider $height={90}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
-                  <Skeleton key={index} $width="130px" />
+                  <Skeleton key={index} $width="125px" />
                 ))
               ) : (
                 <TagList initialTags={tags} />

@@ -1,20 +1,6 @@
 import styled from "styled-components";
 import "../../../shared/variables.scss";
 
-export const Notif = styled.article`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-
-  @media screen and (min-width: 1321px) {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-`;
-
 export const Title = styled.h4`
   font-size: 20px;
   font-weight: 700;

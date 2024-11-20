@@ -15,7 +15,7 @@ export const ModalWindow: React.FC<ModalWindowProps> = ({ children }) => {
   return (
     <Modal $show={isOpen} onClick={closeModal}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        <CustomButton onClick={closeModal} type={"button"} $close={"big"}>
+        <CustomButton onClick={closeModal} type={"button"} $close={true}>
           <Close />
         </CustomButton>
         {children}

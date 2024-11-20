@@ -1,28 +1,22 @@
 import React, { useState } from "react";
-import { Notif, Title, Text, Toggle } from "./style";
+import { Title, Text, Toggle } from "./style";
 import { Container, Flex } from "../../../shared/ui";
 import { Tag } from "../../tag";
 import { Back } from "../../../shared/ui/Icon";
+import { INotif } from "../model";
 
-interface PulseProps {
-  title: string;
-  text: string;
-  id: number;
-  tags: string[];
-}
-
-const Pulse: React.FC<PulseProps> = ({ title, text, id, tags }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const toggleText = () => {
-    setIsExpanded((prev) => !prev);
-  };
+export const Pulse: React.FC<INotif> = ({ title, text, id, tags }) => {
+  // const [isExpanded, setIsExpanded] = useState(false);
+  // const toggleText = () => {
+  //   setIsExpanded((prev) => !prev);
+  // };
 
   return (
     <Container $active={false} $width={"100%"}>
-      <Notif>
+      <Flex $gap={15}>
         <Title>{title}</Title>
         <Text>
-          {isExpanded ? text : `${text.slice(0, 100)}`}
+          {/* {isExpanded ? text : `${text.slice(0, 100)}`}
           {!isExpanded && text.length > 100 && (
             <Toggle onClick={toggleText}>...</Toggle>
           )}
@@ -30,22 +24,21 @@ const Pulse: React.FC<PulseProps> = ({ title, text, id, tags }) => {
             <Toggle onClick={toggleText}>
               <Back />
             </Toggle>
-          )}
+          )} */}
+          {text}
         </Text>
         <Flex $direction={"row"}>
-          {tags.map((tag, index) => (
+          {tags.map((tag) => (
             <Tag
-              key={`${id}-${index}`}
-              name={tag}
-              id={id - index}
+              key={tag.id}
+              id={tag.id}
+              name={tag.name}
               color={"light"}
               isActive={false}
             />
           ))}
         </Flex>
-      </Notif>
+      </Flex>
     </Container>
   );
 };
-
-export default Pulse;
