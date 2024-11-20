@@ -22,9 +22,9 @@ export const privateRoutes: IPrivateRoute[] = [
   },
   {
     id: 1,
-    path: "/addPulse",
+    path: "/addNotif",
     component: lazy(() =>
-      import("../AddPulse").then((module) => ({ default: module.AddPulse }))
+      import("../AddNotif").then((module) => ({ default: module.AddNotif }))
     ),
     isPublic: false,
     roles: [
@@ -36,9 +36,9 @@ export const privateRoutes: IPrivateRoute[] = [
   },
   {
     id: 2,
-    path: "/myPulse",
+    path: "/myNotif",
     component: lazy(() =>
-      import("../MyPulse").then((module) => ({ default: module.MyPulse }))
+      import("../MyNotif").then((module) => ({ default: module.MyNotif }))
     ),
     isPublic: false,
     roles: [

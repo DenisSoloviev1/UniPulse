@@ -2,20 +2,11 @@ import { apiRequest } from "../../../shared/config/api";
 import { ITag } from "../model";
 
 /**
- * Универсальный интерфейс ответа от сервера.
- */
-export interface IResponse<T> {
-  data: T; // Тип данных, возвращаемых сервером.
-  success: boolean; // Указывает на успешность запроса.
-  error?: string; // Сообщение об ошибке, если запрос неуспешен.
-}
-
-/**
  * Получение всех тегов.
  * @returns Promise с массивом тегов.
  */
 export const getTags = async (): Promise<ITag[]> => {
-  const response = await apiRequest<IResponse<ITag[]>>("GET", "/api/tags");
+  const response = await apiRequest<ITag[]>("GET", "/api/tags");
   if (!response.success) {
     throw new Error(response.error || "Не удалось загрузить теги.");
   }
@@ -32,7 +23,7 @@ export const addTag = async (
   name: string,
   description: string
 ): Promise<ITag> => {
-  const response = await apiRequest<IResponse<ITag>>("POST", "/api/tags", {
+  const response = await apiRequest<ITag>("POST", "/api/tags", {
     name,
     description,
     subscriptable: true,
@@ -50,7 +41,7 @@ export const addTag = async (
  * @returns Promise с результатом операции.
  */
 export const subscribeToTag = async (tagId: number): Promise<boolean> => {
-  const response = await apiRequest<IResponse<null>>(
+  const response = await apiRequest<null>(
     "POST",
     `/api/tags/subscript/${tagId}`
   );
@@ -66,10 +57,7 @@ export const subscribeToTag = async (tagId: number): Promise<boolean> => {
  * @returns Promise с массивом тегов, на которые пользователь подписан.
  */
 export const getSubscriptions = async (): Promise<ITag[]> => {
-  const response = await apiRequest<IResponse<any[]>>(
-    "GET",
-    "/api/tags/subscriptions"
-  );
+  const response = await apiRequest<any[]>("GET", "/api/tags/subscriptions");
 
   if (!response.success) {
     throw new Error(response.error || "Не удалось загрузить подписки.");

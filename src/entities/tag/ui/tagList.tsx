@@ -24,15 +24,19 @@ export const TagList: React.FC<TagListProps> = ({ initialTags = [] }) => {
   return (
     <article>
       <Flex $direction={"row"} $wrap={true}>
-        {initialTags.length!==0?(initialTags.map((tag) => (
-          <Tag
-            key={tag.id}
-            id={tag.id}
-            name={tag.name}
-            isActive={true}
-            onClick={() => toggleTagSelect(tag.id)}
-          />
-        ))):<p>пусто</p>}
+        {initialTags.length !== 0 ? (
+          initialTags.map((tag) => (
+            <Tag
+              key={tag.id}
+              id={tag.id}
+              name={tag.name}
+              isActive={true}
+              onClick={() => toggleTagSelect(tag.id)}
+            />
+          ))
+        ) : (
+          <p>тегов нет</p>
+        )}
       </Flex>
     </article>
   );

@@ -43,7 +43,7 @@ export const Callback: React.FC = () => {
 
   useEffect(() => {
     if (isRoleSaved) {
-      navigate(role === RolesDict.USER ? "/myPulse" : "/addPulse");
+      navigate(role === RolesDict.USER ? "/myNotif" : "/addNotif");
     }
   }, [isRoleSaved, role, navigate]);
 

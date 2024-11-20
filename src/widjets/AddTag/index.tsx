@@ -17,7 +17,7 @@ import { useTagStore, getTags, subscribeToTag } from "../../entities/tag";
 
 const AddTag: React.FC = () => {
   const location = useLocation();
-  const isAddPulsePath = location.pathname.includes("addPulse");
+  const isAddNotifPath = location.pathname.includes("addNotif");
   const token = localStorage.getItem("authToken") || "";
 
   const [tagName, setTagName] = useState<string>("");
@@ -42,12 +42,12 @@ const AddTag: React.FC = () => {
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
       } finally {
-        setIsLoadingTags(false); // Окончание загрузки тегов
+        setIsLoadingTags(false); 
       }
     };
 
     fetchTags();
-  }, [token, setFetchTags]);
+  }, []);
 
   const handleCreateTag = async () => {
     setIsLoading(true);
@@ -110,7 +110,7 @@ const AddTag: React.FC = () => {
         <Loader $size="200px" />
       ) : isSuccess ? (
         <DoneSvg />
-      ) : isAddPulsePath ? (
+      ) : isAddNotifPath ? (
         <>
           <Flex>
             <PlainTitle>Существующие теги</PlainTitle>

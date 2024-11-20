@@ -1,5 +1,5 @@
 import React from "react";
-import { PulseList } from "../../entities/notification";
+import { NotifList } from "../../entities/notification";
 import { usePushStore } from "../../shared/ui/ModalWindow/store";
 import { PushContainer, Head } from "./style.ts";
 import { Slider } from "../../shared/ui";
@@ -20,7 +20,7 @@ const Push: React.FC = () => {
       </Head>
 
       <Slider $padding={15}>
-        <PulseList title={"Неподтвержденные пульсы"} />
+        <NotifList title={"Неподтвержденные пульсы"} />
       </Slider>
     </PushContainer>
   );

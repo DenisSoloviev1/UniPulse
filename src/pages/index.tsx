@@ -1,4 +1,4 @@
-export * from "./AddPulse";
+export * from "./AddNotif";
 export * from "./Auth";
-export * from "./MyPulse";
+export * from "./MyNotif";
 export * from "./NotFound";

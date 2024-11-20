@@ -1,4 +1,5 @@
 import { ITag } from "../../tag";
+
 export interface INotif {
   id: number;
   title: string;

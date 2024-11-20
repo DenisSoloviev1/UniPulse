@@ -1,2 +1,2 @@
-export * from "./pulse"
-export * from "./pulseList"
+export * from "./notification"
+export * from "./notificationList"

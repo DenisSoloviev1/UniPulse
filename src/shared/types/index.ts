@@ -6,17 +6,17 @@ type NavItem = {
 
 export const NavItem: NavItem = {
   "/": "Выйти",
-  "/addPulse": "Создание",
-  "/myPulse": "Профиль",
+  "/addNotif": "Создание",
+  "/myNotif": "Профиль",
 };
 
 type ValueOf<T> = T[keyof T];
 
 export enum Routes {
-  AUTH =  "/",
+  AUTH = "/",
   NOTFOUND = "*",
-  ADDPULSE =  "/addPulse",
-  MYPULSE = "/myPulse",
+  ADDNOTIF = "/addNotif",
+  MYNOTIF = "/myNotif",
 }
 
 // roles

@@ -1,17 +1,14 @@
-// import axios from "axios";
-// import { baseUrl } from "../../../shared/config";
+import { apiRequest } from "../../../shared/config/api";
+import { INotif } from "../model";
 
-// export const getPuls = async () => {
-//   try {
-//     const token = localStorage.getItem("authToken");
-//     const response = await axios.get(`${baseUrl}/api/notification/user`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     return response.data; // если нужно вернуть данные из функции
-//   } catch (error) {
-//     console.error("Ошибка:", error);
-//     throw error; // если хотите пробросить ошибку для внешней обработки
-//   }
-// };
+/**
+ * Получение всех уведомлений.
+ * @returns Promise с массивом уведомлений.
+ */
+export const getNotifs = async (): Promise<INotif[]> => {
+  const response = await apiRequest<INotif[]>("GET", "/api/notifications/user");
+  if (!response.success) {
+    throw new Error(response.error || "Не удалось загрузить уведомления.");
+  }
+  return response.data;
+};

@@ -4,11 +4,11 @@ import Main from "../../widjets/Main";
 import AddTag from "../../widjets/AddTag";
 import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
-import { PulseList } from "../../entities/notification";
+import { NotifList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
 import { useTagStore, getSubscriptions } from "../../entities/tag";
 
-export const MyPulse: React.FC = () => {
+export const MyNotif: React.FC = () => {
   const { setSubscriptionTags } = useTagStore();
   const token = localStorage.getItem("authToken") || "";
 
@@ -95,7 +95,7 @@ export const MyPulse: React.FC = () => {
             <AddTag />
           </Flex>
         </Flex>
-        <PulseList title={"Полученные пульсы"} />
+        <NotifList title={"Полученные пульсы"} />
       </Main>
     </>
   );

@@ -2,6 +2,15 @@ import axios, { AxiosRequestConfig, Method } from "axios";
 import { baseUrl } from ".";
 
 /**
+ * Универсальный интерфейс ответа от сервера.
+ */
+export interface IResponse<T> {
+  data: T; // Тип данных, возвращаемых сервером.
+  success: boolean; // Указывает на успешность запроса.
+  error?: string; // Сообщение об ошибке, если запрос неуспешен.
+}
+
+/**
  * Универсальная функция для выполнения HTTP-запросов.
  * @param method - HTTP-метод (GET, POST, PUT, DELETE).
  * @param endpoint - Конечный путь API.
@@ -14,7 +23,7 @@ export const apiRequest = async <T>(
   endpoint: string,
   data?: object,
   params?: object
-): Promise<T> => {
+): Promise<IResponse<T>> => {
   try {
     const token = localStorage.getItem("authToken");
     if (!token) {
