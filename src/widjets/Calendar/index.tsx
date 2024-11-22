@@ -12,7 +12,7 @@ export const CalendarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 220px;
-  height: 300px;
+ 
   font-size: 16px;
 `;
 

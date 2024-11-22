@@ -46,7 +46,7 @@ export const NotifList: React.FC<NotifListProps> = ({ title }) => {
             <Notif
               key={notifItem.id}
               title={notifItem.title}
-              text={notifItem.text}
+              text={notifItem.description}
               id={notifItem.id}
               tags={notifItem.tags}
             />
