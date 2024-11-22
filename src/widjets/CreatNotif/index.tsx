@@ -13,7 +13,7 @@ import { useTagStore } from "../../entities/tag/index.ts";
 import { TagList } from "../../entities/tag/index.ts";
 import { ArrowSvg } from "../../shared/ui/Icon/index.tsx";
 import AddTag from "../AddTag/index.tsx";
-
+import { addNotif } from "../../entities/notification/api/index.ts"; // Импортируем функцию для добавления уведомлений
 const CreatNotif: React.FC = () => {
   const openModal = useAddTagStore((state) => state.open);
   const { selectedTags } = useTagStore();
@@ -21,8 +21,8 @@ const CreatNotif: React.FC = () => {
   // Состояния для формы
   const [title, setTitle] = useState<string>(""); // Название уведомления
   const [text, setText] = useState<string>(""); // Текст уведомления
-  const [mediaFiles, setMediaFiles] = useState<{ fileName: string; fileSize: number; data: string }[]>([]); // Медиафайлы (в формате base64 с дополнительными полями)
-  const [date, setDate] = useState<number | null>(null); // Дата отправки (в timestamp)
+  const [mediaFiles, setMediaFiles] = useState<{ fileName: string; fileSize: number; data: string }[]>([]); // Медиафайлы
+  const [date, setDate] = useState<number | null>(null); // Дата отправки
 
   // Обработчик отправки формы
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,36 +34,19 @@ const CreatNotif: React.FC = () => {
       return;
     }
 
-    // Формируем данные для отправки
-    const requestData = {
-      name: title,
-      time: date,
-      description: text,
-      files: mediaFiles, // Передаем файлы с дополнительными полями
-      tags: selectedTags.map((tag) => tag.id), // ID тегов
-    };
+    // Формируем массив файлов в нужном формате
+    const files = mediaFiles.map((file) => ({
+      fileName: file.fileName,
+      fileSize: file.fileSize,
+      data: file.data.split(",")[1], // Отделяем base64 от префикса типа данных
+    }));
 
-    // Получение токена из localStorage
-    const authToken = localStorage.getItem("authToken");
-    if (!authToken) {
-      alert("Токен авторизации не найден.");
-      return;
-    }
+    // Извлекаем только ID-шники из массива selectedTags
+    const tagIds = selectedTags.map((tag) => tag.id);
 
-    // Запрос к серверу
+    // Вызов функции для добавления уведомления
     try {
-      const response = await fetch("https://ddt.donstu.ru/notif/api/notifications", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(requestData), // Отправляем данные как JSON
-      });
-
-      if (!response.ok) {
-        throw new Error(`Ошибка: ${response.status}`);
-      }
+      await addNotif(title, text, files, tagIds, date);
 
       alert("Уведомление успешно отправлено!");
     } catch (error) {
@@ -93,7 +76,7 @@ const CreatNotif: React.FC = () => {
       );
 
       Promise.all(filePromises)
-          .then((base64Files) => setMediaFiles(base64Files)) // Обновляем состояние с файлами в нужном формате
+          .then((base64Files) => setMediaFiles(base64Files)) // Обновляем состояние с файлами
           .catch((error) => console.error("Ошибка при чтении файлов:", error));
     }
   };
@@ -126,7 +109,7 @@ const CreatNotif: React.FC = () => {
 
         <Flex>
           <PlainTitle>Прикрепленные медиа</PlainTitle>
-          <input type="file" multiple onChange={handleFileChange} /> {/* Добавлено поле для выбора файлов */}
+          <input type="file" multiple onChange={handleFileChange} /> {/* Поле для загрузки файлов */}
         </Flex>
 
         <Flex>

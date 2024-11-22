@@ -13,14 +13,15 @@ import { INotif } from "../model";
 export const addNotif = async (
   title: string,
   description: string,
-  // files: []
+  files: [],
   tags: ITag[],
   time: number,
 ): Promise<INotif> => {
+  console.log('files', files)
   const response = await apiRequest<INotif>("POST", "/api/notifications", {
     title,
     description,
-    // files: []
+    files: files,
     tags,
     time,
   });
