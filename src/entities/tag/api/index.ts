@@ -2,18 +2,6 @@ import { apiRequest } from "../../../shared/config/api";
 import { ITag } from "../model";
 
 /**
- * Получение всех тегов.
- * @returns Promise с массивом тегов.
- */
-export const getTags = async (): Promise<ITag[]> => {
-  const response = await apiRequest<ITag[]>("GET", "/api/tags");
-  if (!response.success) {
-    throw new Error(response.error || "Не удалось загрузить теги.");
-  }
-  return response.data;
-};
-
-/**
  * Добавление нового тега.
  * @param name - Название тега.
  * @param description - Описание тега.
@@ -36,14 +24,67 @@ export const addTag = async (
 };
 
 /**
+ * Получение всех тегов.
+ * @returns Promise с массивом тегов.
+ */
+export const getTags = async (): Promise<ITag[]> => {
+  const response = await apiRequest<ITag[]>("GET", "/api/tags");
+  if (!response.success) {
+    throw new Error(response.error || "Не удалось загрузить теги.");
+  }
+  return response.data;
+};
+
+/**
+ * Редактирование старого тега.
+ * @param id - id тега.
+ * @param name - Название тега.
+ * @param description - Описание тега.
+ * @returns Promise с данными созданного тега.
+ */
+export const editTag = async (
+  id: string,
+  name: string,
+  description: string
+): Promise<ITag> => {
+  const response = await apiRequest<ITag>("POST", `/api/tags/${id}`, {
+    name,
+    description,
+  });
+
+  if (!response.success) {
+    throw new Error(response.error || "Ошибка при редактировании тега.");
+  }
+  return response.data;
+};
+
+/**
+ * Удаление тега.
+ * @param id - id тега.
+ * @returns Promise с данными удалённого тега.
+ */
+export const deleteTag = async (
+  id: number,
+): Promise<ITag> => {
+  const response = await apiRequest<ITag>("POST", "/api/tags/delete", {
+    id
+  });
+
+  if (!response.success) {
+    throw new Error(response.error || "Ошибка при удалении тега.");
+  }
+  return response.data;
+};
+
+/**
  * Подписка на тег.
- * @param tagId - Идентификатор тега для подписки.
+ * @param id - id тега для подписки.
  * @returns Promise с результатом операции.
  */
-export const subscribeToTag = async (tagId: number): Promise<boolean> => {
+export const subscribeToTag = async (id: number): Promise<boolean> => {
   const response = await apiRequest<null>(
     "POST",
-    `/api/tags/subscript/${tagId}`
+    `/api/tags/subscript/${id}`
   );
 
   if (!response.success) {
