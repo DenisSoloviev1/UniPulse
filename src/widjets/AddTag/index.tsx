@@ -12,7 +12,7 @@ import {
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { TagList } from "../../entities/tag";
 import { addTag } from "../../entities/tag";
-import { Cat, DoneSvg } from "../../shared/ui/Icon";
+import { Cat, ComplitedSvg } from "../../shared/ui/Icon";
 import { useTagStore, getTags, subscribeToTag } from "../../entities/tag";
 
 const AddTag: React.FC = () => {
@@ -109,7 +109,7 @@ const AddTag: React.FC = () => {
       {isLoading ? (
         <Loader $size="200px" />
       ) : isSuccess ? (
-        <DoneSvg />
+        <ComplitedSvg />
       ) : isAddNotifPath ? (
         <>
           <Flex>

@@ -7,6 +7,7 @@ import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { NotifList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
 import { useTagStore, getSubscriptions } from "../../entities/tag";
+import { Plus } from "../../shared/ui/Icon";
 
 export const MyNotif: React.FC = () => {
   const { setSubscriptionTags } = useTagStore();
@@ -46,8 +47,9 @@ export const MyNotif: React.FC = () => {
     <>
       <Header />
       <Main>
-        <Flex>
+        <Flex $gap={10}>
           <PlainTitle>Место отправки уведомлений</PlainTitle>
+
           <Flex $direction={"row"}>
             <Container>
               <label>
@@ -72,25 +74,24 @@ export const MyNotif: React.FC = () => {
               </label>
             </Container>
           </Flex>
+
           <Container>
-            <Flex className={"row"}>
               <input
                 type="text"
                 placeholder={`Введите ID ${selectedPlatform}`}
                 value={userId}
                 onChange={handleUserIdChange}
               />
-            </Flex>
           </Container>
         </Flex>
 
-        <Flex>
+        <Flex $gap={10}>
           <PlainTitle>Мои подписки</PlainTitle>
 
-          <Flex>
+          <Flex $direction={"row"} $align={"center"} $gap={10}>
             <TagList initialTags={subscriptionTags} />
             <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
-              +
+              <Plus/>
             </CustomButton>
             <AddTag />
           </Flex>

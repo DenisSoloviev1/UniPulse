@@ -22,6 +22,7 @@ export const MainWrapper = styled.div`
   width: 100%;
   min-width: 320px;
   max-width: 1320px;
+  min-height: 100vh;
   display: flex;
   background-color: var(--color-background);
   border: 2px solid var(--color-background-container);
@@ -31,6 +32,7 @@ export const MainWrapper = styled.div`
   @media screen and (min-width: 1321px) {
     margin: 0 auto 20px;
     border-radius: 0 0 30px 30px;
-    height: 84vh;
+    height: 85vh;
+    min-height: 85vh;
   }
 `;

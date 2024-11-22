@@ -8,13 +8,19 @@ export const Square = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 16px;
-  font-size: 30px;
-  object-fit: cover;
-`;
-export const MediaPreview = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  overflow: hidden;
+  background-color: var(--color-background-container);
+
+  img,
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const FileItem = styled.div`
@@ -24,6 +30,5 @@ export const FileItem = styled.div`
   height: 100%;
   font-size: 14px;
   text-align: center;
-  padding: 10px;
   word-break: break-word;
 `;

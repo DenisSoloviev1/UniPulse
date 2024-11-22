@@ -4,12 +4,12 @@ import { Container, Flex } from "../../../shared/ui";
 import { Tag } from "../../tag";
 import { INotif } from "../model";
 
-export const Notif: React.FC<INotif> = ({ title, text, id, tags }) => {
+export const Notif: React.FC<INotif> = ({ title, description, id, tags }) => {
   return (
     <Container $active={false} $width={"100%"}>
       <Flex $gap={15}>
         <Title>{title}</Title>
-        <Text>{text}</Text>
+        <Text>{description}</Text>
         <Flex $direction={"row"}>
             {tags[0] !== null ?
 

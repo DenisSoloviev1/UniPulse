@@ -1,25 +1,21 @@
 import React, { ReactNode } from "react";
 import { Modal, ModalContent } from "./style.ts";
 import { useAddTagStore } from "../ModalWindow/store";
-import { Close } from "../Icon";
-import { CustomButton } from "../CustomButton";
 
 interface ModalWindowProps {
   children: ReactNode;
+  open?: boolean;
 }
 
-export const ModalWindow: React.FC<ModalWindowProps> = ({ children }) => {
+export const ModalWindow: React.FC<ModalWindowProps> = ({ children, open }) => {
   const closeModal = useAddTagStore((state) => state.close);
   const isOpen = useAddTagStore((state) => state.isOpen);
 
-  return (
-    <Modal $show={isOpen} onClick={closeModal}>
+  return isOpen || open ? (
+    <Modal onClick={closeModal}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        <CustomButton onClick={closeModal} type={"button"} $close={true}>
-          <Close />
-        </CustomButton>
         {children}
       </ModalContent>
     </Modal>
-  );
+  ) : null;
 };

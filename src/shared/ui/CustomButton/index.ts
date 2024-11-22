@@ -32,13 +32,12 @@ export const CustomButton = styled.button<{
   ${(props) =>
     props.$style === "blue" &&
     `
-      padding: 10px 15px;
+      padding: 10px;
       color: var(--color-background);
       border: 2px solid var(--color-action);
       background-color: var(--color-action);
 
       svg {
-
         fill:  var(--color-background);
         transition: all 0.3s ease-in-out;
       }

@@ -1,147 +1,144 @@
 import React, { useState } from "react";
-import { Form, Textarea } from "./style.ts";
+import { Error, Form, Textarea } from "./style.ts";
 import {
   Container,
   Flex,
   CustomButton,
-  MediaItem,
   PlainTitle,
+  ModalWindow,
 } from "../../shared/ui/index.ts";
-import Calendar from "../Calendar/index.tsx";
+import Calendar from "../Calendar";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store.ts";
-import { useTagStore } from "../../entities/tag/index.ts";
-import { TagList } from "../../entities/tag/index.ts";
-import { ArrowSvg } from "../../shared/ui/Icon/index.tsx";
+import { useTagStore, TagList } from "../../entities/tag";
+import { Arrow, Plus, ComplitedSvg } from "../../shared/ui/Icon";
 import AddTag from "../AddTag/index.tsx";
-import { addNotif } from "../../entities/notification/api/index.ts"; // Импортируем функцию для добавления уведомлений
+import { addNotif } from "../../entities/notification";
+import { MediaItem } from "../../shared/ui/MediaItem";
+
 const CreatNotif: React.FC = () => {
   const openModal = useAddTagStore((state) => state.open);
-  const { selectedTags } = useTagStore();
+  const { selectedTags, setSelectedTags } = useTagStore();
 
   // Состояния для формы
-  const [title, setTitle] = useState<string>(""); // Название уведомления
-  const [text, setText] = useState<string>(""); // Текст уведомления
-  const [mediaFiles, setMediaFiles] = useState<{ fileName: string; fileSize: number; data: string }[]>([]); // Медиафайлы
-  const [date, setDate] = useState<number | null>(null); // Дата отправки
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [mediaFiles, setMediaFiles] = useState<
+    Array<{ fileName: string; fileSize: number; data: string }>
+  >([]);
+  const [date, setDate] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isComplited, setIsComplited] = useState<boolean>(false);
+
+  // Сброс формы
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setMediaFiles([]);
+    setDate(null);
+    setSelectedTags([]);
+  };
 
   // Обработчик отправки формы
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
 
-    // Проверяем наличие данных
-    if (!title || !text || !date || selectedTags.length === 0) {
-      alert("Заполните все поля!");
+    // Проверка заполненности полей
+    if (!title || !description || !date || selectedTags.length === 0) {
+      setError("Заполните все поля");
       return;
     }
 
-    // Формируем массив файлов в нужном формате
-    const files = mediaFiles.map((file) => ({
-      fileName: file.fileName,
-      fileSize: file.fileSize,
-      data: file.data.split(",")[1], // Отделяем base64 от префикса типа данных
-    }));
-
-    // Извлекаем только ID-шники из массива selectedTags
     const tagIds = selectedTags.map((tag) => tag.id);
 
-    // Вызов функции для добавления уведомления
     try {
-      await addNotif(title, text, files, tagIds, date);
+      // Отправка данных
+      await addNotif(title, description, mediaFiles, tagIds, date);
 
-      alert("Уведомление успешно отправлено!");
+      // Успешное завершение
+      setError(null);
+      setIsComplited(true);
+
+      // Сброс формы
+      resetForm();
+
+      // Убираем модалку через несколько секунд
+      setTimeout(() => {
+        setIsComplited(false);
+      }, 3000); // Модалка будет видна 3 секунды
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
-      alert("Не удалось отправить уведомление.");
-    }
-  };
-
-  // Обработчик для файлов
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const filePromises = Array.from(files).map((file) =>
-          new Promise<{ fileName: string; fileSize: number; data: string }>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              // Чтение файла как base64
-              resolve({
-                fileName: file.name,
-                fileSize: file.size,
-                data: reader.result as string,
-              });
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(file); // Чтение файла как base64
-          })
-      );
-
-      Promise.all(filePromises)
-          .then((base64Files) => setMediaFiles(base64Files)) // Обновляем состояние с файлами
-          .catch((error) => console.error("Ошибка при чтении файлов:", error));
+      setError("Не удалось отправить уведомление");
     }
   };
 
   return (
-      <Form onSubmit={handleSubmit}>
-        <Flex>
-          <PlainTitle>Название уведомления</PlainTitle>
-          <Container $border={16} $width={"100%"}>
-            <Textarea
-                placeholder="Введите название"
-                rows={2}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            ></Textarea>
+    <Form onSubmit={handleSubmit}>
+      <Flex $gap={10}>
+        <PlainTitle>Название уведомления</PlainTitle>
+        <Container $border={16} $width={"30%"}>
+          <Textarea
+            placeholder="Введите название"
+            rows={2}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          ></Textarea>
+        </Container>
+      </Flex>
+
+      <Flex $gap={10}>
+        <PlainTitle>Текст уведомления</PlainTitle>
+        <Container $border={16} $width={"100%"}>
+          <Textarea
+            placeholder="Введите текст"
+            rows={10}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></Textarea>
+        </Container>
+      </Flex>
+
+      <Flex $gap={10}>
+        <PlainTitle>Прикрепленные медиа</PlainTitle>
+        <MediaItem onFilesChange={setMediaFiles} />
+      </Flex>
+
+      <Flex $gap={10}>
+        <PlainTitle>Получатели</PlainTitle>
+        <Flex $direction={"row"} $align={"center"} $gap={10}>
+          <TagList initialTags={selectedTags} />
+
+          <CustomButton type="button" $style="blue" onClick={openModal}>
+            <Plus />
+          </CustomButton>
+          <AddTag />
+        </Flex>
+      </Flex>
+
+      <Flex $gap={10}>
+        <PlainTitle>Дата отправки</PlainTitle>
+        <Flex $direction={"row"} $gap={10}>
+          <Container $border={16}>
+            <Calendar onChange={(newDate) => setDate(newDate)} />
           </Container>
+
+          <CustomButton type="submit" $style="blue">
+            Отправить <Arrow />
+          </CustomButton>
         </Flex>
 
-        <Flex>
-          <PlainTitle>Текст уведомления</PlainTitle>
-          <Container $border={16} $width={"100%"}>
-            <Textarea
-                placeholder="Введите текст"
-                rows={10}
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-            ></Textarea>
-          </Container>
-        </Flex>
+        {error && <Error>{error}</Error>}
 
-        <Flex>
-          <PlainTitle>Прикрепленные медиа</PlainTitle>
-          <input type="file" multiple onChange={handleFileChange} /> {/* Поле для загрузки файлов */}
-        </Flex>
-
-        <Flex>
-          <PlainTitle>Получатели</PlainTitle>
-
-          <Flex>
-            <TagList initialTags={selectedTags} />
-
-            <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
-              +
-            </CustomButton>
-
-            <AddTag />
-          </Flex>
-        </Flex>
-
-        <Flex>
-          <PlainTitle>Дата отправки</PlainTitle>
-
-          <Flex $direction={"row"}>
-            <Container $border={16}>
-              <Flex $direction={"row"}>
-                <Calendar onChange={(newDate) => setDate(newDate)} />
-              </Flex>
-            </Container>
-
-            <CustomButton type={"submit"} $style={"blue"}>
-              Отправить <ArrowSvg />
-            </CustomButton>
-          </Flex>
-        </Flex>
-      </Form>
+        {isComplited && (
+          <ModalWindow open={isComplited}>
+            <Flex $direction="column" $align="center" $gap={16}>
+              <ComplitedSvg />
+              <p>Уведомление успешно отправлено!</p>
+            </Flex>
+          </ModalWindow>
+        )}
+      </Flex>
+    </Form>
   );
 };
 

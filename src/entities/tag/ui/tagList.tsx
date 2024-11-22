@@ -23,7 +23,7 @@ export const TagList: React.FC<TagListProps> = ({ initialTags = [] }) => {
   };
   return (
     <article>
-      <Flex $direction={"row"} $wrap={true}>
+      <Flex $direction={"row"} $wrap={true} $align={"center"}>
         {initialTags.length !== 0 ? (
           initialTags.map((tag) => (
             <Tag

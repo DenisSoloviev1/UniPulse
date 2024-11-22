@@ -9,6 +9,7 @@ export const Flex = styled.div<{
   $wrap?: boolean;
 }>`
   width: 100%;
+  min-height: 40px;
   display: flex;
   flex-direction: ${(props) => props.$direction ?? "column"};
   justify-content: ${(props) => props.$justify ?? "flex-start"};

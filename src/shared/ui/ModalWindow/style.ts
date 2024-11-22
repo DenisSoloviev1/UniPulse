@@ -2,14 +2,13 @@ import styled from "styled-components";
 import "../../variables.scss";
 
 export const Modal = styled.div<{
-  $show: boolean;
 }>`
   width: 100vw;
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
-  display: ${(props) => (props.$show ? "flex" : "none")};
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;

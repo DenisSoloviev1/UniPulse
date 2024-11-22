@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   overflow-y: auto;
-  gap: 30px;
+  gap: 40px;
 
   svg {
     max-width: 40%;

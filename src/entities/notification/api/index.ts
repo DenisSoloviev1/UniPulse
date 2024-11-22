@@ -13,15 +13,14 @@ import { INotif } from "../model";
 export const addNotif = async (
   title: string,
   description: string,
-  files: [],
-  tags: ITag[],
-  time: number,
+  files: any[],
+  tags: ITag["id"][],
+  time: number
 ): Promise<INotif> => {
-  console.log('files', files)
   const response = await apiRequest<INotif>("POST", "/api/notifications", {
     title,
     description,
-    files: files,
+    files,
     tags,
     time,
   });
@@ -49,6 +48,7 @@ export const getNotifs = async (): Promise<INotif[]> => {
  * @param id - id редактируемого уведомления.
  * @param title - Название уведомления.
  * @param description - Описание уведомления.
+ * @param files - Прикреплённые файлы.
  * @param tags - Теги, которые получат это уведомление.
  * @param time - Время отправки.
  * @returns Promise с данными созданного уведомления.
@@ -57,17 +57,21 @@ export const editNotif = async (
   id: number,
   title: string,
   description: string,
-  // files: []
+  files: any[],
   tags: ITag[],
-  time: number,
+  time: number
 ): Promise<INotif> => {
-  const response = await apiRequest<INotif>("POST", `/api/notifications/${id}`, {
-    title,
-    description,
-    // files: []
-    tags,
-    time,
-  });
+  const response = await apiRequest<INotif>(
+    "POST",
+    `/api/notifications/${id}`,
+    {
+      title,
+      description,
+      files,
+      tags,
+      time,
+    }
+  );
 
   if (!response.success) {
     throw new Error(response.error || "Ошибка при редактировании уведомления.");
@@ -80,12 +84,14 @@ export const editNotif = async (
  * @param id - id уведомления.
  * @returns Promise с данными удалённого уведомления.
  */
-export const deleteTag = async (
-  id: number,
-): Promise<INotif> => {
-  const response = await apiRequest<INotif>("POST", "/api/notifications/delete", {
-    id
-  });
+export const deleteTag = async (id: number): Promise<INotif> => {
+  const response = await apiRequest<INotif>(
+    "POST",
+    "/api/notifications/delete",
+    {
+      id,
+    }
+  );
 
   if (!response.success) {
     throw new Error(response.error || "Ошибка при удалении уведомления.");
@@ -98,13 +104,16 @@ export const deleteTag = async (
  * @param id - id уведомления.
  * @returns Promise с данными подтверждаемого уведомления.
  */
-export const submitTag = async (
-  id: number,
-): Promise<INotif> => {
-  const response = await apiRequest<INotif>("POST", `/api/notifications/${id}/submit`);
+export const submitTag = async (id: number): Promise<INotif> => {
+  const response = await apiRequest<INotif>(
+    "POST",
+    `/api/notifications/${id}/submit`
+  );
 
   if (!response.success) {
-    throw new Error(response.error || "Ошибка при подтверждении создания уведомления.");
+    throw new Error(
+      response.error || "Ошибка при подтверждении создания уведомления."
+    );
   }
   return response.data;
 };

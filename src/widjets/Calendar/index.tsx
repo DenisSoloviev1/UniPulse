@@ -19,7 +19,7 @@ export const CalendarContainer = styled.div`
 registerLocale("ru", ru);
 
 interface CalendarProps {
-  onChange: (date: number | null) => void; // Передаем timestamp в родительский компонент
+  onChange: (date: number | null) => void; 
 }
 
 const Calendar: React.FC<CalendarProps> = ({ onChange }) => {

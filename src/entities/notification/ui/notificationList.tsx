@@ -35,7 +35,7 @@ export const NotifList: React.FC<NotifListProps> = ({ title }) => {
 
   return (
     <article style={{ width: "100%" }}>
-      <Flex $gap={20}>
+      <Flex $gap={10}>
         <PlainTitle>{title}</PlainTitle>
         {isLoadingNotifs ? (
           Array.from({ length: 3 }).map((_, index) => (
@@ -46,7 +46,7 @@ export const NotifList: React.FC<NotifListProps> = ({ title }) => {
             <Notif
               key={notifItem.id}
               title={notifItem.title}
-              text={notifItem.description}
+              description={notifItem.description}
               id={notifItem.id}
               tags={notifItem.tags}
             />
