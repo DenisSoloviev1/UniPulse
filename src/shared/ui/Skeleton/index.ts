@@ -5,19 +5,18 @@ export const Skeleton = styled.div<{ $width?: string; $height?: string }>`
 background-color: var(--color-background-container); /* Цвет скелетона */
   border-radius: 16px; /* Закругление углов */
   width: ${({ $width }) => $width || "100%"};
-  max-width: 130px;
   height: ${({ $height }) => $height || "40px"};
   animation: shimmer 2s infinite linear;
 
   @keyframes shimmer {
     0% {
-      background-position: -200px 0;
+      background-position: 100% 0;
     }
     95% {
-      background-position: 200px 0;
+      background-position: -100% 0;
     }
     100% {
-      background-position: 200px 0;
+      background-position: -100% 0;
     }
   }
 

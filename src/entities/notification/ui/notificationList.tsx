@@ -35,11 +35,11 @@ export const NotifList: React.FC<NotifListProps> = ({ title }) => {
 
   return (
     <article style={{ width: "100%" }}>
-      <Flex $direction="column" $gap={20}>
+      <Flex $gap={20}>
         <PlainTitle>{title}</PlainTitle>
         {isLoadingNotifs ? (
-          Array.from({ length: 7 }).map((_, index) => (
-            <Skeleton key={index} $height="100px" />
+          Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton key={index} $height="150px" />
           ))
         ) : notifs.length !== 0 ? (
           notifs.map((notifItem) => (

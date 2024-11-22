@@ -1,11 +1,11 @@
 import { lazy } from "react";
-import { IPrivateRoute, RolesDict } from "../../shared/types";
+import { IPrivateRoute, RolesDict, Routes } from "../../shared/types";
 
 export const privateRoutes: IPrivateRoute[] = [
 
   {
     id: 0,
-    path: "/callback",
+    path: Routes.CALLBACK,
     component: lazy(() =>
       import("../../entities/auth/api/callback").then((module) => ({
         default: module.Callback,
@@ -22,7 +22,7 @@ export const privateRoutes: IPrivateRoute[] = [
   },
   {
     id: 1,
-    path: "/addNotif",
+    path: Routes.ADDNOTIF,
     component: lazy(() =>
       import("../AddNotif").then((module) => ({ default: module.AddNotif }))
     ),
@@ -36,7 +36,7 @@ export const privateRoutes: IPrivateRoute[] = [
   },
   {
     id: 2,
-    path: "/myNotif",
+    path: Routes.MYNOTIF,
     component: lazy(() =>
       import("../MyNotif").then((module) => ({ default: module.MyNotif }))
     ),

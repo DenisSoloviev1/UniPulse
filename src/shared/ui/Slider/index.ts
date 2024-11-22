@@ -7,10 +7,11 @@ export const Slider = styled.div<{
   $height?: number;
 }>`
   display: flex;
+  align-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
   min-height: 100px;
-  height:${(props) => (props.$height ? `${props.$height}px` : ``)};
+  height: ${(props) => (props.$height ? `${props.$height}px` : `auto`)};
   overflow-y: scroll;
   overflow-x: hidden;
   gap: ${(props) => (props.$gap ? `${props.$gap}px` : "5px")};

@@ -15,6 +15,7 @@ type ValueOf<T> = T[keyof T];
 export enum Routes {
   AUTH = "/",
   NOTFOUND = "*",
+  CALLBACK = "/callback",
   ADDNOTIF = "/addNotif",
   MYNOTIF = "/myNotif",
 }

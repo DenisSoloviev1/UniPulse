@@ -7,12 +7,12 @@ import {
   PlainTitle,
   ModalWindow,
   Slider,
+  Loader, Skeleton
 } from "../../shared/ui";
 import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
 import { TagList } from "../../entities/tag";
 import { addTag } from "../../entities/tag";
 import { Cat, DoneSvg } from "../../shared/ui/Icon";
-import { Loader, Skeleton } from "../../shared/ui";
 import { useTagStore, getTags, subscribeToTag } from "../../entities/tag";
 
 const AddTag: React.FC = () => {
@@ -159,7 +159,7 @@ const AddTag: React.FC = () => {
             <Slider $height={90}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
-                  <Skeleton key={index} $width="130px"/>
+                  <Skeleton key={index} $width="125px"/>
                 ))
               ) : (
                 <TagList initialTags={tags} />

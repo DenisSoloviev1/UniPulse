@@ -11,7 +11,7 @@ export interface INav {
 export const NavItems: INav[] = [
   {
     id: 0,
-    path: Routes.ADDNotif,
+    path: Routes.ADDNOTIF,
     label: "Создание",
     allowedRoles: [
       RolesDict.ADMIN,
@@ -22,7 +22,7 @@ export const NavItems: INav[] = [
   },
   {
     id: 1,
-    path: Routes.MYNotif,
+    path: Routes.MYNOTIF,
     label: "Профиль",
     allowedRoles: [
       RolesDict.ADMIN,
