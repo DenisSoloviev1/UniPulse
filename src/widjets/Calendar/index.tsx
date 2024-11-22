@@ -12,24 +12,27 @@ export const CalendarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 220px;
-  height: 300px
+  height: 300px;
   font-size: 16px;
-}`;
+`;
 
 registerLocale("ru", ru);
 
-const Calendar: React.FC = () => {
+interface CalendarProps {
+  onChange: (date: number | null) => void; // Передаем timestamp в родительский компонент
+}
+
+const Calendar: React.FC<CalendarProps> = ({ onChange }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
+    onChange(date ? Math.floor(date.getTime() / 1000) : null); // Передаем timestamp в секундах
   };
 
   const filterTime = (time: Date) => {
     const now = new Date();
-    const selectedDateWithoutTime = selectedDate
-      ? new Date(selectedDate)
-      : null;
+    const selectedDateWithoutTime = selectedDate ? new Date(selectedDate) : null;
 
     if (selectedDateWithoutTime) {
       selectedDateWithoutTime.setHours(time.getHours());
@@ -41,21 +44,21 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <CalendarContainer>
-      <DatePicker
-        selected={selectedDate || null}
-        onChange={handleDateChange}
-        showTimeSelect // Показ времени
-        dateFormat="d MMMM yyyy  HH:mm" // Формат даты и времени
-        timeFormat="HH:mm" // 24-часовой формат
-        minDate={new Date()}
-        locale="ru" // Указываем локализацию
-        placeholderText="__ ______ ____  __:__"
-        timeIntervals={30} // Интервалы времени (например, каждые 30 минут)
-        filterTime={filterTime} // Применение фильтра для времени
-      />
-      <CalendarSvg />
-    </CalendarContainer>
+      <CalendarContainer>
+        <DatePicker
+            selected={selectedDate || null}
+            onChange={handleDateChange}
+            showTimeSelect
+            dateFormat="d MMMM yyyy  HH:mm"
+            timeFormat="HH:mm"
+            minDate={new Date()}
+            locale="ru"
+            placeholderText="__ ______ ____  __:__"
+            timeIntervals={30}
+            filterTime={filterTime}
+        />
+        <CalendarSvg />
+      </CalendarContainer>
   );
 };
 

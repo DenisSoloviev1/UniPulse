@@ -11,15 +11,17 @@ export const Notif: React.FC<INotif> = ({ title, text, id, tags }) => {
         <Title>{title}</Title>
         <Text>{text}</Text>
         <Flex $direction={"row"}>
-          {tags.map((tag) => (
-            <Tag
-              key={tag.id}
-              id={tag.id}
-              name={tag.name}
-              color={"light"}
-              isActive={false}
-            />
-          ))}
+            {tags[0] !== null ?
+
+                (tags.map((tag) => (
+                <Tag
+                key={tag.id}
+            id={tag.id}
+            name={tag.name}
+            color={"light"}
+            isActive={false}
+        />
+          ))): null}
         </Flex>
       </Flex>
     </Container>
