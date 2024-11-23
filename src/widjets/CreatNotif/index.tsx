@@ -132,7 +132,7 @@ const CreatNotif: React.FC = () => {
         {error && <Error>{error}</Error>}
 
           <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
-            <Flex $direction="column" $align="center" $gap={16}>
+            <Flex $direction="column" $align="center" $gap={15}>
               <ComplitedSvg />
             </Flex>
           </ModalWindow>

@@ -3,7 +3,6 @@ import "../../variables.scss";
 
 export const CustomButton = styled.button<{
   $style?: "gray" | "blue";
-  $close?: boolean;
   $width?: string;
 }>`
   display: flex;
@@ -15,11 +14,11 @@ export const CustomButton = styled.button<{
   border-radius: 16px;
   transition: all 0.3s ease-in-out;
   gap: 15px;
+  padding: 10px;
 
   ${(props) =>
     props.$style === "gray" &&
     `
-      padding: 10px 15px;
       color: var(--color-font-active);
       background-color: var(--color-background-container);
       border: 2px solid var(--color-background-container);
@@ -32,7 +31,6 @@ export const CustomButton = styled.button<{
   ${(props) =>
     props.$style === "blue" &&
     `
-      padding: 10px;
       color: var(--color-background);
       border: 2px solid var(--color-action);
       background-color: var(--color-action);
@@ -51,19 +49,4 @@ export const CustomButton = styled.button<{
       }
       }
   `}
-
-  ${(props) =>
-    props.$close &&
-    `background-color: transparent;
-          border: 0;
-          position: absolute;
-          top: -10px;
-          right: -10px;
-          padding: 0;
-  
-          svg {
-            width: 30px;
-            fill: var(--color-delete);
-          }
-        `}
 `;

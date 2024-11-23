@@ -1,8 +1,8 @@
 import React from "react";
 import { NotifList } from "../../entities/notification";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import { Slider } from "../../shared/ui";
 import { ModalWindow } from "../../shared/ui";
+import { Slider } from "../../shared/ui";
 
 const Push: React.FC = () => {
   const closeModal = useModalStore((state) => state.close);
@@ -14,9 +14,7 @@ const Push: React.FC = () => {
       show={isOpenPush}
       position={["60px", "", "", "10px"]}
       width={"80%"}
-
     >
-
       <Slider $padding={5}>
         <NotifList title={"Неподтвержденные пульсы"} />
       </Slider>

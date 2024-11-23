@@ -30,7 +30,6 @@ export const MainWrapper = styled.div`
   overflow-x: hidden;
 
   @media screen and (min-width: 1321px) {
-    margin: 0 auto 20px;
     border-radius: 0 0 30px 30px;
     height: 85vh;
     min-height: 85vh;

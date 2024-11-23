@@ -117,7 +117,7 @@ const AddTag: React.FC = () => {
         <>
           <Flex>
             <PlainTitle>Существующие теги</PlainTitle>
-            <Slider $height={100}>
+            <Slider $height={100} $wrap={true}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
                   <Skeleton key={index} $width="125px" />
@@ -159,7 +159,7 @@ const AddTag: React.FC = () => {
         <>
           <Flex>
             <PlainTitle>Подписаться на тег</PlainTitle>
-            <Slider $height={100}>
+            <Slider $height={100} $wrap={true}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
                   <Skeleton key={index} $width="125px" />

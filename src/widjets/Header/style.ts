@@ -16,10 +16,12 @@ export const HeaderWrapper = styled.div`
   width: 100%;
   min-width: 320px;
   max-width: 1320px;
-  padding: 15px;
+  padding: 10px 30px;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   background-color: var(--color-background);
   border: 2px solid var(--color-background-container);
 
@@ -30,7 +32,6 @@ export const HeaderWrapper = styled.div`
   }
 
   @media screen and (min-width: 1321px) {
-    margin: 20px auto 0;
     border-radius: 30px 30px 0 0;
     padding: 20px 30px;
   }

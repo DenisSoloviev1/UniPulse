@@ -20,10 +20,12 @@ export const MenuContainer = styled.div`
     display: flex;
   }
 `;
-export const Menu: React.FC = () => {
+ const Menu: React.FC = () => {
   return (
     <MenuContainer>
       <NavBar />
     </MenuContainer>
   );
 };
+
+export default Menu;

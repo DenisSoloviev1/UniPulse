@@ -34,7 +34,6 @@ export const NavItems: INav[] = [
       RolesDict.MEDIA,
       RolesDict.EDITOR,
       RolesDict.PUBLISHER,
-      RolesDict.USER,
     ],
   },
   {

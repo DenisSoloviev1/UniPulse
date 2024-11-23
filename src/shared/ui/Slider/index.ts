@@ -5,10 +5,17 @@ export const Slider = styled.div<{
   $padding?: number;
   $gap?: number;
   $height?: number;
+  $wrap?: boolean;
 }>`
   display: flex;
+  ${(props) =>
+    props.$wrap
+      ? `flex-wrap: wrap;  
+         
+    `
+      : `flex-direction: column;`}
   align-content: flex-start;
-  flex-wrap: wrap;
+
   width: 100%;
   min-height: 100px;
   height: ${(props) => (props.$height ? `${props.$height}px` : `auto`)};

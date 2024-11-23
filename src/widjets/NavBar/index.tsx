@@ -19,13 +19,13 @@ export const Nav = styled.nav`
 
   .active {
     text-decoration: underline;
-    transition: all .3s easi-in-out;
+    transition: all 0.3s easi-in-out;
 
     svg {
       position: relative;
       bottom: 5px;
       transform: scale(1.2);
-filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .4));
+      filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.4));
     }
   }
 
