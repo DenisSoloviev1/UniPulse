@@ -4,7 +4,7 @@ import { Container, Flex } from "../../../shared/ui";
 import { Tag } from "../../tag";
 import { INotif } from "../model";
 
-export const Notif: React.FC<INotif> = ({ title, description, id, tags }) => {
+export const Notif: React.FC<INotif> = ({ title, description, tags }) => {
   return (
     <Container $active={false} $width={"100%"}>
       <Flex $gap={15}>

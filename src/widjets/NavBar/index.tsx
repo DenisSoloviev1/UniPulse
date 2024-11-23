@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuthStore } from "../../entities/auth";
-import { usePushStore } from "../../shared/ui/ModalWindow/store";
 import { Bell } from "../../shared/ui";
 import { NavItems, INav } from "./constants";
 import styled from "styled-components";
@@ -15,13 +14,10 @@ export const Nav = styled.nav`
 
 export const NavBar: React.FC = () => {
   const { role, resetAuth } = useAuthStore((state) => state);
-  const closePush = usePushStore((state) => state.close);
-  const openPush = usePushStore((state) => state.open);
-  const isOpen = usePushStore((state) => state.isOpen);
 
   return (
     <Nav>
-      <Bell onClick={isOpen ? closePush : openPush} count={5} />
+      <Bell />
 
       {NavItems.filter(
         (link: INav) =>

@@ -3,7 +3,7 @@ import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import AddTag from "../../widjets/AddTag";
 import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
-import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
+import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import { NotifList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
 import { useTagStore, getSubscriptions } from "../../entities/tag";
@@ -24,7 +24,7 @@ export const MyNotif: React.FC = () => {
     setUserId(event.target.value);
   };
 
-  const openModal = useAddTagStore((state) => state.open);
+  const openAddTag = useModalStore((state) => state.open);
 
   useEffect(() => {
     if (!token) return;
@@ -90,7 +90,7 @@ export const MyNotif: React.FC = () => {
 
           <Flex $direction={"row"} $align={"center"} $gap={10}>
             <TagList initialTags={subscriptionTags} />
-            <CustomButton type={"button"} $style={"blue"} onClick={openModal}>
+            <CustomButton type={"button"} $style={"blue"} onClick={()=>openAddTag("AddTag")}>
               <Plus/>
             </CustomButton>
             <AddTag />

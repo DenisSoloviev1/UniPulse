@@ -8,7 +8,7 @@ import {
   ModalWindow,
 } from "../../shared/ui/index.ts";
 import Calendar from "../Calendar";
-import { useAddTagStore } from "../../shared/ui/ModalWindow/store.ts";
+import { useModalStore } from "../../shared/ui/ModalWindow/store.ts";
 import { useTagStore, TagList } from "../../entities/tag";
 import { Arrow, Plus, ComplitedSvg } from "../../shared/ui/Icon";
 import AddTag from "../AddTag/index.tsx";
@@ -16,7 +16,10 @@ import { addNotif } from "../../entities/notification";
 import { MediaItem } from "../../shared/ui/MediaItem";
 
 const CreatNotif: React.FC = () => {
-  const openModal = useAddTagStore((state) => state.open);
+  const openModal = useModalStore((state) => state.open);
+  const closeModal = useModalStore((state) => state.close);
+  const isComplited = useModalStore((state) => state.isOpen("Complited"));
+
   const { selectedTags, setSelectedTags } = useTagStore();
 
   // Состояния для формы
@@ -27,7 +30,6 @@ const CreatNotif: React.FC = () => {
   >([]);
   const [date, setDate] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isComplited, setIsComplited] = useState<boolean>(false);
 
   // Сброс формы
   const resetForm = () => {
@@ -57,18 +59,18 @@ const CreatNotif: React.FC = () => {
 
       // Успешное завершение
       setError(null);
-      setIsComplited(true);
-
+      openModal("Complited");
       // Сброс формы
       resetForm();
 
       // Убираем модалку через несколько секунд
       setTimeout(() => {
-        setIsComplited(false);
+        closeModal("Complited");
       }, 3000); // Модалка будет видна 3 секунды
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
       setError("Не удалось отправить уведомление");
+      closeModal("Complited");
     }
   };
 
@@ -108,7 +110,7 @@ const CreatNotif: React.FC = () => {
         <Flex $direction={"row"} $align={"center"} $gap={10}>
           <TagList initialTags={selectedTags} />
 
-          <CustomButton type="button" $style="blue" onClick={openModal}>
+          <CustomButton type="button" $style="blue" onClick={()=>openModal("AddTag")}>
             <Plus />
           </CustomButton>
           <AddTag />
@@ -129,14 +131,11 @@ const CreatNotif: React.FC = () => {
 
         {error && <Error>{error}</Error>}
 
-        {isComplited && (
-          <ModalWindow open={isComplited}>
+          <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
             <Flex $direction="column" $align="center" $gap={16}>
               <ComplitedSvg />
-              <p>Уведомление успешно отправлено!</p>
             </Flex>
           </ModalWindow>
-        )}
       </Flex>
     </Form>
   );

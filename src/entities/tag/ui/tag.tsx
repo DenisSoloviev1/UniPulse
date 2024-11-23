@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, CustomButton } from "../../../shared/ui";
-import { Close } from "../../../shared/ui/Icon";
+import { Container } from "../../../shared/ui";
 import { ITag } from "../model";
 
 interface PropsTag {
@@ -24,7 +23,7 @@ export const Tag: React.FC<PropsTag> = ({
       $border={16}
       $padding={[10, 15]}
       $active={isActive}
-      onClick={onClick}
+      onClick={()=>onClick}
     >
       <p id={`${id}`}>{name}</p>
     </Container>

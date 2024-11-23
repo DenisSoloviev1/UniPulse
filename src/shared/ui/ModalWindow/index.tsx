@@ -1,19 +1,33 @@
 import React, { ReactNode } from "react";
 import { Modal, ModalContent } from "./style.ts";
-import { useAddTagStore } from "../ModalWindow/store";
+// import { useModalStore } from "../ModalWindow/store";
 
 interface ModalWindowProps {
   children: ReactNode;
-  open?: boolean;
+  onClick: () => void;
+  show?: boolean;
+  background?: boolean;
+  width?: string;
+  height?: string;
 }
 
-export const ModalWindow: React.FC<ModalWindowProps> = ({ children, open }) => {
-  const closeModal = useAddTagStore((state) => state.close);
-  const isOpen = useAddTagStore((state) => state.isOpen);
+export const ModalWindow: React.FC<ModalWindowProps> = ({
+  children,
+  onClick,
+  show,
+  background = true,
+  width,
+  height,
+}) => {
+  // const closeModal = useModalStore((state) => state.close);
 
-  return isOpen || open ? (
-    <Modal onClick={closeModal}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
+  return show ? (
+    <Modal onClick={onClick} $background={background}>
+      <ModalContent
+        onClick={(e) => e.stopPropagation()}
+        $width={width}
+        $height={height}
+      >
         {children}
       </ModalContent>
     </Modal>

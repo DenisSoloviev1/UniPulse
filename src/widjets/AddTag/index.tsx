@@ -7,9 +7,10 @@ import {
   PlainTitle,
   ModalWindow,
   Slider,
-  Loader, Skeleton
+  Loader,
+  Skeleton,
 } from "../../shared/ui";
-import { useAddTagStore } from "../../shared/ui/ModalWindow/store";
+import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import { TagList } from "../../entities/tag";
 import { addTag } from "../../entities/tag";
 import { Cat, ComplitedSvg } from "../../shared/ui/Icon";
@@ -23,7 +24,9 @@ const AddTag: React.FC = () => {
   const [tagName, setTagName] = useState<string>("");
   const [tagDescription, setTagDescription] = useState<string>("");
 
-  const closeModal = useAddTagStore((state) => state.close);
+  const closeModal = useModalStore((state) => state.close);
+  const isOpenAddTag = useModalStore((state) => state.isOpen("AddTag"));
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true); // Новый флаг для загрузки тегов
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -42,7 +45,7 @@ const AddTag: React.FC = () => {
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
       } finally {
-        setIsLoadingTags(false); 
+        setIsLoadingTags(false);
       }
     };
 
@@ -60,7 +63,7 @@ const AddTag: React.FC = () => {
       setIsSuccess(true);
 
       setTimeout(() => {
-        closeModal();
+        closeModal("AddTag");
         setIsSuccess(false);
       }, 1500);
     } catch (error) {
@@ -94,7 +97,7 @@ const AddTag: React.FC = () => {
       setIsSuccess(true);
 
       setTimeout(() => {
-        closeModal();
+        closeModal("AddTag");
         setIsSuccess(false);
       }, 1500);
     } catch (error) {
@@ -105,7 +108,7 @@ const AddTag: React.FC = () => {
   };
 
   return (
-    <ModalWindow>
+    <ModalWindow show={isOpenAddTag} onClick={() => closeModal("AddTag")}>
       {isLoading ? (
         <Loader $size="200px" />
       ) : isSuccess ? (
@@ -159,7 +162,7 @@ const AddTag: React.FC = () => {
             <Slider $height={90}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
-                  <Skeleton key={index} $width="125px"/>
+                  <Skeleton key={index} $width="125px" />
                 ))
               ) : (
                 <TagList initialTags={tags} />
