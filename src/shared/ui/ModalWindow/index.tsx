@@ -1,32 +1,30 @@
 import React, { ReactNode } from "react";
 import { Modal, ModalContent } from "./style.ts";
-// import { useModalStore } from "../ModalWindow/store";
 
 interface ModalWindowProps {
   children: ReactNode;
   onClick: () => void;
   show?: boolean;
-  background?: boolean;
   width?: string;
   height?: string;
+  position?: string[];
 }
 
 export const ModalWindow: React.FC<ModalWindowProps> = ({
   children,
   onClick,
   show,
-  background = true,
   width,
   height,
+  position = [],
 }) => {
-  // const closeModal = useModalStore((state) => state.close);
-
   return show ? (
-    <Modal onClick={onClick} $background={background}>
+    <Modal onClick={() => onClick} $background={position.length === 0}>
       <ModalContent
         onClick={(e) => e.stopPropagation()}
         $width={width}
         $height={height}
+        $position={position}
       >
         {children}
       </ModalContent>

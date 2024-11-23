@@ -23,7 +23,11 @@ export const Modal = styled.div<{ $background?: boolean }>`
   `}
 `;
 
-export const ModalContent = styled.div<{ $width?: string; $height?: string }>`
+export const ModalContent = styled.div<{
+  $width?: string;
+  $height?: string;
+  $position?: string[];
+}>`
   max-width: 450px;
   width: ${(props) => (props.$width ? props.$width : `80%`)};
   height: ${(props) => (props.$height ? props.$height : `330px`)};
@@ -38,4 +42,14 @@ export const ModalContent = styled.div<{ $width?: string; $height?: string }>`
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
   position: relative;
   gap: 10px;
+
+  ${(props) => {
+    const [top, left, bottom, right] = props.$position || [];
+    return `
+      ${top ? `top: ${top};` : ""}
+      ${left ? `left: ${left};` : ""}
+      ${bottom ? `bottom: ${bottom};` : ""}
+      ${right ? `right: ${right};` : ""}
+    `;
+  }}
 `;
