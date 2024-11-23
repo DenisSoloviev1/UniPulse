@@ -1,28 +1,26 @@
 import React from "react";
 import { NotifList } from "../../entities/notification";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import { PushContainer, Head } from "./style.ts";
 import { Slider } from "../../shared/ui";
-import { Back } from "../../shared/ui/Icon";
+import { ModalWindow } from "../../shared/ui";
 
 const Push: React.FC = () => {
-  const closePush = useModalStore((state) => state.close);
-  const isOpenAddTag = useModalStore((state) => state.isOpen("Push"));
+  const closeModal = useModalStore((state) => state.close);
+  const isOpenPush = useModalStore((state) => state.isOpen("Push"));
 
   return (
-    <PushContainer $show={isOpenAddTag}>
-      <Head>
-        <button onClick={()=>closePush("Push")}>
-          <Back />
-        </button>
+    <ModalWindow
+      onClick={() => closeModal("Push")}
+      show={isOpenPush}
+      position={["60px", "", "", "10px"]}
+      width={"80%"}
 
-        <h4>Уведомления</h4>
-      </Head>
+    >
 
-      <Slider $padding={15}>
+      <Slider $padding={5}>
         <NotifList title={"Неподтвержденные пульсы"} />
       </Slider>
-    </PushContainer>
+    </ModalWindow>
   );
 };
 

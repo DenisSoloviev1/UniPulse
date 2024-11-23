@@ -1,15 +1,44 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuthStore } from "../../entities/auth";
-import { Bell } from "../../shared/ui";
 import { NavItems, INav } from "./constants";
 import styled from "styled-components";
+import "../../shared/Variables.scss";
 
 export const Nav = styled.nav`
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 20px;
+
+  svg {
+    fill: var(--color-action);
+    display: none;
+    height: 25px;
+  }
+
+  .active {
+    text-decoration: underline;
+    transition: all .3s easi-in-out;
+
+    svg {
+      position: relative;
+      bottom: 5px;
+      transform: scale(1.2);
+filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .4));
+    }
+  }
+
+  @media screen and (max-width: 601px) {
+    width: 100%;
+    justify-content: space-evenly;
+    span {
+      display: none;
+    }
+    svg {
+      display: flex;
+    }
+  }
 `;
 
 export const NavBar: React.FC = () => {
@@ -17,8 +46,6 @@ export const NavBar: React.FC = () => {
 
   return (
     <Nav>
-      <Bell />
-
       {NavItems.filter(
         (link: INav) =>
           Array.isArray(link.allowedRoles) && link.allowedRoles.includes(role)
@@ -26,12 +53,11 @@ export const NavBar: React.FC = () => {
         <NavLink
           key={link.id}
           to={link.path}
-          style={({ isActive }) =>
-            isActive ? { textDecoration: "underline" } : {}
-          }
+          className={({ isActive }) => (isActive ? "active" : "")}
           onClick={link.label === "Выйти" ? resetAuth : undefined}
         >
-          {link.label}
+          <span>{link.label}</span>
+          {link.svg}
         </NavLink>
       ))}
     </Nav>

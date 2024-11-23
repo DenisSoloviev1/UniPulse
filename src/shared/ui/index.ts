@@ -8,3 +8,4 @@ export { Loader } from "./Loader";
 export { PlainTitle } from "./PlainTitle";
 export { Slider } from "./Slider";
 export { Skeleton } from "./Skeleton";
+export { Toggler } from "./Toggler";

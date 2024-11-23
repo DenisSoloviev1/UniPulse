@@ -28,7 +28,7 @@ const AddTag: React.FC = () => {
   const isOpenAddTag = useModalStore((state) => state.isOpen("AddTag"));
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true); // Новый флаг для загрузки тегов
+  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true); 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const { tags, selectedTags, setFetchTags, setSelectedTags } = useTagStore();
@@ -117,7 +117,7 @@ const AddTag: React.FC = () => {
         <>
           <Flex>
             <PlainTitle>Существующие теги</PlainTitle>
-            <Slider $height={90}>
+            <Slider $height={100}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
                   <Skeleton key={index} $width="125px" />
@@ -159,7 +159,7 @@ const AddTag: React.FC = () => {
         <>
           <Flex>
             <PlainTitle>Подписаться на тег</PlainTitle>
-            <Slider $height={90}>
+            <Slider $height={100}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
                   <Skeleton key={index} $width="125px" />

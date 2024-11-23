@@ -1,26 +1,18 @@
 import styled from "styled-components";
 import "../../variables.scss";
 
-export const Modal = styled.div<{ $background?: boolean }>`
+export const Modal = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
   display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 2;
-
-  ${(props) =>
-    props.$background
-      ? `
-    background-color: rgba(133, 132, 132, 0.2);
-    backdrop-filter: blur(1px);
-    justify-content: center;
-    align-items: center;
-  `
-      : `
-    background-color: transparent;
-  `}
+  background-color: rgba(133, 132, 132, 0.2);
+  backdrop-filter: blur(1px);
 `;
 
 export const ModalContent = styled.div<{
@@ -28,20 +20,18 @@ export const ModalContent = styled.div<{
   $height?: string;
   $position?: string[];
 }>`
-  max-width: 450px;
-  width: ${(props) => (props.$width ? props.$width : `80%`)};
-  height: ${(props) => (props.$height ? props.$height : `330px`)};
+  width: ${(props) => (props.$width ? props.$width : `450px`)};
+  height: ${(props) => (props.$height ? props.$height : `350px`)};
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-radius: 16px;
   background-color: var(--color-background);
   padding: 10px 20px 20px;
   border: 1px solid var(--color-font-disable);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
-  position: relative;
-  gap: 10px;
+  position: ${(props) => (props.$position ? `absolute` : `relative`)};
 
   ${(props) => {
     const [top, left, bottom, right] = props.$position || [];
@@ -52,4 +42,8 @@ export const ModalContent = styled.div<{
       ${right ? `right: ${right};` : ""}
     `;
   }}
+
+  @media screen and (max-width: 551px) {
+    width: 80%;
+  }
 `;

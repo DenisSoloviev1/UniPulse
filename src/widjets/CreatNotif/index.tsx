@@ -78,7 +78,7 @@ const CreatNotif: React.FC = () => {
     <Form onSubmit={handleSubmit}>
       <Flex $gap={10}>
         <PlainTitle>Название уведомления</PlainTitle>
-        <Container $border={16} $width={"30%"}>
+        <Container $border={16} $width={"40%"}>
           <Textarea
             placeholder="Введите название"
             rows={2}

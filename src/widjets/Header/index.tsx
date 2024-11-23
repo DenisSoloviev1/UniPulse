@@ -2,6 +2,7 @@ import React from "react";
 import { HeaderContainer, HeaderWrapper } from "./style.ts";
 import { Logo } from "../../shared/ui/Icon";
 import { NavBar } from "../NavBar";
+import { Bell, Flex } from "../../shared/ui";
 import Push from "../../widjets/Push";
 
 const Header: React.FC = () => {
@@ -10,9 +11,12 @@ const Header: React.FC = () => {
       <HeaderWrapper>
         <Logo />
 
-        <Push />
+        <Flex $direction={"row"} $align={"center"} $gap={10}>
+          <Bell />
+          <Push />
 
-        <NavBar />
+          <NavBar />
+        </Flex>
       </HeaderWrapper>
     </HeaderContainer>
   );
