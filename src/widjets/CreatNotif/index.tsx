@@ -41,12 +41,31 @@ const CreatNotif: React.FC = () => {
     setSelectedTags([]);
   };
 
-  // Обработчик отправки формы
+// Обновленный обработчик отправки формы с учетом валидации
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    // Проверка заполненности полей
+    // Валидация длины заголовка
+    if (title.length > 40) {
+      setError("Название уведомления должно быть не длиннее 40 символов");
+      return;
+    }
+
+    // Валидация длины описания
+    if (description.length > 300) {
+      setError("Текст уведомления должен быть не длиннее 300 символов");
+      return;
+    }
+
+    // Валидация количества файлов
+    console.log('v',mediaFiles)
+    if (mediaFiles.length > 10) {
+      setError("Можно прикрепить не более 10 файлов");
+      return;
+    }
+
+    // Проверка заполненности остальных полей
     if (!title || !description || !date || selectedTags.length === 0) {
       setError("Заполните все поля");
       return;
@@ -61,19 +80,19 @@ const CreatNotif: React.FC = () => {
       // Успешное завершение
       setError(null);
       openModal("Complited");
-      // Сброс формы
       resetForm();
 
       // Убираем модалку через несколько секунд
       setTimeout(() => {
         closeModal("Complited");
-      }, 3000); // Модалка будет видна 3 секунды
+      }, 3000);
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
       setError("Не удалось отправить уведомление");
       closeModal("Complited");
     }
   };
+
 
   return (
     <Form onSubmit={handleSubmit}>

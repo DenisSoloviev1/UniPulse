@@ -18,8 +18,7 @@ export const MediaItem: React.FC<MediaItemProps> = ({ onFilesChange }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
-      const newMediaFiles: Array<{ src: string; type: string; name: string }> =
-        [];
+      const newMediaFiles: Array<{ src: string; type: string; name: string }> = [];
       const processedFiles: Array<{
         fileName: string;
         fileSize: number;
@@ -32,7 +31,7 @@ export const MediaItem: React.FC<MediaItemProps> = ({ onFilesChange }) => {
 
         reader.onload = (e) => {
           if (e.target?.result) {
-            // Добавляем в состояние для предварительного просмотра
+            // Добавляем в массив для состояния
             newMediaFiles.push({
               src: e.target.result as string,
               type: fileType,
@@ -46,18 +45,18 @@ export const MediaItem: React.FC<MediaItemProps> = ({ onFilesChange }) => {
               data: (e.target.result as string).split(",")[1], // base64
             });
 
-            // Обновляем состояние для предварительного просмотра
-            setMediaFiles((prev) => [...prev, ...newMediaFiles]);
-
-            // Передаём файлы в родительский компонент
-            onFilesChange(processedFiles);
+            // Если все файлы обработаны, обновляем состояние и вызываем callback
+            if (newMediaFiles.length === files.length) {
+              setMediaFiles((prev) => [...prev, ...newMediaFiles]);
+              onFilesChange((prev) => [...prev, ...processedFiles]);
+            }
           }
         };
 
         if (
-          fileType === "image" ||
-          fileType === "video" ||
-          (fileType === "application" && file.name.endsWith(".svg"))
+            fileType === "image" ||
+            fileType === "video" ||
+            (fileType === "application" && file.name.endsWith(".svg"))
         ) {
           reader.readAsDataURL(file);
         } else {
@@ -72,12 +71,15 @@ export const MediaItem: React.FC<MediaItemProps> = ({ onFilesChange }) => {
             fileSize: file.size,
             data: "", // Для не-медиа файлов base64 может отсутствовать
           });
-          setMediaFiles((prev) => [...prev, ...newMediaFiles]);
-          onFilesChange(processedFiles);
+          if (newMediaFiles.length === files.length) {
+            setMediaFiles((prev) => [...prev, ...newMediaFiles]);
+            onFilesChange((prev) => [...prev, ...processedFiles]);
+          }
         }
       });
     }
   };
+
 
   return (
     <Flex $direction={"row"} $align={"center"} $gap={15}>
