@@ -47,55 +47,63 @@ export const MyNotif: React.FC = () => {
     <>
       <Header />
       <Main>
-        <Flex $gap={10}>
-          <PlainTitle>Место отправки уведомлений</PlainTitle>
+        <Flex $gap={20}>
+          <Flex $gap={10}>
+            <PlainTitle>Место отправки уведомлений</PlainTitle>
 
-          <Flex $direction={"row"}>
-            <Container>
-              <label>
-                <input
-                  type="radio"
-                  value="vk"
-                  checked={selectedPlatform === "vk"}
-                  onChange={handlePlatformChange}
-                />
-                Вконтакте
-              </label>
-            </Container>
-            <Container>
-              <label>
-                <input
-                  type="radio"
-                  value="telegram"
-                  checked={selectedPlatform === "telegram"}
-                  onChange={handlePlatformChange}
-                />
-                Телеграм
-              </label>
-            </Container>
-          </Flex>
+            <Flex $direction={"row"}>
+              <Container>
+                <label>
+                  <input
+                    type="radio"
+                    value="vk"
+                    checked={selectedPlatform === "vk"}
+                    onChange={handlePlatformChange}
+                  />
+                  Вконтакте
+                </label>
+              </Container>
+              
+              <Container>
+                <label>
+                  <input
+                    type="radio"
+                    value="telegram"
+                    checked={selectedPlatform === "telegram"}
+                    onChange={handlePlatformChange}
+                  />
+                  Телеграм
+                </label>
+              </Container>
+            </Flex>
 
-          <Container>
+            <Container>
               <input
                 type="text"
                 placeholder={`Введите ID ${selectedPlatform}`}
                 value={userId}
                 onChange={handleUserIdChange}
               />
-          </Container>
-        </Flex>
+            </Container>
+          </Flex>
 
-        <Flex $gap={10}>
-          <PlainTitle>Мои подписки</PlainTitle>
+          <Flex $gap={10}>
+            <PlainTitle>Мои подписки</PlainTitle>
 
-          <Flex $direction={"row"} $align={"center"} $gap={10}>
-            <TagList initialTags={subscriptionTags} />
-            <CustomButton type={"button"} $style={"blue"} onClick={()=>openAddTag("AddTag")}>
-              <Plus/>
-            </CustomButton>
-            <AddTag />
+            <Flex $direction={"row"} $align={"center"} $gap={10}>
+              <TagList initialTags={subscriptionTags} />
+              <CustomButton
+                type={"button"}
+                $style={"blue"}
+                onClick={() => openAddTag("AddTag")}
+              >
+                <Plus />
+              </CustomButton>
+              <AddTag />
+            </Flex>
           </Flex>
         </Flex>
+
         <NotifList title={"Полученные пульсы"} />
       </Main>
     </>

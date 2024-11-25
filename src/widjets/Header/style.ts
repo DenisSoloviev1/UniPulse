@@ -26,8 +26,12 @@ export const HeaderWrapper = styled.div`
   border: 2px solid var(--color-background-container);
 
   @media screen and (max-width: 601px) {
-    nav {
+    a {
       display: none;
+    }
+
+    a[data-id="2"] {
+      display: flex;
     }
   }
 

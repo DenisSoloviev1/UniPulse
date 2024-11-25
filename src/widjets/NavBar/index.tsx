@@ -23,7 +23,7 @@ export const Nav = styled.nav`
 
     svg {
       position: relative;
-      bottom: 5px;
+      bottom: 3px;
       transform: scale(1.2);
       filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.4));
     }
@@ -52,6 +52,7 @@ export const NavBar: React.FC = () => {
       ).map((link: INav) => (
         <NavLink
           key={link.id}
+          data-id={`${link.id}`}
           to={link.path}
           className={({ isActive }) => (isActive ? "active" : "")}
           onClick={link.label === "Выйти" ? resetAuth : undefined}

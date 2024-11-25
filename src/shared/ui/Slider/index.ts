@@ -14,7 +14,7 @@ export const Slider = styled.div<{
          
     `
       : `flex-direction: column;`}
-  align-content: flex-start;
+  align-items: flex-start;
 
   width: 100%;
   min-height: 100px;

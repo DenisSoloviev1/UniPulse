@@ -14,7 +14,6 @@ export const Flex = styled.div<{
   justify-content: ${(props) => props.$justify ?? "flex-start"};
   align-items: ${(props) => props.$align ?? "start"};
   gap: ${(props) => (props.$gap ? `${props.$gap}px` : "5px")};
-  ${(props) =>
-    props.$shadow && `box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);`}
+  ${(props) => props.$shadow && `box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);`}
   flex-wrap: ${(props) => props.$wrap && `wrap`};
 `;

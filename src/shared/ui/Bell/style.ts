@@ -2,14 +2,12 @@ import styled from "styled-components";
 import "../../variables.scss";
 
 export const BellButton = styled.button`
-  width: 30px;
-  height: 30px;
   transition: all 0.2s ease-in-out;
   position: relative;
 
   svg {
-    width: 100%;
-    height: 100%;
+    width: 30px;
+    height: 30px;
     fill: var(--color-action);
   }
   &:hover {
