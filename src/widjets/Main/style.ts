@@ -19,6 +19,7 @@ export const MainContainer = styled.main`
 
 export const MainWrapper = styled.div`
   margin: 0 auto;
+  padding-bottom: 70px;
   width: 100%;
   min-width: 320px;
   max-width: 1320px;
@@ -33,5 +34,6 @@ export const MainWrapper = styled.div`
     border-radius: 0 0 30px 30px;
     height: 85vh;
     min-height: 85vh;
+    padding-bottom: 0;
   }
 `;

@@ -28,7 +28,7 @@ const AddTag: React.FC = () => {
   const isOpenAddTag = useModalStore((state) => state.isOpen("AddTag"));
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true); 
+  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const { tags, selectedTags, setFetchTags, setSelectedTags } = useTagStore();
@@ -127,7 +127,7 @@ const AddTag: React.FC = () => {
               )}
             </Slider>
           </Flex>
-          <Flex>
+          <Flex $width={"100%"}>
             <PlainTitle>Новый тег</PlainTitle>
             <Container $width={"100%"}>
               <input
@@ -145,15 +145,16 @@ const AddTag: React.FC = () => {
                 onChange={(e) => setTagDescription(e.target.value)}
               />
             </Container>
-            <CustomButton
-              type={"button"}
-              onClick={handleCreateTag}
-              $style={"blue"}
-              $width={"100%"}
-            >
-              Создать
-            </CustomButton>
           </Flex>
+
+          <CustomButton
+            type={"button"}
+            onClick={handleCreateTag}
+            $style={"blue"}
+            $width={"70%"}
+          >
+            Создать
+          </CustomButton>
         </>
       ) : (
         <>

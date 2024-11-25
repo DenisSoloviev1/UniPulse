@@ -33,7 +33,6 @@ export const Container = styled.div<{
     ${(props) => props.$active && `cursor: pointer; background-color: #dfdfdf;`}
   }
 
-
   svg {
     width: 25px;
   }
@@ -41,4 +40,5 @@ export const Container = styled.div<{
   input {
     width: 100%;
   }
+
 `;

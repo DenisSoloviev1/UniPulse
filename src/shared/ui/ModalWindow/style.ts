@@ -44,6 +44,6 @@ export const ModalContent = styled.div<{
   }}
 
   @media screen and (max-width: 551px) {
-  width: ${(props) => (props.$width ? props.$width : `80%`)};
+  width: ${(props) => (props.$width ? props.$width : `90%`)};
   }
 `;

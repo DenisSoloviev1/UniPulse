@@ -49,7 +49,7 @@ export const MyNotif: React.FC = () => {
       <Main>
         <Flex $gap={20}>
           <Flex $gap={10}>
-            <PlainTitle>Место отправки уведомлений</PlainTitle>
+            <PlainTitle>Настройка уведомлений</PlainTitle>
 
             <Flex $direction={"row"}>
               <Container>

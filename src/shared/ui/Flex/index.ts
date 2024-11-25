@@ -7,7 +7,9 @@ export const Flex = styled.div<{
   $gap?: number;
   $shadow?: boolean;
   $wrap?: boolean;
+  $width?: string;
 }>`
+width: ${(props) => props.$width ?? ""};
   min-height: 40px;
   display: flex;
   flex-direction: ${(props) => props.$direction ?? "column"};

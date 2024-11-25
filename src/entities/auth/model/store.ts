@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Roles, RolesDict } from "../../../shared/types";
+import { Roles } from "../../../shared/types";
 
 interface IAuthState {
   isAuth: boolean;
@@ -14,8 +14,7 @@ const initialRole = (localStorage.getItem("userRole") as Roles) || "";
 
 export const useAuthStore = create<IAuthState>((set) => ({
   isAuth: initialAuth,
-  // role: initialRole,
-  role: RolesDict.ADMIN,
+  role: initialRole,
   setAuthStatus: (authStatus: boolean) => set({ isAuth: authStatus }),
   setRole: (newRole: Roles) => {
     localStorage.setItem("userRole", newRole);

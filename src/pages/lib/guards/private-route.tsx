@@ -14,22 +14,22 @@ export const PrivateRoute: FC<IPrivateRoute> = ({
   roles,
   isPublic,
 }) => {
-  // const { isAuth, role } = useAuthStore((state) => state);
+  const { isAuth, role } = useAuthStore((state) => state);
 
   // Если страница публичная, рендерим её без проверок
   if (isPublic) {
     return <RouteComponent />;
   }
 
-  // // Если пользователь не авторизован, перенаправляем его на страницу авторизации
-  // if (!isAuth) {
-  //   return <Auth />;
-  // }
+  // Если пользователь не авторизован, перенаправляем его на страницу авторизации
+  if (!isAuth) {
+    return <Auth />;
+  }
 
-  // // Если пользователь авторизован, но его роль не соответствует разрешённым ролям, показываем страницу "Not Found"
-  // if (role && !roles.includes(role as Roles)) {
-  //   return <NotFound />;
-  // }
+  // Если пользователь авторизован, но его роль не соответствует разрешённым ролям, показываем страницу "Not Found"
+  if (role && !roles.includes(role as Roles)) {
+    return <NotFound />;
+  }
 
   // Если пользователь авторизован и его роль совпадает с одной из разрешенных, рендерим компонент страницы
   return <RouteComponent />;

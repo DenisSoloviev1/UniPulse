@@ -14,6 +14,7 @@ import { Arrow, Plus, ComplitedSvg } from "../../shared/ui/Icon";
 import AddTag from "../AddTag/index.tsx";
 import { addNotif } from "../../entities/notification";
 import { MediaItem } from "../../shared/ui/MediaItem";
+import { isMobile } from "../../shared/config/";
 
 const CreatNotif: React.FC = () => {
   const openModal = useModalStore((state) => state.open);
@@ -78,9 +79,9 @@ const CreatNotif: React.FC = () => {
     <Form onSubmit={handleSubmit}>
       <Flex $gap={10}>
         <PlainTitle>Название уведомления</PlainTitle>
-        <Container $border={16} $width={"40%"}>
+        <Container $border={16} $width={isMobile ? "100%" : "50%"}>
           <Textarea
-            placeholder="Введите название"
+            // placeholder="Введите название"
             rows={2}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -92,7 +93,7 @@ const CreatNotif: React.FC = () => {
         <PlainTitle>Текст уведомления</PlainTitle>
         <Container $border={16} $width={"100%"}>
           <Textarea
-            placeholder="Введите текст"
+            // placeholder="Введите текст"
             rows={10}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -110,32 +111,36 @@ const CreatNotif: React.FC = () => {
         <Flex $direction={"row"} $align={"center"} $gap={10}>
           <TagList initialTags={selectedTags} />
 
-          <CustomButton type="button" $style="blue" onClick={()=>openModal("AddTag")}>
+          <CustomButton
+            type="button"
+            $style="blue"
+            onClick={() => openModal("AddTag")}
+          >
             <Plus />
           </CustomButton>
           <AddTag />
         </Flex>
       </Flex>
 
-      <Flex $gap={10}>
+      <Flex $gap={10} >
         <PlainTitle>Дата отправки</PlainTitle>
-        <Flex $direction={"row"} $gap={10}>
+        <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
           <Container $border={16}>
             <Calendar onChange={(newDate) => setDate(newDate)} />
           </Container>
 
-          <CustomButton type="submit" $style="blue">
+          <CustomButton type="submit" $style={"blue"} >
             Отправить <Arrow />
           </CustomButton>
         </Flex>
 
         {error && <Error>{error}</Error>}
 
-          <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
-            <Flex $direction="column" $align="center" $gap={15}>
-              <ComplitedSvg />
-            </Flex>
-          </ModalWindow>
+        <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
+          <Flex $direction="column" $align="center" $gap={15}>
+            <ComplitedSvg />
+          </Flex>
+        </ModalWindow>
       </Flex>
     </Form>
   );
