@@ -12,7 +12,7 @@ export const TagList: React.FC<TagListProps> = ({ initialTags = [] }) => {
 
   // Функция для выбора/снятия тега
   const toggleTagSelect = (id: ITag["id"]) => {
-    const tag = tags.find((tag) => tag.id === id);
+    const tag = initialTags.find((tag) => tag.id === id);
     if (!tag) return;
 
     setSelectedTags(
@@ -20,6 +20,7 @@ export const TagList: React.FC<TagListProps> = ({ initialTags = [] }) => {
         ? selectedTags.filter((selectedTag) => selectedTag.id !== id)
         : [...selectedTags, tag]
     );
+    console.log(`выбранный тэг ${tag}`)
   };
   return (
     <article>
@@ -30,7 +31,6 @@ export const TagList: React.FC<TagListProps> = ({ initialTags = [] }) => {
               key={tag.id}
               id={tag.id}
               name={tag.name}
-              isActive={true}
               onClick={() => toggleTagSelect(tag.id)}
             />
           ))

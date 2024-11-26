@@ -21,6 +21,10 @@ export const Square = styled.div`
     width: 20px;
     height: 20px;
   }
+    &:hover{
+    cursor: pointer;
+     background-color: #dfdfdf;
+    }
 `;
 
 export const FileItem = styled.div`
@@ -31,4 +35,16 @@ export const FileItem = styled.div`
   font-size: 14px;
   text-align: center;
   word-break: break-word;
+  position: relative;
+  cursor: pointer;
+
+  button {
+    display: none;
+  }
+
+  &:hover {
+    button {
+      display: flex;
+    }
+  }
 `;

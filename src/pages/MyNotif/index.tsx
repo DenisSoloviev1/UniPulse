@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import AddTag from "../../widjets/AddTag";
-import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
+import {
+  Container,
+  Flex,
+  CustomButton,
+  PlainTitle,
+  Loader,
+} from "../../shared/ui";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import { NotifList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
@@ -63,7 +69,7 @@ export const MyNotif: React.FC = () => {
                   Вконтакте
                 </label>
               </Container>
-              
+
               <Container>
                 <label>
                   <input
@@ -91,7 +97,11 @@ export const MyNotif: React.FC = () => {
             <PlainTitle>Мои подписки</PlainTitle>
 
             <Flex $direction={"row"} $align={"center"} $gap={10}>
-              <TagList initialTags={subscriptionTags} />
+              {subscriptionTags.length === 0 ? (
+                <Loader $size={"50px"}/>
+              ) : (
+                <TagList initialTags={subscriptionTags} />
+              )}
               <CustomButton
                 type={"button"}
                 $style={"blue"}

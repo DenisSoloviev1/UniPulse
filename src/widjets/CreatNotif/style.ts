@@ -15,6 +15,6 @@ export const Textarea = styled.textarea`
   outline: none;
 `;
 
-export const Error = styled.p`
+export const Error = styled.span`
 color: var(--color-delete);
 `

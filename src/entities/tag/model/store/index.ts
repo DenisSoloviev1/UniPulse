@@ -7,7 +7,7 @@ interface TagStore {
   selectedTags: ITag[];
   subscriptionTags: ITag[];
   addTag: (tag: ITag) => void;
-  setFetchTags: (fetchTags: ITag[]) => void;
+  setTags: (tags: ITag[]) => void;
   setSelectedTags: (selectedTags: ITag[]) => void;
   setSubscriptionTags: (subscriptionTags: ITag[]) => void;
 }
@@ -19,7 +19,7 @@ export const useTagStore = create<TagStore>((set) => ({
   selectedTags: [],
   subscriptionTags: [],
   addTag: (tag) => set((state) => ({ tags: [...state.tags, tag] })),
-  setFetchTags: (fetchTags) => set({ tags: fetchTags }),
+  setTags: (tags) => set({ tags: tags }),
   setSelectedTags: (selectedTags) => set({ selectedTags }),
   setSubscriptionTags: (subscriptionTags) => set({ subscriptionTags }),
 }));

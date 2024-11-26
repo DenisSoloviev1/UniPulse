@@ -98,9 +98,8 @@ const CreatNotif: React.FC = () => {
     <Form onSubmit={handleSubmit}>
       <Flex $gap={10}>
         <PlainTitle>Название уведомления</PlainTitle>
-        <Container $border={16} $width={isMobile ? "100%" : "50%"}>
+        <Container $border={16} $width={isMobile ? "100%" : "50%"} $active={true}>
           <Textarea
-            // placeholder="Введите название"
             rows={2}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -110,9 +109,8 @@ const CreatNotif: React.FC = () => {
 
       <Flex $gap={10}>
         <PlainTitle>Текст уведомления</PlainTitle>
-        <Container $border={16} $width={"100%"}>
+        <Container $border={16} $width={"100%"} $active={true}>
           <Textarea
-            // placeholder="Введите текст"
             rows={10}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -144,7 +142,7 @@ const CreatNotif: React.FC = () => {
       <Flex $gap={10} >
         <PlainTitle>Дата отправки</PlainTitle>
         <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
-          <Container $border={16}>
+          <Container $border={16} $active={true}>
             <Calendar onChange={(newDate) => setDate(newDate)} />
           </Container>
 

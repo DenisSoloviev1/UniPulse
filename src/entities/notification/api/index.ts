@@ -84,7 +84,7 @@ export const editNotif = async (
  * @param id - id уведомления.
  * @returns Promise с данными удалённого уведомления.
  */
-export const deleteTag = async (id: number): Promise<INotif> => {
+export const deleteNotif = async (id: number): Promise<INotif> => {
   const response = await apiRequest<INotif>(
     "POST",
     "/api/notifications/delete",
@@ -104,7 +104,7 @@ export const deleteTag = async (id: number): Promise<INotif> => {
  * @param id - id уведомления.
  * @returns Promise с данными подтверждаемого уведомления.
  */
-export const submitTag = async (id: number): Promise<INotif> => {
+export const submitNotif = async (id: number): Promise<INotif> => {
   const response = await apiRequest<INotif>(
     "POST",
     `/api/notifications/${id}/submit`

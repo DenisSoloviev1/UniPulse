@@ -2,7 +2,7 @@ import styled from "styled-components";
 import "../../variables.scss";
 
 export const CustomButton = styled.button<{
-  $style?: "gray" | "blue";
+  $style?: "gray" | "blue" | "close";
   $width?: string;
 }>`
   display: flex;
@@ -47,6 +47,27 @@ export const CustomButton = styled.button<{
         svg {
         fill: var(--color-action);
       }
+      }
+  `}
+
+  ${(props) =>
+    props.$style === "close" &&
+    `
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--color-background);
+      padding: 0;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+
+      svg{
+        fill: var(--color-delete);
+        width: 25px;
+        height: 25px;
       }
   `}
 `;

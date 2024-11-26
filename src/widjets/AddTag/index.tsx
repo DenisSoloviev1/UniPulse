@@ -20,6 +20,7 @@ import {
   getSubscriptionTags,
   subscribeToTag,
 } from "../../entities/tag";
+import { Error } from "../CreatNotif/style";
 
 const AddTag: React.FC = () => {
   const location = useLocation();
@@ -36,7 +37,16 @@ const AddTag: React.FC = () => {
   const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const { tags, selectedTags, setFetchTags, setSelectedTags } = useTagStore();
+  const {
+    tags,
+    selectedTags,
+    subscriptionTags,
+    setTags,
+    setSelectedTags,
+    setSubscriptionTags,
+  } = useTagStore();
+
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!token) return;
@@ -47,10 +57,11 @@ const AddTag: React.FC = () => {
         let responseData;
         if (isAddNotifPath) {
           responseData = await getTags();
+          setTags(responseData);
         } else {
           responseData = await getSubscriptionTags();
+          setSubscriptionTags(responseData);
         }
-        setFetchTags(responseData);
         console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
@@ -65,12 +76,17 @@ const AddTag: React.FC = () => {
   const handleCreateTag = async () => {
     setIsLoading(true);
     try {
+      if (tagName.length === 0 || tagDescription.length === 0) {
+        setError("Заполните все поля");
+        return;
+      }
       await addTag(tagName, tagDescription);
 
       // Очистка формы и показ успеха
       setTagDescription("");
       setTagName("");
       setIsSuccess(true);
+      setError("");
 
       setTimeout(() => {
         closeModal("AddTag");
@@ -125,36 +141,41 @@ const AddTag: React.FC = () => {
         <ComplitedSvg />
       ) : isAddNotifPath ? (
         <>
-          <Flex>
-            <PlainTitle>Существующие теги</PlainTitle>
-            <Slider $height={100} $wrap={true}>
-              {isLoadingTags ? (
-                Array.from({ length: 7 }).map((_, index) => (
-                  <Skeleton key={index} $width="125px" />
-                ))
-              ) : (
-                <TagList initialTags={tags} />
-              )}
-            </Slider>
-          </Flex>
-          <Flex $width={"100%"}>
-            <PlainTitle>Новый тег</PlainTitle>
-            <Container $width={"100%"}>
-              <input
-                type="text"
-                placeholder="название"
-                value={tagName}
-                onChange={(e) => setTagName(e.target.value)}
-              />
-            </Container>
-            <Container $width={"100%"}>
-              <input
-                type="text"
-                placeholder="описание"
-                value={tagDescription}
-                onChange={(e) => setTagDescription(e.target.value)}
-              />
-            </Container>
+          <Flex $width={"100%"} $gap={10}>
+            <Flex>
+              <PlainTitle>Существующие теги</PlainTitle>
+              <Slider $height={100} $wrap={true}>
+                {isLoadingTags ? (
+                  Array.from({ length: 7 }).map((_, index) => (
+                    <Skeleton key={index} $width="125px" />
+                  ))
+                ) : (
+                  <TagList initialTags={tags} />
+                )}
+              </Slider>
+            </Flex>
+
+            <Flex $width={"100%"}>
+              <PlainTitle>Новый тег</PlainTitle>
+              <Container $width={"100%"}>
+                <input
+                  type="text"
+                  placeholder="название"
+                  value={tagName}
+                  onChange={(e) => setTagName(e.target.value)}
+                />
+              </Container>
+              <Container $width={"100%"}>
+                <input
+                  type="text"
+                  placeholder="описание"
+                  value={tagDescription}
+                  onChange={(e) => setTagDescription(e.target.value)}
+                />
+              </Container>
+
+              <Error>{error}</Error>
+            </Flex>
           </Flex>
 
           <CustomButton
@@ -168,7 +189,7 @@ const AddTag: React.FC = () => {
         </>
       ) : (
         <>
-          <Flex>
+          <Flex $width={"100%"}>
             <PlainTitle>Подписаться на тег</PlainTitle>
             <Slider $height={100} $wrap={true}>
               {isLoadingTags ? (
@@ -176,7 +197,7 @@ const AddTag: React.FC = () => {
                   <Skeleton key={index} $width="125px" />
                 ))
               ) : (
-                <TagList initialTags={tags} />
+                <TagList initialTags={subscriptionTags} />
               )}
             </Slider>
           </Flex>
