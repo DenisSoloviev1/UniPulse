@@ -41,3 +41,5 @@ export interface IPrivateRoute {
   component: LazyExoticComponent<React.FC<any>>;
   roles: Roles[];
 }
+
+

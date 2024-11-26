@@ -45,9 +45,12 @@ export const NotifList: React.FC<NotifListProps> = ({ title }) => {
           notifs.map((notifItem) => (
             <Notif
               key={notifItem.id}
+              id={notifItem.id}
               title={notifItem.title}
               description={notifItem.description}
-              id={notifItem.id}
+              status={notifItem.status}
+              files={notifItem.files}
+              time={notifItem.time}
               tags={notifItem.tags}
             />
           ))

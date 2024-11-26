@@ -16,14 +16,41 @@ export const Text = styled.p`
     padding-left: 30px;
   }
 `;
-export const Toggle = styled.span`
-  color: var(--color-action);
-  cursor: pointer;
-  margin-left: 2px;
 
-  svg {
-    fill: var(--color-action);
-    position: relative;
-    top: 5px;
-  }
+export const Time = styled.time`
+  color: var(--color-font-disable);
+  font-size: 16px;
+`;
+
+export const Status = styled.span<{
+  $status: "wait_submit" | "wait_sent" | "sent";
+}>`
+  padding: 4px 8px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  color: var(--color-background);
+
+  /* Стиль для "Ожидает подтверждения" */
+  ${(props) =>
+    props.$status === "wait_submit" &&
+    `
+    background-color: var(--color-delete);
+  `}
+
+  /* Стиль для "Ожидает отправки" */
+  ${(props) =>
+    props.$status === "wait_sent" &&
+    `
+    background-color: var(--color-warning);
+
+  `}
+
+  /* Стиль для "Отправлено" */
+  ${(props) =>
+    props.$status === "sent" &&
+    `
+    background-color: var(--color-success);
+
+  `}
 `;

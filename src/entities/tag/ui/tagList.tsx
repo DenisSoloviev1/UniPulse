@@ -4,11 +4,11 @@ import { Tag } from "../ui";
 import { ITag, useTagStore } from "../model";
 
 interface TagListProps {
-  initialTags?: ITag[];
+  initialTags: ITag[];
 }
 
 export const TagList: React.FC<TagListProps> = ({ initialTags = [] }) => {
-  const { tags, selectedTags, setSelectedTags } = useTagStore();
+  const { selectedTags, setSelectedTags } = useTagStore();
 
   // Функция для выбора/снятия тега
   const toggleTagSelect = (id: ITag["id"]) => {

@@ -17,9 +17,9 @@ import { Cat, ComplitedSvg } from "../../shared/ui/Icon";
 import {
   useTagStore,
   getTags,
-  getSubscriptionTags,
-  subscribeToTag,
+  getSubscriptionToTags,
 } from "../../entities/tag";
+import { subscribeToTag } from "../../entities/subscription";
 import { Error } from "../CreatNotif/style";
 
 const AddTag: React.FC = () => {
@@ -39,11 +39,11 @@ const AddTag: React.FC = () => {
 
   const {
     tags,
+    subscriptionToTags,
     selectedTags,
-    subscriptionTags,
     setTags,
+    setSubscriptionToTags,
     setSelectedTags,
-    setSubscriptionTags,
   } = useTagStore();
 
   const [error, setError] = useState<string | null>(null);
@@ -59,8 +59,8 @@ const AddTag: React.FC = () => {
           responseData = await getTags();
           setTags(responseData);
         } else {
-          responseData = await getSubscriptionTags();
-          setSubscriptionTags(responseData);
+          responseData = await getSubscriptionToTags();
+          setSubscriptionToTags(responseData);
         }
         console.log("Загруженные теги:", responseData);
       } catch (error) {
@@ -197,21 +197,20 @@ const AddTag: React.FC = () => {
                   <Skeleton key={index} $width="125px" />
                 ))
               ) : (
-                <TagList initialTags={subscriptionTags} />
+                <TagList initialTags={subscriptionToTags} />
               )}
             </Slider>
+
+            <Cat />
           </Flex>
 
-          <Flex $align={"center"}>
-            <Cat />
-            <CustomButton
-              onClick={handleSubscriptionTag}
-              $style={"blue"}
-              $width={"100%"}
-            >
-              Готово
-            </CustomButton>
-          </Flex>
+          <CustomButton
+            onClick={handleSubscriptionTag}
+            $style={"blue"}
+            $width={"70%"}
+          >
+            Готово
+          </CustomButton>
         </>
       )}
     </ModalWindow>

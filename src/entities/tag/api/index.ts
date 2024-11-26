@@ -8,8 +8,8 @@ import { ITag } from "../model";
  * @returns Promise с данными созданного тега.
  */
 export const addTag = async (
-  name: string,
-  description: string
+  name: ITag["name"],
+  description: ITag["description"]
 ): Promise<ITag> => {
   const response = await apiRequest<ITag>("POST", "/api/tags", {
     name,
@@ -39,7 +39,7 @@ export const getTags = async (): Promise<ITag[]> => {
  * Получение всех тегов, на которые можно подписаться.
  * @returns Promise с массивом тегов.
  */
-export const getSubscriptionTags = async (): Promise<ITag[]> => {
+export const getSubscriptionToTags = async (): Promise<ITag[]> => {
   const response = await apiRequest<ITag[]>("GET", "/api/tags/subscriptable");
   if (!response.success) {
     throw new Error(response.error || "Не удалось загрузить теги.");
@@ -55,9 +55,9 @@ export const getSubscriptionTags = async (): Promise<ITag[]> => {
  * @returns Promise с данными созданного тега.
  */
 export const editTag = async (
-  id: string,
-  name: string,
-  description: string
+  id: ITag["id"],
+  name: ITag["name"],
+  description: ITag["description"]
 ): Promise<ITag> => {
   const response = await apiRequest<ITag>("POST", `/api/tags/${id}`, {
     name,
@@ -76,7 +76,7 @@ export const editTag = async (
  * @returns Promise с данными удалённого тега.
  */
 export const deleteTag = async (
-  id: number,
+  id: ITag["id"],
 ): Promise<ITag> => {
   const response = await apiRequest<ITag>("POST", "/api/tags/delete", {
     id
@@ -86,36 +86,4 @@ export const deleteTag = async (
     throw new Error(response.error || "Ошибка при удалении тега.");
   }
   return response.data;
-};
-
-/**
- * Подписка на тег.
- * @param id - id тега для подписки.
- * @returns Promise с результатом операции.
- */
-export const subscribeToTag = async (id: number): Promise<boolean> => {
-  const response = await apiRequest<null>(
-    "POST",
-    `/api/tags/subscript/${id}`
-  );
-
-  if (!response.success) {
-    throw new Error(response.error || "Ошибка подписки на тег.");
-  }
-  return response.success;
-};
-
-/**
- * Получение всех подписок.
- * @returns Promise с массивом тегов, на которые пользователь подписан.
- */
-export const getSubscriptions = async (): Promise<ITag[]> => {
-  const response = await apiRequest<any[]>("GET", "/api/tags/subscriptions");
-
-  if (!response.success) {
-    throw new Error(response.error || "Не удалось загрузить подписки.");
-  }
-
-  // Извлекаем поле `tag` из каждой подписки.
-  return response.data.map((sub: { tag: ITag }) => sub.tag);
 };

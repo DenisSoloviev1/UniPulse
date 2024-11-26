@@ -4,6 +4,18 @@ export interface INotif {
   id: number;
   title: string;
   description: string;
-  //   tags: number[];//с бека приходит массив id тегов, нужно редактировать потом
+  status: "wait_submit" | "wait_sent" | "sent";
+  time: number | null;
+  files: any | null;
   tags: ITag[];
 }
+
+type StatusNotif = {
+  [key: string]: string;
+};
+
+export const StatusNotif: StatusNotif = {
+  "wait_submit": "подтвердить",
+  "wait_sent": "отправить",
+  "sent": "отправлено",
+};

@@ -7,15 +7,15 @@ import { INotif } from "../model";
  * @param title - Название уведомления.
  * @param description - Описание уведомления.
  * @param tags - Теги, которые получат это уведомление.
- * @param time - Время отправки.
+ * @param time - Время получения уведомления.
  * @returns Promise с данными созданного уведомления.
  */
 export const addNotif = async (
-  title: string,
-  description: string,
-  files: any[],
+  title: INotif["title"],
+  description: INotif["description"],
+  files: INotif["files"],
   tags: ITag["id"][],
-  time: number
+  time: INotif["time"],
 ): Promise<INotif> => {
   const response = await apiRequest<INotif>("POST", "/api/notifications", {
     title,
@@ -50,16 +50,16 @@ export const getNotifs = async (): Promise<INotif[]> => {
  * @param description - Описание уведомления.
  * @param files - Прикреплённые файлы.
  * @param tags - Теги, которые получат это уведомление.
- * @param time - Время отправки.
+ * @param time - Время получения уведомления.
  * @returns Promise с данными созданного уведомления.
  */
 export const editNotif = async (
-  id: number,
-  title: string,
-  description: string,
-  files: any[],
-  tags: ITag[],
-  time: number
+  id: INotif["id"],
+  title: INotif["title"],
+  description: INotif["description"],
+  files: INotif["files"],
+  tags: INotif["tags"][],
+  time: INotif["time"],
 ): Promise<INotif> => {
   const response = await apiRequest<INotif>(
     "POST",
@@ -84,7 +84,7 @@ export const editNotif = async (
  * @param id - id уведомления.
  * @returns Promise с данными удалённого уведомления.
  */
-export const deleteNotif = async (id: number): Promise<INotif> => {
+export const deleteNotif = async (id: INotif["id"]): Promise<INotif> => {
   const response = await apiRequest<INotif>(
     "POST",
     "/api/notifications/delete",
@@ -104,7 +104,7 @@ export const deleteNotif = async (id: number): Promise<INotif> => {
  * @param id - id уведомления.
  * @returns Promise с данными подтверждаемого уведомления.
  */
-export const submitNotif = async (id: number): Promise<INotif> => {
+export const submitNotif = async (id: INotif["id"]): Promise<INotif> => {
   const response = await apiRequest<INotif>(
     "POST",
     `/api/notifications/${id}/submit`

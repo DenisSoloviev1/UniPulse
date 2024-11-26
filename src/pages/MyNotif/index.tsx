@@ -7,16 +7,16 @@ import {
   Flex,
   CustomButton,
   PlainTitle,
-  Loader,
 } from "../../shared/ui";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import { NotifList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
-import { useTagStore, getSubscriptions } from "../../entities/tag";
+import { useSubscriptionStore, getSubscriptions } from "../../entities/subscription";
 import { Plus } from "../../shared/ui/Icon";
 
 export const MyNotif: React.FC = () => {
-  const { setSubscriptionTags } = useTagStore();
+  const { subscriptions, setSubscriptions } = useSubscriptionStore();
+
   const token = localStorage.getItem("authToken") || "";
 
   const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
@@ -38,7 +38,7 @@ export const MyNotif: React.FC = () => {
     const fetchSubscriptions = async () => {
       try {
         const responseData = await getSubscriptions();
-        setSubscriptionTags(responseData);
+        setSubscriptions(responseData); 
         console.log("Загруженные подписки:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки подписок:", error);
@@ -46,8 +46,7 @@ export const MyNotif: React.FC = () => {
     };
 
     fetchSubscriptions();
-  }, [token, setSubscriptionTags]);
-  const { subscriptionTags } = useTagStore();
+  }, [token, setSubscriptions]);
 
   return (
     <>
@@ -97,11 +96,7 @@ export const MyNotif: React.FC = () => {
             <PlainTitle>Мои подписки</PlainTitle>
 
             <Flex $direction={"row"} $align={"center"} $gap={10}>
-              {subscriptionTags.length === 0 ? (
-                <Loader $size={"50px"}/>
-              ) : (
-                <TagList initialTags={subscriptionTags} />
-              )}
+              <TagList initialTags={subscriptions} /> 
               <CustomButton
                 type={"button"}
                 $style={"blue"}
