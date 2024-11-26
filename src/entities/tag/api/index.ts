@@ -24,11 +24,23 @@ export const addTag = async (
 };
 
 /**
- * Получение всех тегов.
+ * Получение всех тегов для отправки удведомлений.
  * @returns Promise с массивом тегов.
  */
 export const getTags = async (): Promise<ITag[]> => {
   const response = await apiRequest<ITag[]>("GET", "/api/tags");
+  if (!response.success) {
+    throw new Error(response.error || "Не удалось загрузить теги.");
+  }
+  return response.data;
+};
+
+/**
+ * Получение всех тегов, на которые можно подписаться.
+ * @returns Promise с массивом тегов.
+ */
+export const getSubscriptionTags = async (): Promise<ITag[]> => {
+  const response = await apiRequest<ITag[]>("GET", "/api/tags/subscriptable");
   if (!response.success) {
     throw new Error(response.error || "Не удалось загрузить теги.");
   }

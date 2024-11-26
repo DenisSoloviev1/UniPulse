@@ -14,7 +14,12 @@ import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import { TagList } from "../../entities/tag";
 import { addTag } from "../../entities/tag";
 import { Cat, ComplitedSvg } from "../../shared/ui/Icon";
-import { useTagStore, getTags, subscribeToTag } from "../../entities/tag";
+import {
+  useTagStore,
+  getTags,
+  getSubscriptionTags,
+  subscribeToTag,
+} from "../../entities/tag";
 
 const AddTag: React.FC = () => {
   const location = useLocation();
@@ -39,7 +44,12 @@ const AddTag: React.FC = () => {
     const fetchTags = async () => {
       setIsLoadingTags(true);
       try {
-        const responseData = await getTags();
+        let responseData;
+        if (isAddNotifPath) {
+          responseData = await getTags();
+        } else {
+          responseData = await getSubscriptionTags();
+        }
         setFetchTags(responseData);
         console.log("Загруженные теги:", responseData);
       } catch (error) {

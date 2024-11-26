@@ -24,7 +24,6 @@ export const MainWrapper = styled.div`
   min-width: 320px;
   max-width: 1320px;
   min-height: 100vh;
-  display: flex;
   background-color: var(--color-background);
   border: 2px solid var(--color-background-container);
   border-top: 0;
