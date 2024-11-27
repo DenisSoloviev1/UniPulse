@@ -136,7 +136,7 @@ const AddTag: React.FC = () => {
   return (
     <ModalWindow show={isOpenAddTag} onClick={() => closeModal("AddTag")}>
       {isLoading ? (
-        <Loader $size="200px" />
+        <Loader $size="300px" />
       ) : isSuccess ? (
         <ComplitedSvg />
       ) : isAddNotifPath ? (

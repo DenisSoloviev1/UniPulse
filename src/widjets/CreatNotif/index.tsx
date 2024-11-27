@@ -128,7 +128,7 @@ const CreatNotif: React.FC = () => {
       <Flex $gap={10}>
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
-          <TagList initialTags={selectedTags} styleTags={"normal"}/>
+          <TagList initialTags={selectedTags} />
 
           <CustomButton
             type="button"

@@ -1,5 +1,4 @@
 import { apiRequest } from "../../../shared/config/api";
-import { ITag } from "../../tag";
 import { ISubscription } from "../model";
 
 /**
@@ -20,7 +19,7 @@ export const subscribeToTag = async (id: ISubscription["id"]): Promise<boolean> 
  * Получение всех подписок.
  * @returns Promise с массивом тегов, на которые пользователь подписан.
  */
-export const getSubscriptions = async (): Promise<ITag[]> => {
+export const getSubscriptions = async (): Promise<ISubscription[]> => {
   const response = await apiRequest<ISubscription[]>("GET", "/api/tags/subscriptions");
 
   if (!response.success) {
@@ -28,7 +27,7 @@ export const getSubscriptions = async (): Promise<ITag[]> => {
   }
 
   // Извлекаем поле `tag` из каждой подписки.
-  return response.data.map((subscription) => subscription.tag);
+  return response.data;
 };
 
 /**

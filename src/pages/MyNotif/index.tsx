@@ -5,15 +5,15 @@ import AddTag from "../../widjets/AddTag";
 import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import { NotifList } from "../../entities/notification";
-import { TagList } from "../../entities/tag";
 import {
   useSubscriptionStore,
   getSubscriptions,
+  SubscriptionList,
 } from "../../entities/subscription";
 import { Plus } from "../../shared/ui/Icon";
 
 export const MyNotif: React.FC = () => {
-  const { subscriptions, setSubscriptions } = useSubscriptionStore();
+  const { setSubscriptions } = useSubscriptionStore();
 
   const token = localStorage.getItem("authToken") || "";
 
@@ -94,7 +94,7 @@ export const MyNotif: React.FC = () => {
             <PlainTitle>Мои подписки</PlainTitle>
 
             <Flex $direction={"row"} $align={"center"} $gap={10}>
-              <TagList initialTags={subscriptions} styleTags={"normal"} choiseTags={false}/>
+              <SubscriptionList/>
 
               <CustomButton
                 type={"button"}

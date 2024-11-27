@@ -15,7 +15,7 @@ export const Notif: React.FC<INotif> = ({
   const formattedDate = formatDate(time);
 
   return (
-    <Container $active={true} $width={"100%"}>
+    <Container $width={"100%"}>
       <Flex $gap={15}>
         <Flex
           $width={"100%"}
@@ -35,17 +35,12 @@ export const Notif: React.FC<INotif> = ({
 
         <Text>{description}</Text>
         <Flex $direction={"row"}>
-          {tags[0] !== null
-            ? tags.map((tag) => (
-                <Tag
-                  key={tag.id}
-                  id={tag.id}
-                  name={tag.name}
-                  color={"light"}
-                  isActive={false}
-                />
-              ))
-            : null}
+          {Array.isArray(tags) &&
+            tags
+              .filter((tag) => tag && typeof tag === "object" && "id" in tag) // Фильтруем корректные объекты
+              .map((tag) => (
+                <Tag key={tag.id} id={tag.id} name={tag.name} style={"light"} />
+              ))}
         </Flex>
       </Flex>
     </Container>
