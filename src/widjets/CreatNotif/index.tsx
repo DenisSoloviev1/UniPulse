@@ -100,7 +100,6 @@ const CreatNotif: React.FC = () => {
         <Container
           $border={16}
           $width={isMobile ? "100%" : "50%"}
-          $active={true}
         >
           <Textarea
             rows={2}
@@ -112,7 +111,7 @@ const CreatNotif: React.FC = () => {
 
       <Flex $gap={10}>
         <PlainTitle>Текст уведомления</PlainTitle>
-        <Container $border={16} $width={"100%"} $active={true}>
+        <Container $border={16} $width={"100%"} >
           <Textarea
             rows={10}
             value={description}
@@ -129,7 +128,7 @@ const CreatNotif: React.FC = () => {
       <Flex $gap={10}>
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
-          <TagList initialTags={selectedTags} />
+          <TagList initialTags={selectedTags} styleTags={"normal"}/>
 
           <CustomButton
             type="button"
@@ -145,7 +144,7 @@ const CreatNotif: React.FC = () => {
       <Flex $gap={10}>
         <PlainTitle>Дата отправки</PlainTitle>
         <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
-          <Container $border={16} $active={true}>
+          <Container $border={16}>
             <Calendar onChange={(newDate) => setDate(newDate)} />
           </Container>
 

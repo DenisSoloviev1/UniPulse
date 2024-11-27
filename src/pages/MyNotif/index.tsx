@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import AddTag from "../../widjets/AddTag";
-import {
-  Container,
-  Flex,
-  CustomButton,
-  PlainTitle,
-} from "../../shared/ui";
+import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import { NotifList } from "../../entities/notification";
 import { TagList } from "../../entities/tag";
-import { useSubscriptionStore, getSubscriptions } from "../../entities/subscription";
+import {
+  useSubscriptionStore,
+  getSubscriptions,
+} from "../../entities/subscription";
 import { Plus } from "../../shared/ui/Icon";
 
 export const MyNotif: React.FC = () => {
@@ -30,7 +28,7 @@ export const MyNotif: React.FC = () => {
     setUserId(event.target.value);
   };
 
-  const openAddTag = useModalStore((state) => state.open);
+  const openModal = useModalStore((state) => state.open);
 
   useEffect(() => {
     if (!token) return;
@@ -38,7 +36,7 @@ export const MyNotif: React.FC = () => {
     const fetchSubscriptions = async () => {
       try {
         const responseData = await getSubscriptions();
-        setSubscriptions(responseData); 
+        setSubscriptions(responseData);
         console.log("Загруженные подписки:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки подписок:", error);
@@ -96,14 +94,16 @@ export const MyNotif: React.FC = () => {
             <PlainTitle>Мои подписки</PlainTitle>
 
             <Flex $direction={"row"} $align={"center"} $gap={10}>
-              <TagList initialTags={subscriptions} /> 
+              <TagList initialTags={subscriptions} styleTags={"normal"} choiseTags={false}/>
+
               <CustomButton
                 type={"button"}
                 $style={"blue"}
-                onClick={() => openAddTag("AddTag")}
+                onClick={() => openModal("AddTag")}
               >
                 <Plus />
               </CustomButton>
+
               <AddTag />
             </Flex>
           </Flex>

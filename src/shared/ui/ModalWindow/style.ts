@@ -10,7 +10,7 @@ export const Modal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2;
+  z-index: 5;
   background-color: rgba(133, 132, 132, 0.2);
   backdrop-filter: blur(1px);
 `;
@@ -32,6 +32,7 @@ export const ModalContent = styled.div<{
   border: 1px solid var(--color-font-disable);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
   position: ${(props) => (props.$position ? `absolute` : `relative`)};
+  z-index: 4;
 
   ${(props) => {
     const [top, left, bottom, right] = props.$position || [];

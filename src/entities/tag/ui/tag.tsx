@@ -3,27 +3,24 @@ import { Container } from "../../../shared/ui";
 import { ITag } from "../model";
 
 interface PropsTag {
-  name: ITag["name"];
   id: ITag["id"];
-  color?: string;
-  isActive?: boolean;
+  name: ITag["name"];
+  color?: "normal" | "light" | "choice";
   onClick?: () => void;
 }
 
 export const Tag: React.FC<PropsTag> = ({
-  name,
   id,
+  name,
   color,
-  isActive = true,
   onClick,
 }) => {
   return (
     <Container
-      $color={color}
+      $style={color}
       $border={16}
       $padding={[10, 15]}
-      $active={isActive}
-      onClick={()=>onClick}
+      onClick={onClick}
     >
       <p id={`${id}`}>{name}</p>
     </Container>

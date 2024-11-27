@@ -190,7 +190,7 @@ const AddTag: React.FC = () => {
       ) : (
         <>
           <Flex $width={"100%"}>
-            <PlainTitle>Подписаться на тег</PlainTitle>
+            <PlainTitle>Доступные теги</PlainTitle>
             <Slider $height={100} $wrap={true}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
@@ -209,7 +209,7 @@ const AddTag: React.FC = () => {
             $style={"blue"}
             $width={"70%"}
           >
-            Готово
+            Подписаться
           </CustomButton>
         </>
       )}

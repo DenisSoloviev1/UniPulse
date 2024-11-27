@@ -1,9 +1,9 @@
 import styled from "styled-components";
+import "../../Variables.scss";
 
 export const Container = styled.div<{
   $width?: string;
-  $active?: boolean;
-  $color?: string;
+  $style?: "normal" | "light" | "choice";
   $border?: number;
   $gap?: number;
   $padding?: number | number[];
@@ -13,10 +13,8 @@ export const Container = styled.div<{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: ${(props) =>
-    props.$color === "light"
-      ? `var(--color-background)`
-      : `var(--color-background-container)`};
+  background-color: var(--color-background-container);
+  border: 2px solid transparent;
   border-radius: ${(props) => (props.$border ? `${props.$border}px` : "8px")};
   gap: ${(props) => (props.$gap ? `${props.$gap}px` : "5px")};
   padding: ${(props) => {
@@ -30,7 +28,8 @@ export const Container = styled.div<{
   position: relative;
 
   &:hover {
-    ${(props) => props.$active && `cursor: pointer; background-color: #dfdfdf;`}
+    cursor: pointer;
+    background-color: #dfdfdf;
   }
 
   svg {
@@ -41,4 +40,33 @@ export const Container = styled.div<{
     width: 100%;
   }
 
+  ${(props) =>
+    props.$style === "normal"
+      ? `
+  background-color: var(--color-background-container);
+
+  &:hover {
+    cursor: pointer;
+    background-color: #dfdfdf;
+  }
+  `
+      : ""}
+
+  ${(props) =>
+    props.$style === "light"
+      ? `
+  background-color: var(--color-background);
+
+  &:hover {
+    background-color: var(--color-background);
+  }
+  `
+      : ""}
+
+  ${(props) =>
+    props.$style === "choice"
+      ? `
+      border: 2px solid var(--color-action);
+      `
+      : ""}
 `;

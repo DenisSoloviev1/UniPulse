@@ -10,7 +10,7 @@ import { INotif } from "../../entities/notification";
 
 const InputContainer = styled.div`
   width: 220px;
-  height: 27px;
+  height: 25px;
   display: flex;
   align-items: center;
 `;
