@@ -12,7 +12,9 @@
   font-size: 16px;
   overflow: hidden;
 }
-
+.react-datepicker__tab-loop{
+  position: absolute;
+}
 .react-datepicker__header {
   background-color: var(--color-background);
   color: var(--color-active);

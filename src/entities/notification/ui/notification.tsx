@@ -3,7 +3,7 @@ import { Title, Text, Time, Status } from "./style";
 import { Container, Flex } from "../../../shared/ui";
 import { Tag } from "../../tag";
 import { INotif, StatusNotif } from "../model";
-import { formatDate } from "../../../shared/config";
+import { formatDate, isMobile } from "../../../shared/config";
 
 export const Notif: React.FC<INotif> = ({
   title,
@@ -22,11 +22,12 @@ export const Notif: React.FC<INotif> = ({
           $direction={"row"}
           $align={"center"}
           $justify={"space-between"}
+          $gap={10}
         >
           <Title>{title}</Title>
 
           <Flex $direction={"row"} $align={"center"} $gap={15}>
-            <Time>{formattedDate}</Time>
+            {isMobile ? <></> : <Time>{formattedDate}</Time>}
 
             <Status $status={status}>{StatusNotif[status]}</Status>
           </Flex>

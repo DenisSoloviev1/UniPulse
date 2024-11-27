@@ -15,7 +15,7 @@ export const formatDate = (input: number | string | null): string => {
       minute: "2-digit",
     }).format(date);
 
-    return `${dayMonthYear}  ${time}`; // Объединяем дату и время
+    return `${dayMonthYear} ${time}`; // Объединяем дату и время
   } else {
     throw new Error("Неверный формат времени");
   }

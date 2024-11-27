@@ -9,10 +9,10 @@ import {
 } from "../../shared/ui/index.ts";
 import Calendar from "../Calendar";
 import { useModalStore } from "../../shared/ui/ModalWindow/store.ts";
-import { useTagStore, TagList } from "../../entities/tag";
+import { useTagStore, TagList, ITag } from "../../entities/tag";
 import { Arrow, Plus, ComplitedSvg } from "../../shared/ui/Icon";
 import AddTag from "../AddTag/index.tsx";
-import { addNotif } from "../../entities/notification";
+import { addNotif, INotif } from "../../entities/notification";
 import { MediaItem } from "../../shared/ui/MediaItem";
 import { isMobile } from "../../shared/config/";
 
@@ -24,12 +24,12 @@ const CreatNotif: React.FC = () => {
   const { selectedTags, setSelectedTags } = useTagStore();
 
   // Состояния для формы
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [title, setTitle] = useState<INotif["title"]>("");
+  const [description, setDescription] = useState<INotif["description"]>("");
   const [mediaFiles, setMediaFiles] = useState<
     Array<{ fileName: string; fileSize: number; data: string }>
   >([]);
-  const [date, setDate] = useState<number | null>(null);
+  const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
 
   // Сброс формы
@@ -41,7 +41,7 @@ const CreatNotif: React.FC = () => {
     setSelectedTags([]);
   };
 
-// Обновленный обработчик отправки формы с учетом валидации
+  // Обновленный обработчик отправки формы с учетом валидации
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -59,7 +59,7 @@ const CreatNotif: React.FC = () => {
     }
 
     // Валидация количества файлов
-    console.log('v',mediaFiles)
+    console.log("v", mediaFiles);
     if (mediaFiles.length > 10) {
       setError("Можно прикрепить не более 10 файлов");
       return;
@@ -71,7 +71,7 @@ const CreatNotif: React.FC = () => {
       return;
     }
 
-    const tagIds = selectedTags.map((tag) => tag.id);
+    const tagIds: ITag["id"][] = selectedTags.map((tag) => tag.id);
 
     try {
       // Отправка данных
@@ -93,12 +93,15 @@ const CreatNotif: React.FC = () => {
     }
   };
 
-
   return (
     <Form onSubmit={handleSubmit}>
       <Flex $gap={10}>
         <PlainTitle>Название уведомления</PlainTitle>
-        <Container $border={16} $width={isMobile ? "100%" : "50%"} $active={true}>
+        <Container
+          $border={16}
+          $width={isMobile ? "100%" : "50%"}
+          $active={true}
+        >
           <Textarea
             rows={2}
             value={title}
@@ -139,14 +142,14 @@ const CreatNotif: React.FC = () => {
         </Flex>
       </Flex>
 
-      <Flex $gap={10} >
+      <Flex $gap={10}>
         <PlainTitle>Дата отправки</PlainTitle>
         <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
           <Container $border={16} $active={true}>
             <Calendar onChange={(newDate) => setDate(newDate)} />
           </Container>
 
-          <CustomButton type="submit" $style={"blue"} >
+          <CustomButton type="submit" $style={"blue"}>
             Отправить <Arrow />
           </CustomButton>
         </Flex>

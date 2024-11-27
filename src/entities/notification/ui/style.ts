@@ -2,17 +2,27 @@ import styled from "styled-components";
 import "../../../shared/variables.scss";
 
 export const Title = styled.h4`
+  width: 80%;
   font-size: 20px;
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media screen and (min-width: 601px) {
+    width: 40%;
+  }
 `;
+
 export const Text = styled.p`
   width: 100%;
   font-size: 20px;
   padding-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   @media screen and (min-width: 1321px) {
-    width: 100%;
-    font-size: 20px;
     padding-left: 30px;
   }
 `;
@@ -43,7 +53,6 @@ export const Status = styled.span<{
     props.$status === "wait_sent" &&
     `
     background-color: var(--color-warning);
-
   `}
 
   /* Стиль для "Отправлено" */
@@ -51,6 +60,5 @@ export const Status = styled.span<{
     props.$status === "sent" &&
     `
     background-color: var(--color-success);
-
   `}
 `;
