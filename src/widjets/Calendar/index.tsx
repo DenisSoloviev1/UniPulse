@@ -52,7 +52,7 @@ const Calendar: React.FC<CalendarProps> = ({ onChange }) => {
       timeFormat="HH:mm"
       minDate={new Date()}
       locale="ru"
-      timeIntervals={30}
+      timeIntervals={10}
       filterTime={filterTime}
       customInput={
         <InputContainer>

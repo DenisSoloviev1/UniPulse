@@ -1,6 +1,7 @@
 import { apiRequest } from "../../../shared/config/api";
 import { ITag } from "../../tag";
 import { INotif } from "../model";
+import { useAuthStore } from "../../auth";
 
 /**
  * Создание нового уведомления.
@@ -15,7 +16,7 @@ export const addNotif = async (
   description: INotif["description"],
   files: INotif["files"],
   tags: ITag["id"][],
-  time: INotif["time"],
+  time: INotif["time"]
 ): Promise<INotif> => {
   const response = await apiRequest<INotif>("POST", "/api/notifications", {
     title,
@@ -33,10 +34,16 @@ export const addNotif = async (
 
 /**
  * Получение всех уведомлений.
+ * @role - роль пользователя для получения заявок, относящихся к нему
  * @returns Promise с массивом уведомлений.
  */
 export const getNotifs = async (): Promise<INotif[]> => {
-  const response = await apiRequest<INotif[]>("GET", "/api/notifications/user");
+  const { role } = useAuthStore();
+
+  const response = await apiRequest<INotif[]>(
+    "GET",
+    `/api/notifications/${role}`
+  );
   if (!response.success) {
     throw new Error(response.error || "Не удалось загрузить уведомления.");
   }
@@ -59,7 +66,7 @@ export const editNotif = async (
   description: INotif["description"],
   files: INotif["files"],
   tags: INotif["tags"][],
-  time: INotif["time"],
+  time: INotif["time"]
 ): Promise<INotif> => {
   const response = await apiRequest<INotif>(
     "POST",

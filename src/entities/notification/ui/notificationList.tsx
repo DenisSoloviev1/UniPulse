@@ -11,12 +11,8 @@ interface NotifListProps {
 export const NotifList: React.FC<NotifListProps> = ({ title }) => {
   const { notifs, setFetchNotifs } = useNotifStore();
   const [isLoadingNotifs, setIsLoadingNotifs] = useState<boolean>(true); // Состояние загрузки
-  const token = localStorage.getItem("authToken");
 
   useEffect(() => {
-    if (!token) return;
-
-    // Функция для получения уведомлений
     const fetchNotifs = async () => {
       setIsLoadingNotifs(true);
       try {
