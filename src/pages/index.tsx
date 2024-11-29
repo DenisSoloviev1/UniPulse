@@ -1,4 +1,6 @@
-export * from "./AddNotif";
 export * from "./Auth";
-export * from "./MyNotif";
 export * from "./NotFound";
+export * from "./AddNotif";
+export * from "./MyNotif";
+export * from "./AddChannel";
+
