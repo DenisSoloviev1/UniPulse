@@ -35,30 +35,33 @@ export const Time = styled.time`
 export const Status = styled.span<{
   $status: "wait_submit" | "wait_sent" | "sent";
 }>`
-  padding: 4px 8px;
-  border-radius: 16px;
+  width: fit-content;
   display: flex;
+  justify-content: center;
   align-items: center;
-  color: var(--color-background);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 500;
 
   /* Стиль для "Ожидает подтверждения" */
   ${(props) =>
     props.$status === "wait_submit" &&
     `
-    background-color: var(--color-delete);
+    background-color: var(--color-submit);
+    color: var(--color-font-submit);
   `}
 
   /* Стиль для "Ожидает отправки" */
   ${(props) =>
     props.$status === "wait_sent" &&
     `
-    background-color: var(--color-warning);
-  `}
+    background-color: var(--color-sent);
+    color: var(--color-font-sent);  `}
 
   /* Стиль для "Отправлено" */
   ${(props) =>
     props.$status === "sent" &&
     `
     background-color: var(--color-success);
-  `}
+    color: var(--color-font-success);  `}
 `;

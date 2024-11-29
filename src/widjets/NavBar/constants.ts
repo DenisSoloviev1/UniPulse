@@ -20,8 +20,8 @@ export const NavItems: INav[] = [
     allowedRoles: [
       RolesDict.ADMIN,
       RolesDict.MEDIA,
-      RolesDict.EDITOR,
-      RolesDict.PUBLISHER,
+      RolesDict.CREATOR,
+      // RolesDict.MODERATOR,
     ],
   },
   {
@@ -32,8 +32,8 @@ export const NavItems: INav[] = [
     allowedRoles: [
       RolesDict.ADMIN,
       RolesDict.MEDIA,
-      RolesDict.EDITOR,
-      RolesDict.PUBLISHER,
+      RolesDict.CREATOR,
+      // RolesDict.MODERATOR,
     ],
   },
   {
@@ -44,8 +44,8 @@ export const NavItems: INav[] = [
     allowedRoles: [
       RolesDict.ADMIN,
       RolesDict.MEDIA,
-      RolesDict.EDITOR,
-      RolesDict.PUBLISHER,
+      RolesDict.CREATOR,
+      // RolesDict.MODERATOR,
       RolesDict.USER,
     ],
     onClick: () => {},

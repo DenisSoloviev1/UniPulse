@@ -2,7 +2,6 @@ import { lazy } from "react";
 import { IPrivateRoute, RolesDict, Routes } from "../../shared/types";
 
 export const privateRoutes: IPrivateRoute[] = [
-
   {
     id: 0,
     path: Routes.CALLBACK,
@@ -13,10 +12,10 @@ export const privateRoutes: IPrivateRoute[] = [
     ),
     isPublic: true,
     roles: [
-      RolesDict.ADMIN,
+      // RolesDict.ADMIN,
       RolesDict.MEDIA,
-      RolesDict.EDITOR,
-      RolesDict.PUBLISHER,
+      RolesDict.CREATOR,
+      // RolesDict.MODERATOR,
       RolesDict.USER,
     ],
   },
@@ -28,10 +27,10 @@ export const privateRoutes: IPrivateRoute[] = [
     ),
     isPublic: false,
     roles: [
-      RolesDict.ADMIN,
+      // RolesDict.ADMIN,
       RolesDict.MEDIA,
-      RolesDict.EDITOR,
-      RolesDict.PUBLISHER,
+      RolesDict.CREATOR,
+      // RolesDict.MODERATOR,
     ],
   },
   {
@@ -42,10 +41,10 @@ export const privateRoutes: IPrivateRoute[] = [
     ),
     isPublic: false,
     roles: [
-      RolesDict.ADMIN,
+      // RolesDict.ADMIN,
       RolesDict.MEDIA,
-      RolesDict.EDITOR,
-      RolesDict.PUBLISHER,
+      RolesDict.CREATOR,
+      // RolesDict.MODERATOR,
       RolesDict.USER,
     ],
   },

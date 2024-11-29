@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Skeleton, PlainTitle } from "../../../shared/ui";
-import { Notif } from "./notification";
+import { Notif } from "../";
 import { useNotifStore } from "../model";
 import { getNotifs } from "../api";
+import { useAuthStore } from "../../auth";
 
 interface NotifListProps {
   title: string;
 }
 
 export const NotifList: React.FC<NotifListProps> = ({ title }) => {
+  const { role } = useAuthStore();
+
   const { notifs, setFetchNotifs } = useNotifStore();
   const [isLoadingNotifs, setIsLoadingNotifs] = useState<boolean>(true); // Состояние загрузки
 
@@ -16,7 +19,7 @@ export const NotifList: React.FC<NotifListProps> = ({ title }) => {
     const fetchNotifs = async () => {
       setIsLoadingNotifs(true);
       try {
-        const responseData = await getNotifs();
+        const responseData = await getNotifs(role);
         setFetchNotifs(responseData);
         console.log("Загруженные уведомления:", responseData);
       } catch (error) {

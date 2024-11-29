@@ -20,7 +20,7 @@ import {
   getSubscriptionToTags,
 } from "../../entities/tag";
 import { subscribeToTag } from "../../entities/subscription";
-import { Error } from "../CreatNotif/style";
+import { Error } from "../ManageNotif/style";
 
 const AddTag: React.FC = () => {
   const location = useLocation();

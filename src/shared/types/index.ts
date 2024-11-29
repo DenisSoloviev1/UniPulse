@@ -25,8 +25,8 @@ export enum Routes {
 export const RolesDict = {
   ADMIN: "admin",
   MEDIA: "media",
-  EDITOR: "editor",
-  PUBLISHER: "publisher",
+  CREATOR: "creator",
+  // MODERATOR: "moderator",
   USER: "user",
 } as const;
 
@@ -41,5 +41,3 @@ export interface IPrivateRoute {
   component: LazyExoticComponent<React.FC<any>>;
   roles: Roles[];
 }
-
-

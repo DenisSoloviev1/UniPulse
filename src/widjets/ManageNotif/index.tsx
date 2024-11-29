@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Error, Form, Textarea } from "./style.ts";
 import {
   Container,
@@ -7,16 +7,20 @@ import {
   PlainTitle,
   ModalWindow,
 } from "../../shared/ui/index.ts";
-import Calendar from "../Calendar";
+import Calendar from "../Calendar/index.tsx";
 import { useModalStore } from "../../shared/ui/ModalWindow/store.ts";
-import { useTagStore, TagList, ITag } from "../../entities/tag";
-import { Arrow, Plus, ComplitedSvg } from "../../shared/ui/Icon";
+import { useTagStore, TagList, ITag } from "../../entities/tag/index.ts";
+import { Arrow, Plus, ComplitedSvg } from "../../shared/ui/Icon/index.tsx";
 import AddTag from "../AddTag/index.tsx";
-import { addNotif, INotif } from "../../entities/notification";
-import { MediaItem } from "../../shared/ui/MediaItem";
-import { isMobile } from "../../shared/config/";
+import { addNotif, editNotif, INotif } from "../../entities/notification/index.ts";
+import { MediaItem } from "../../shared/ui/MediaItem/index.tsx";
+import { isMobile } from "../../shared/config/index.ts";
 
-const CreatNotif: React.FC = () => {
+interface ManageNotifProps {
+  notifData?: INotif; 
+}
+
+const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
   const openModal = useModalStore((state) => state.open);
   const closeModal = useModalStore((state) => state.close);
   const isComplited = useModalStore((state) => state.isOpen("Complited"));
@@ -32,6 +36,17 @@ const CreatNotif: React.FC = () => {
   const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Заполнение формы данными из notifData
+  useEffect(() => {
+    if (notifData) {
+      setTitle(notifData.title);
+      setDescription(notifData.description);
+      setDate(notifData.time);
+      setSelectedTags(notifData.tags);
+      setMediaFiles(notifData.files || []);
+    }
+  }, [notifData, setSelectedTags]);
+
   // Сброс формы
   const resetForm = () => {
     setTitle("");
@@ -41,7 +56,6 @@ const CreatNotif: React.FC = () => {
     setSelectedTags([]);
   };
 
-  // Обновленный обработчик отправки формы с учетом валидации
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -59,7 +73,6 @@ const CreatNotif: React.FC = () => {
     }
 
     // Валидация количества файлов
-    console.log("v", mediaFiles);
     if (mediaFiles.length > 10) {
       setError("Можно прикрепить не более 10 файлов");
       return;
@@ -74,8 +87,20 @@ const CreatNotif: React.FC = () => {
     const tagIds: ITag["id"][] = selectedTags.map((tag) => tag.id);
 
     try {
-      // Отправка данных
       await addNotif(title, description, mediaFiles, tagIds, date);
+
+      if (notifData) {
+        await editNotif(
+          notifData.id,
+          title,
+          description,
+          mediaFiles,
+          tagIds,
+          date
+        );
+      } else {
+        await addNotif(title, description, mediaFiles, tagIds, date);
+      }
 
       // Успешное завершение
       setError(null);
@@ -97,10 +122,7 @@ const CreatNotif: React.FC = () => {
     <Form onSubmit={handleSubmit}>
       <Flex $gap={10}>
         <PlainTitle>Название уведомления</PlainTitle>
-        <Container
-          $border={16}
-          $width={isMobile ? "100%" : "50%"}
-        >
+        <Container $border={16} $width={isMobile ? "100%" : "50%"}>
           <Textarea
             rows={2}
             value={title}
@@ -111,7 +133,7 @@ const CreatNotif: React.FC = () => {
 
       <Flex $gap={10}>
         <PlainTitle>Текст уведомления</PlainTitle>
-        <Container $border={16} $width={"100%"} >
+        <Container $border={16} $width={"100%"}>
           <Textarea
             rows={10}
             value={description}
@@ -129,7 +151,6 @@ const CreatNotif: React.FC = () => {
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
           <TagList initialTags={selectedTags} />
-
           <CustomButton
             type="button"
             $style="blue"
@@ -145,7 +166,10 @@ const CreatNotif: React.FC = () => {
         <PlainTitle>Дата отправки</PlainTitle>
         <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
           <Container $border={16}>
-            <Calendar onChange={(newDate) => setDate(newDate)} />
+            <Calendar
+              onChange={(newDate) => setDate(newDate)}
+              value={date ? new Date(date * 1000) : null}
+            />
           </Container>
 
           <CustomButton type="submit" $style={"blue"}>
@@ -165,4 +189,4 @@ const CreatNotif: React.FC = () => {
   );
 };
 
-export default CreatNotif;
+export default ManageNotif;

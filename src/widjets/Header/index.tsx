@@ -16,7 +16,11 @@ const Header: React.FC = () => {
         <Logo />
 
         <Flex $direction={"row"} $align={"center"} $gap={20}>
-          {role !== RolesDict.USER && <Bell />}
+          {role === RolesDict.USER || role === RolesDict.CREATOR ? (
+            <></>
+          ) : (
+            <Bell />
+          )}
           <Push />
 
           <NavBar />

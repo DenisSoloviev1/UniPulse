@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import CreatNotif from "../../widjets/CreatNotif";
+import ManageNotif from "../../widjets/ManageNotif";
 import { NotifList } from "../../entities/notification";
 
 export const AddNotif: React.FC = () => {
@@ -9,7 +9,7 @@ export const AddNotif: React.FC = () => {
     <>
       <Header />
       <Main>
-        <CreatNotif />
+        <ManageNotif  notifData={undefined}/>
 
         <NotifList title={"Отправленные пульсы"} />
       </Main>

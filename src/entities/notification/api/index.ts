@@ -1,7 +1,7 @@
 import { apiRequest } from "../../../shared/config/api";
 import { ITag } from "../../tag";
 import { INotif } from "../model";
-import { useAuthStore } from "../../auth";
+import { Roles } from "../../../shared/types";
 
 /**
  * Создание нового уведомления.
@@ -37,9 +37,7 @@ export const addNotif = async (
  * @role - роль пользователя для получения заявок, относящихся к нему
  * @returns Promise с массивом уведомлений.
  */
-export const getNotifs = async (): Promise<INotif[]> => {
-  const { role } = useAuthStore();
-
+export const getNotifs = async (role: Roles): Promise<INotif[]> => {
   const response = await apiRequest<INotif[]>(
     "GET",
     `/api/notifications/${role}`
@@ -65,7 +63,7 @@ export const editNotif = async (
   title: INotif["title"],
   description: INotif["description"],
   files: INotif["files"],
-  tags: INotif["tags"][],
+  tags: INotif["id"][],
   time: INotif["time"]
 ): Promise<INotif> => {
   const response = await apiRequest<INotif>(
