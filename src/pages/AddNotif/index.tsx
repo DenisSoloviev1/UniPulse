@@ -9,7 +9,7 @@ export const AddNotif: React.FC = () => {
     <>
       <Header />
       <Main>
-        <ManageNotif  notifData={undefined}/>
+        <ManageNotif/>
 
         <NotifList title={"Отправленные пульсы"} />
       </Main>

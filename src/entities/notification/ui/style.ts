@@ -2,16 +2,11 @@ import styled from "styled-components";
 import "../../../shared/variables.scss";
 
 export const Title = styled.h4`
-  width: 80%;
   font-size: 20px;
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  @media screen and (min-width: 601px) {
-    width: 40%;
-  }
 `;
 
 export const Text = styled.p`
@@ -30,6 +25,7 @@ export const Text = styled.p`
 export const Time = styled.time`
   color: var(--color-font-disable);
   font-size: 16px;
+  white-space: nowrap;
 `;
 
 export const Status = styled.span<{

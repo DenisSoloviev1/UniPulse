@@ -1,9 +1,10 @@
 import React from "react";
-import { NotifList, useNotifStore } from "../../entities/notification";
+import { NotifList } from "../../entities/notification";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import { Flex, ModalWindow, PlainTitle } from "../../shared/ui";
-import { Slider } from "../../shared/ui";
+import { useNotifStore } from "../../entities/notification";
+import { Flex, ModalWindow, PlainTitle, Slider } from "../../shared/ui";
 import ManageNotif from "../ManageNotif";
+import CardNotif from "../CardNotif";
 import { isMobile } from "../../shared/config";
 
 const Push: React.FC = () => {
@@ -11,22 +12,25 @@ const Push: React.FC = () => {
 
   const closeModal = useModalStore((state) => state.close);
   const isOpenPush = useModalStore((state) => state.isOpen("Push"));
-  const isOpenNotif = useModalStore((state) =>
+  const isOpenMoreNotif = useModalStore((state) =>
     state.isOpen(`Notif-${selectNotif?.id}`)
   );
+  const isAddNotifPath = location.pathname.includes("addNotif");
 
   return (
     <>
       <ModalWindow
         onClick={() => closeModal(`Notif-${selectNotif?.id}`)}
-        show={isOpenNotif}
-        width={isMobile ? "90%" : "60%"}
-        height={isMobile ? "80%" : "auto"}
+        show={isOpenMoreNotif}
+        width={isMobile ? "90%" : "50%"}
+        height={isMobile ? "70%" : "90%"}
       >
         <Flex $gap={10} $width={"100%"}>
-          <PlainTitle style={{fontSize: "30px", fontWeight: "500" }}>Редактирование</PlainTitle>
+          <PlainTitle style={{ fontSize: "30px", fontWeight: "500" }}>
+            {isAddNotifPath && "Редактирование"}
+          </PlainTitle>
           <Slider $padding={5}>
-            <ManageNotif />
+            {isAddNotifPath ? <ManageNotif notifData={selectNotif}/> : <CardNotif />}
           </Slider>
         </Flex>
       </ModalWindow>

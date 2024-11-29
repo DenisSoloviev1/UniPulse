@@ -12,12 +12,16 @@ import { useModalStore } from "../../shared/ui/ModalWindow/store.ts";
 import { useTagStore, TagList, ITag } from "../../entities/tag/index.ts";
 import { Arrow, Plus, ComplitedSvg } from "../../shared/ui/Icon/index.tsx";
 import AddTag from "../AddTag/index.tsx";
-import { addNotif, editNotif, INotif } from "../../entities/notification/index.ts";
+import {
+  addNotif,
+  editNotif,
+  INotif,
+} from "../../entities/notification/index.ts";
 import { MediaItem } from "../../shared/ui/MediaItem/index.tsx";
 import { isMobile } from "../../shared/config/index.ts";
 
 interface ManageNotifProps {
-  notifData?: INotif; 
+  notifData?: INotif;
 }
 
 const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
@@ -39,10 +43,10 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
   // Заполнение формы данными из notifData
   useEffect(() => {
     if (notifData) {
-      setTitle(notifData.title);
-      setDescription(notifData.description);
-      setDate(notifData.time);
-      setSelectedTags(notifData.tags);
+      setTitle(notifData.title || "");
+      setDescription(notifData.description || "");
+      setDate(notifData.time || null);
+      setSelectedTags(notifData.tags || []);
       setMediaFiles(notifData.files || []);
     }
   }, [notifData, setSelectedTags]);
@@ -56,29 +60,27 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
     setSelectedTags([]);
   };
 
+  // Обработчик отправки формы
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    // Валидация длины заголовка
+    // Валидация
     if (title.length > 40) {
       setError("Название уведомления должно быть не длиннее 40 символов");
       return;
     }
 
-    // Валидация длины описания
     if (description.length > 300) {
       setError("Текст уведомления должен быть не длиннее 300 символов");
       return;
     }
 
-    // Валидация количества файлов
     if (mediaFiles.length > 10) {
       setError("Можно прикрепить не более 10 файлов");
       return;
     }
 
-    // Проверка заполненности остальных полей
     if (!title || !description || !date || selectedTags.length === 0) {
       setError("Заполните все поля");
       return;
@@ -87,9 +89,8 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
     const tagIds: ITag["id"][] = selectedTags.map((tag) => tag.id);
 
     try {
-      await addNotif(title, description, mediaFiles, tagIds, date);
-
       if (notifData) {
+        // Редактирование уведомления
         await editNotif(
           notifData.id,
           title,
@@ -99,6 +100,7 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
           date
         );
       } else {
+        // Создание нового уведомления
         await addNotif(title, description, mediaFiles, tagIds, date);
       }
 
@@ -127,7 +129,7 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
             rows={2}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-          ></Textarea>
+          />
         </Container>
       </Flex>
 
@@ -138,7 +140,7 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
             rows={10}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-          ></Textarea>
+          />
         </Container>
       </Flex>
 
@@ -173,14 +175,20 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
           </Container>
 
           <CustomButton type="submit" $style={"blue"}>
-            Отправить <Arrow />
+            {notifData ? (
+              "Подтвердить"
+            ) : (
+              <>
+                Отправить <Arrow />
+              </>
+            )}
           </CustomButton>
         </Flex>
 
         {error && <Error>{error}</Error>}
 
         <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
-          <Flex $direction="column" $align="center" $gap={15}>
+          <Flex $direction="column" $align="center" $width={"100%"}>
             <ComplitedSvg />
           </Flex>
         </ModalWindow>

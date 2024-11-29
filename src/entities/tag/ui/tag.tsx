@@ -5,16 +5,11 @@ import { ITag } from "../model";
 interface PropsTag {
   id: ITag["id"];
   name: ITag["name"];
-  style?: "normal" | "light" | "choice";
+  style?: "noActive" | "normal" | "light" | "choice";
   onClick?: () => void;
 }
 
-export const Tag: React.FC<PropsTag> = ({
-  id,
-  name,
-  style,
-  onClick,
-}) => {
+export const Tag: React.FC<PropsTag> = ({ id, name, style, onClick }) => {
   return (
     <Container
       $style={style}

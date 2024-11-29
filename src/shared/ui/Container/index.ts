@@ -3,7 +3,7 @@ import "../../Variables.scss";
 
 export const Container = styled.div<{
   $width?: string;
-  $style?: "normal" | "light" | "choice";
+  $style?: "noActive" | "normal" | "light" | "choice";
   $border?: number;
   $gap?: number;
   $padding?: number | number[];
@@ -68,5 +68,17 @@ export const Container = styled.div<{
       ? `
       border: 2px solid var(--color-action);
       `
+      : ""}
+
+  ${(props) =>
+    props.$style === "noActive"
+      ? `
+    background-color: var(--color-background-container);
+
+    &:hover {
+      cursor: default;
+      background-color: var(--color-background-container);
+    }      
+    `
       : ""}
 `;

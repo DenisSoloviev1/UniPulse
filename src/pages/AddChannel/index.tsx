@@ -12,6 +12,7 @@ export const AddChannel: React.FC = () => {
 
   useEffect(() => {
     // Получаем текущий URL
+    console.log(channelId)
     const url = new URL(window.location.href);
     // Извлекаем параметр id
     const id = url.searchParams.get("id");
