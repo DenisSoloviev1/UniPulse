@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { addTelegramChannel } from "../../entities/user";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../entities/auth";
-import { Wrapper } from "../style";
 import { Loader } from "../../shared/ui";
 
 export const AddChannel: React.FC = () => {

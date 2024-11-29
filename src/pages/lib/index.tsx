@@ -58,8 +58,8 @@ export const privateRoutes: IPrivateRoute[] = [
     roles: [
       RolesDict.ADMIN,
       RolesDict.MEDIA,
-      RolesDict.EDITOR,
-      RolesDict.PUBLISHER,
+      RolesDict.CREATOR,
+      // RolesDict.MODERATOR,
       RolesDict.USER,
     ],
   },

@@ -5,7 +5,6 @@ import { RolesDict } from "../../shared/types";
 import { Slider } from "../../shared/ui";
 import Menu from "../Menu";
 
-
 interface MainProps {
   children?: ReactNode;
 }
@@ -20,7 +19,7 @@ const Main: React.FC<MainProps> = ({ children }) => {
           {children}
         </Slider>
 
-        {role !== "" ? role !== RolesDict.USER && <Menu /> : <></>}
+        {role === RolesDict.USER ? <></> : <Menu />}
       </MainWrapper>
     </MainContainer>
   );

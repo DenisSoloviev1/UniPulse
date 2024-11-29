@@ -24,7 +24,7 @@ const Push: React.FC = () => {
         height={isMobile ? "80%" : "auto"}
       >
         <Flex $gap={10} $width={"100%"}>
-          <PlainTitle style={{ textAlign: "center", fontSize: "30px", fontWeight: "500" }}>Редактирование</PlainTitle>
+          <PlainTitle style={{fontSize: "30px", fontWeight: "500" }}>Редактирование</PlainTitle>
           <Slider $padding={5}>
             <ManageNotif />
           </Slider>
