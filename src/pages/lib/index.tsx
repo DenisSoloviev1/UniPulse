@@ -48,4 +48,19 @@ export const privateRoutes: IPrivateRoute[] = [
       RolesDict.USER,
     ],
   },
+  {
+    id: 3,
+    path: Routes.ADDCHANNEL,
+    component: lazy(() =>
+        import("../AddChannel").then((module) => ({ default: module.AddChannel }))
+    ),
+    isPublic: true,
+    roles: [
+      RolesDict.ADMIN,
+      RolesDict.MEDIA,
+      RolesDict.EDITOR,
+      RolesDict.PUBLISHER,
+      RolesDict.USER,
+    ],
+  },
 ];

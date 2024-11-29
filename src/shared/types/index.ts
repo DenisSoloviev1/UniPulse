@@ -18,6 +18,7 @@ export enum Routes {
   CALLBACK = "/callback",
   ADDNOTIF = "/addNotif",
   MYNOTIF = "/myNotif",
+  ADDCHANNEL = "/addChannel/:platform",
 }
 
 // roles
