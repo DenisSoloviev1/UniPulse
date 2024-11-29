@@ -6,9 +6,11 @@ import { getNotifs } from "../api";
 
 interface NotifListProps {
   title: string;
+  active: boolean;
+
 }
 
-export const NotifList: React.FC<NotifListProps> = ({ title }) => {
+export const NotifList: React.FC<NotifListProps> = ({ title, active, onModalTrigger }) => {
   const { notifs, setFetchNotifs } = useNotifStore();
   const [isLoadingNotifs, setIsLoadingNotifs] = useState<boolean>(true); // Состояние загрузки
   const token = localStorage.getItem("authToken");
@@ -33,6 +35,10 @@ export const NotifList: React.FC<NotifListProps> = ({ title }) => {
     fetchNotifs();
   }, []);
 
+  const handleModalTrigger = (notifItem) => {
+    onModalTrigger(notifItem)
+  };
+
   return (
     <article style={{ width: "100%" }}>
       <Flex $gap={10}>
@@ -44,6 +50,10 @@ export const NotifList: React.FC<NotifListProps> = ({ title }) => {
         ) : notifs.length !== 0 ? (
           notifs.map((notifItem) => (
             <Notif
+                onModalTrigger={handleModalTrigger} // Передаем обработчик
+
+                
+                active={active}
               key={notifItem.id}
               id={notifItem.id}
               title={notifItem.title}

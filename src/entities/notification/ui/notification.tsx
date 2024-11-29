@@ -6,16 +6,35 @@ import { INotif, StatusNotif } from "../model";
 import { formatDate, isMobile } from "../../../shared/config";
 
 export const Notif: React.FC<INotif> = ({
+    id,
   title,
   description,
   time,
   tags,
   status,
+    active,
+    files,
+                                          onModalTrigger
 }) => {
   const formattedDate = formatDate(time);
 
+  function triggerModal() {
+    if (active && onModalTrigger) {
+      let notifItem = {
+        title: title,
+        description: description,
+        time: time,
+        tags: tags,
+        status: status,
+        files: files,
+        id: id
+      }
+      onModalTrigger(notifItem); // Вызываем переданную функцию
+    }
+  }
+
   return (
-    <Container $width={"100%"}>
+    <Container $width={"100%"} onClick={triggerModal}>
       <Flex $gap={15}>
         <Flex
           $width={"100%"}

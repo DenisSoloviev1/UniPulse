@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,11 +19,22 @@ registerLocale("ru", ru);
 
 interface CalendarProps {
   onChange: (timestamp: INotif["time"]) => void;
+  value?: Date | null; // Добавлен проп для внешнего значения
 }
 
-const Calendar: React.FC<CalendarProps> = ({ onChange }) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [displayDate, setDisplayDate] = useState<string>("");
+const Calendar: React.FC<CalendarProps> = ({ onChange, value }) => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(value || null);
+  const [displayDate, setDisplayDate] = useState<string>(
+      value ? formatDate(Math.floor(value.getTime() / 1000)) : ""
+  );
+
+  useEffect(() => {
+    // Обновление selectedDate при изменении внешнего значения
+    if (value) {
+      setSelectedDate(value);
+      setDisplayDate(formatDate(Math.floor(value.getTime() / 1000)));
+    }
+  }, [value]);
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -44,28 +55,28 @@ const Calendar: React.FC<CalendarProps> = ({ onChange }) => {
   };
 
   return (
-    <DatePicker
-      selected={selectedDate}
-      onChange={handleDateChange}
-      showTimeSelect
-      dateFormat="d MMMM yyyy HH:mm"
-      timeFormat="HH:mm"
-      minDate={new Date()}
-      locale="ru"
-      timeIntervals={30}
-      filterTime={filterTime}
-      customInput={
-        <InputContainer>
-          <input
-            type="text"
-            value={displayDate}
-            readOnly
-            placeholder="__ ______ ____ __:__"
-          />
-          <CalendarSvg />
-        </InputContainer>
-      }
-    />
+      <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          showTimeSelect
+          dateFormat="d MMMM yyyy HH:mm"
+          timeFormat="HH:mm"
+          minDate={new Date()}
+          locale="ru"
+          timeIntervals={30}
+          filterTime={filterTime}
+          customInput={
+            <InputContainer>
+              <input
+                  type="text"
+                  value={displayDate}
+                  readOnly
+                  placeholder="__ ______ ____ __:__"
+              />
+              <CalendarSvg />
+            </InputContainer>
+          }
+      />
   );
 };
 
