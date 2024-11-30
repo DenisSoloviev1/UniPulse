@@ -5,8 +5,13 @@ import { Tag } from "../../tag";
 import { INotif, StatusNotif, useNotifStore } from "../model";
 import { formatDate, isMobile } from "../../../shared/config";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store";
+import { Roles } from "../../../shared/types";
 
-export const Notif: React.FC<INotif> = ({
+type NotifProps = INotif&{
+onClick:()=>void;
+}
+
+export const Notif: React.FC<NotifProps> = ({
   id,
   title,
   description,
@@ -14,8 +19,9 @@ export const Notif: React.FC<INotif> = ({
   tags,
   status,
   files,
+  onClick
 }) => {
-  const { setSelectNotif } = useNotifStore();
+  const { setSelectNotif, setSelectEditNotif } = useNotifStore();
   const openModal = useModalStore((state) => state.open);
   const closeModal = useModalStore((state) => state.close);
 
@@ -40,11 +46,7 @@ export const Notif: React.FC<INotif> = ({
   return (
     <Container
       $width={"100%"}
-      onClick={() => {
-        triggerNotif(); // Устанавливаем уведомление
-        openModal(`Notif-${id}`);
-        closeModal("Push");
-      }}
+      onClick={onClick}
     >
       <Flex $gap={15}>
         <Flex
@@ -59,11 +61,14 @@ export const Notif: React.FC<INotif> = ({
           <Flex $direction={"row"} $align={"center"} $gap={15}>
             {!isMobile && <Time>{formattedDate}</Time>}
 
-            {isAddNotifPath && (
+            {/* {isAddNotifPath && (
               <Status $status={status}>
                 {StatusNotif[status]}
               </Status>
-            )}
+            )} */}
+            <Status $status={status}>
+                {StatusNotif[status]}
+              </Status>
           </Flex>
         </Flex>
 

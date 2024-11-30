@@ -28,7 +28,7 @@ export const addTag = async (
  * @returns Promise с массивом тегов.
  */
 export const getTags = async (): Promise<ITag[]> => {
-  const response = await apiRequest<ITag[]>("GET", "/api/tags");
+  const response = await apiRequest<ITag[]>("GET", "/api/tags/available");
   if (!response.success) {
     throw new Error(response.error || "Не удалось загрузить теги.");
   }

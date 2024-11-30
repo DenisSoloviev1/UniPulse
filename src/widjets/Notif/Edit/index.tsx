@@ -1,35 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Error, Form, Textarea } from "./style.ts";
+import { Error, Form, Textarea } from "../style.ts";
 import {
   Container,
   Flex,
   CustomButton,
   PlainTitle,
   ModalWindow,
-} from "../../shared/ui/index.ts";
-import Calendar from "../Calendar/index.tsx";
-import { useModalStore } from "../../shared/ui/ModalWindow/store.ts";
-import { useTagStore, TagList, ITag } from "../../entities/tag/index.ts";
-import { Arrow, Plus, ComplitedSvg } from "../../shared/ui/Icon/index.tsx";
-import AddTag from "../AddTag/index.tsx";
-import {
-  addNotif,
-  editNotif,
-  INotif,
-} from "../../entities/notification/index.ts";
-import { MediaItem } from "../../shared/ui/MediaItem/index.tsx";
-import { isMobile } from "../../shared/config/index.ts";
+} from "../../../shared/ui/index.ts";
+import Calendar from "../../Calendar/index.tsx";
+import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
+import { useTagStore, TagList, ITag } from "../../../entities/tag/index.ts";
+import { Arrow, Plus, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
+import { AddTag } from "../../Tag";
+import { editNotif, INotif } from "../../../entities/notification/index.ts";
+import { MediaItem } from "../../../shared/ui/MediaItem/index.tsx";
+import { isMobile } from "../../../shared/config/index.ts";
 
-interface ManageNotifProps {
+interface EditNotifProps {
   notifData?: INotif;
 }
 
-const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
+export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
   const openModal = useModalStore((state) => state.open);
   const closeModal = useModalStore((state) => state.close);
   const isComplited = useModalStore((state) => state.isOpen("Complited"));
 
-  const { selectedTags, setSelectedTags } = useTagStore();
+  const { selectedEditTags, setSelectedEditTags } = useTagStore();
 
   // Состояния для формы
   const [title, setTitle] = useState<INotif["title"]>("");
@@ -46,10 +42,10 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
       setTitle(notifData.title || "");
       setDescription(notifData.description || "");
       setDate(notifData.time || null);
-      setSelectedTags(notifData.tags || []);
+      setSelectedEditTags(notifData.tags || []);
       setMediaFiles(notifData.files || []);
     }
-  }, [notifData, setSelectedTags]);
+  }, [notifData, setSelectedEditTags]);
 
   // Сброс формы
   const resetForm = () => {
@@ -57,7 +53,7 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
     setDescription("");
     setMediaFiles([]);
     setDate(null);
-    setSelectedTags([]);
+    setSelectedEditTags([]);
   };
 
   // Обработчик отправки формы
@@ -81,16 +77,15 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
       return;
     }
 
-    if (!title || !description || !date || selectedTags.length === 0) {
+    if (!title || !description || !date || selectedEditTags.length === 0) {
       setError("Заполните все поля");
       return;
     }
 
-    const tagIds: ITag["id"][] = selectedTags.map((tag) => tag.id);
+    const tagIds: ITag["id"][] = selectedEditTags.map((tag) => tag.id);
 
     try {
       if (notifData) {
-        // Редактирование уведомления
         await editNotif(
           notifData.id,
           title,
@@ -100,8 +95,7 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
           date
         );
       } else {
-        // Создание нового уведомления
-        await addNotif(title, description, mediaFiles, tagIds, date);
+        setError("Ошибка редактирования уведомления");
       }
 
       // Успешное завершение
@@ -126,7 +120,7 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
         <PlainTitle>Название уведомления</PlainTitle>
         <Container $border={16} $width={isMobile ? "100%" : "50%"}>
           <Textarea
-            rows={2}
+            rows={1}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -152,7 +146,7 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
       <Flex $gap={10}>
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
-          <TagList initialTags={selectedTags} />
+          <TagList initialTags={selectedEditTags} />
           <CustomButton
             type="button"
             $style="blue"
@@ -175,20 +169,14 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
           </Container>
 
           <CustomButton type="submit" $style={"blue"}>
-            {notifData ? (
-              "Подтвердить"
-            ) : (
-              <>
-                Отправить <Arrow />
-              </>
-            )}
+            Подтвердить <Arrow />
           </CustomButton>
         </Flex>
 
         {error && <Error>{error}</Error>}
 
         <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
-          <Flex $direction="column" $align="center" $width={"100%"}>
+          <Flex $justify={"center"} $align={"center"} $width={"100%"}>
             <ComplitedSvg />
           </Flex>
         </ModalWindow>
@@ -196,5 +184,3 @@ const ManageNotif: React.FC<ManageNotifProps> = ({ notifData }) => {
     </Form>
   );
 };
-
-export default ManageNotif;

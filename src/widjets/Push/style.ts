@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import "../../variables.scss";
+import "../../shared/Variables.scss";
 
 export const BellButton = styled.button`
   transition: all 0.2s ease-in-out;

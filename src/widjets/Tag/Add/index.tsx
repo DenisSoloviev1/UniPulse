@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import {
   Container,
   Flex,
@@ -9,22 +8,15 @@ import {
   Slider,
   Loader,
   Skeleton,
-} from "../../shared/ui";
-import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import { TagList } from "../../entities/tag";
-import { addTag } from "../../entities/tag";
-import { Cat, ComplitedSvg } from "../../shared/ui/Icon";
-import {
-  useTagStore,
-  getTags,
-  getSubscriptionToTags,
-} from "../../entities/tag";
-import { subscribeToTag } from "../../entities/subscription";
-import { Error } from "../ManageNotif/style";
+} from "../../../shared/ui";
+import { useModalStore } from "../../../shared/ui/ModalWindow/store";
+import { TagList } from "../../../entities/tag";
+import { addTag } from "../../../entities/tag";
+import { ComplitedSvg } from "../../../shared/ui/Icon";
+import { useTagStore, getTags } from "../../../entities/tag";
+import { Error } from "../../Notif/style";
 
-const AddTag: React.FC = () => {
-  const location = useLocation();
-  const isAddNotifPath = location.pathname.includes("addNotif");
+export const AddTag: React.FC = () => {
   const token = localStorage.getItem("authToken") || "";
 
   const [tagName, setTagName] = useState<string>("");
@@ -37,14 +29,7 @@ const AddTag: React.FC = () => {
   const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const {
-    tags,
-    subscriptionToTags,
-    selectedTags,
-    setTags,
-    setSubscriptionToTags,
-    setSelectedTags,
-  } = useTagStore();
+  const { tags, setTags } = useTagStore();
 
   const [error, setError] = useState<string | null>(null);
 
@@ -54,14 +39,8 @@ const AddTag: React.FC = () => {
     const fetchTags = async () => {
       setIsLoadingTags(true);
       try {
-        let responseData;
-        if (isAddNotifPath) {
-          responseData = await getTags();
-          setTags(responseData);
-        } else {
-          responseData = await getSubscriptionToTags();
-          setSubscriptionToTags(responseData);
-        }
+        const responseData = await getTags();
+        setTags(responseData);
         console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
@@ -99,47 +78,13 @@ const AddTag: React.FC = () => {
     }
   };
 
-  const handleSubscriptionTag = async () => {
-    setIsLoading(true);
-
-    if (selectedTags.length === 0) {
-      console.error("Ошибка: не выбран ни один тег.");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      // Подписываемся на все выбранные теги
-      await Promise.all(
-        selectedTags.map(async (tag) => {
-          if (tag.id) {
-            await subscribeToTag(tag.id);
-          }
-        })
-      );
-
-      // Очистка формы и показ успеха
-      setSelectedTags([]);
-      setIsSuccess(true);
-
-      setTimeout(() => {
-        closeModal("AddTag");
-        setIsSuccess(false);
-      }, 1500);
-    } catch (error) {
-      console.error("Ошибка подписки на тег:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <ModalWindow show={isOpenAddTag} onClick={() => closeModal("AddTag")}>
       {isLoading ? (
         <Loader $size="300px" />
       ) : isSuccess ? (
         <ComplitedSvg />
-      ) : isAddNotifPath ? (
+      ) : (
         <>
           <Flex $width={"100%"} $gap={10}>
             <Flex>
@@ -187,34 +132,7 @@ const AddTag: React.FC = () => {
             Создать
           </CustomButton>
         </>
-      ) : (
-        <>
-          <Flex $width={"100%"}>
-            <PlainTitle>Доступные теги</PlainTitle>
-            <Slider $height={100} $wrap={true}>
-              {isLoadingTags ? (
-                Array.from({ length: 7 }).map((_, index) => (
-                  <Skeleton key={index} $width="125px" />
-                ))
-              ) : (
-                <TagList initialTags={subscriptionToTags} />
-              )}
-            </Slider>
-
-            <Cat />
-          </Flex>
-
-          <CustomButton
-            onClick={handleSubscriptionTag}
-            $style={"blue"}
-            $width={"70%"}
-          >
-            Подписаться
-          </CustomButton>
-        </>
       )}
     </ModalWindow>
   );
 };
-
-export default AddTag;

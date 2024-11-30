@@ -1,26 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import AddTag from "../../widjets/AddTag";
-import { Container, Flex, CustomButton, PlainTitle } from "../../shared/ui";
+import { SubscribeTag } from "../../widjets/Tag";
+import {
+  Container,
+  Flex,
+  CustomButton,
+  PlainTitle,
+  ModalWindow,
+  Slider,
+} from "../../shared/ui";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import { NotifList } from "../../entities/notification";
+import { NotifList, useNotifStore } from "../../entities/notification";
 import {
   useSubscriptionStore,
   getSubscriptions,
   SubscriptionList,
 } from "../../entities/subscription";
 import { Plus } from "../../shared/ui/Icon";
-import { useAuthStore} from "../../entities/auth";
-import {addTelegramChannel} from "../../entities/user";
-import {useNavigate} from "react-router-dom";
+import { useAuthStore } from "../../entities/auth";
+import { addTelegramChannel } from "../../entities/user";
+import { useNavigate } from "react-router-dom";
+import { MoreInfo } from "../../widjets/Notif";
+import { isMobile } from "../../shared/config";
 
 export const MyNotif: React.FC = () => {
   const navigate = useNavigate();
 
+  const { selectNotif } = useNotifStore();
+
   const { setSubscriptions } = useSubscriptionStore();
-  const { userId, isAuth } = useAuthStore();  // Используем стор для получения userId
-  const token = localStorage.getItem("authToken") || "";
+  const { userId, isAuth } = useAuthStore(); // Используем стор для получения userId
 
   const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
   const [inputUserId, setUserId] = useState<string>("");
@@ -39,19 +49,17 @@ export const MyNotif: React.FC = () => {
   const addTelegram = async (id: string) => {
     try {
       const result = await addTelegramChannel(id);
-      console.log('Успех:', result);
+      console.log("Успех:", result);
       if (result.success) {
         // Если сервер вернул положительный ответ
         navigate("/myNotif");
       }
     } catch (error) {
-      console.error('Ошибка при добавлении канала:', error);
+      console.error("Ошибка при добавлении канала:", error);
     }
   };
 
   useEffect(() => {
-    if (!token) return;
-
     const fetchSubscriptions = async () => {
       try {
         const responseData = await getSubscriptions();
@@ -63,7 +71,7 @@ export const MyNotif: React.FC = () => {
     };
 
     fetchSubscriptions();
-  }, [token, setSubscriptions]);
+  }, [setSubscriptions]);
 
   // Запрос на добавление канала, если userId в сторе присутствует
   useEffect(() => {
@@ -73,70 +81,70 @@ export const MyNotif: React.FC = () => {
   }, [isAuth, userId]);
 
   return (
-      <>
-        <Header />
-        <Main>
-          <Flex $gap={20}>
-            <Flex $gap={10}>
-              <PlainTitle>Настройка уведомлений</PlainTitle>
+    <>
+      <Header />
+      <Main>
+        <Flex $gap={20}>
+          <Flex $gap={10}>
+            <PlainTitle>Настройка уведомлений</PlainTitle>
 
-              <Flex $direction={"row"}>
-                <Container>
-                  <label>
-                    <input
-                        type="radio"
-                        value="vk"
-                        checked={selectedPlatform === "vk"}
-                        onChange={handlePlatformChange}
-                    />
-                    Вконтакте
-                  </label>
-                </Container>
-
-                <Container>
-                  <label>
-                    <input
-                        type="radio"
-                        value="telegram"
-                        checked={selectedPlatform === "telegram"}
-                        onChange={handlePlatformChange}
-                    />
-                    Телеграм
-                  </label>
-                </Container>
-              </Flex>
+            <Flex $direction={"row"}>
+              <Container>
+                <label>
+                  <input
+                    type="radio"
+                    value="vk"
+                    checked={selectedPlatform === "vk"}
+                    onChange={handlePlatformChange}
+                  />
+                  Вконтакте
+                </label>
+              </Container>
 
               <Container>
-                <input
-                    type="text"
-                    placeholder={`Введите ID ${selectedPlatform}`}
-                    value={inputUserId}
-                    onChange={handleUserIdChange}
-                />
+                <label>
+                  <input
+                    type="radio"
+                    value="telegram"
+                    checked={selectedPlatform === "telegram"}
+                    onChange={handlePlatformChange}
+                  />
+                  Телеграм
+                </label>
               </Container>
             </Flex>
 
-            <Flex $gap={10}>
-              <PlainTitle>Мои подписки</PlainTitle>
-
-              <Flex $direction={"row"} $align={"center"} $gap={10}>
-                <SubscriptionList/>
-
-                <CustomButton
-                    type={"button"}
-                    $style={"blue"}
-                    onClick={() => openModal("AddTag")}
-                >
-                  <Plus />
-                </CustomButton>
-
-                <AddTag />
-              </Flex>
-            </Flex>
+            <Container>
+              <input
+                type="text"
+                placeholder={`Введите ID ${selectedPlatform}`}
+                value={inputUserId}
+                onChange={handleUserIdChange}
+              />
+            </Container>
           </Flex>
 
-          <NotifList title={"Полученные пульсы"} />
-        </Main>
-      </>
+          <Flex $gap={10}>
+            <PlainTitle>Мои подписки</PlainTitle>
+
+            <Flex $direction={"row"} $align={"center"} $gap={10}>
+              <SubscriptionList />
+
+              <CustomButton
+                type={"button"}
+                $style={"blue"}
+                onClick={() => openModal("SubscribeTag")}
+              >
+                <Plus />
+              </CustomButton>
+
+              <SubscribeTag />
+            </Flex>
+          </Flex>
+        </Flex>
+
+        <NotifList title={"Полученные пульсы"} />
+      </Main>
+    </>
   );
 };

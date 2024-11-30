@@ -37,7 +37,7 @@ export const addNotif = async (
  * @role - роль пользователя для получения заявок, относящихся к нему
  * @returns Promise с массивом уведомлений.
  */
-export const getNotifs = async (role: Roles): Promise<INotif[]> => {
+export const getNotifs = async (role?: Roles): Promise<INotif[]> => {
   const response = await apiRequest<INotif[]>(
     "GET",
     `/api/notifications/${role}`

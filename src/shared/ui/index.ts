@@ -1,4 +1,3 @@
-export { Bell } from "./Bell";
 export { Container } from "./Container";
 export { CustomButton } from "./CustomButton";
 export { Flex } from "./Flex";

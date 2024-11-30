@@ -4,7 +4,7 @@ import { useAuthStore } from "../../entities/auth";
 import { RolesDict } from "../../shared/types";
 import { Logo } from "../../shared/ui/Icon";
 import { NavBar } from "../NavBar";
-import { Bell, Flex } from "../../shared/ui";
+import { Flex } from "../../shared/ui";
 import Push from "../Push";
 
 const Header: React.FC = () => {
@@ -19,9 +19,8 @@ const Header: React.FC = () => {
           {role === RolesDict.USER || role === RolesDict.CREATOR ? (
             <></>
           ) : (
-            <Bell />
+            <Push />
           )}
-          <Push />
 
           <NavBar />
         </Flex>

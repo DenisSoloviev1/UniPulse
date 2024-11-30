@@ -8,7 +8,7 @@ interface TagListProps {
 }
 
 export const TagList: React.FC<TagListProps> = ({ initialTags }) => {
-  const { selectedTags, setSelectedTags } = useTagStore();
+  const { selectedTags, setSelectedTags, selectedEditTags, setSelectedEditTags } = useTagStore();
 
   const handleTagClick = (id: ITag["id"]) => {
     const tag = initialTags.find((tag) => tag.id === id);
