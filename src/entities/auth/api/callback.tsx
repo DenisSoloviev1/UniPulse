@@ -11,7 +11,7 @@ export const Callback: React.FC = () => {
   const { role, setRole } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRoleSaved, setIsRoleSaved] = useState(false);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const Callback: React.FC = () => {
           console.error("Ошибка при обмене кода на токен:", error);
         });
     } else {
-      setLoading(false);
+      setIsLoading(false);
     }
   }, [location, setRole]);
 
@@ -47,7 +47,7 @@ export const Callback: React.FC = () => {
     }
   }, [isRoleSaved, role, navigate]);
 
-  if (loading) {
+  if (isLoading) {
     return <Loader $size={"200px"}/>;
   }
 

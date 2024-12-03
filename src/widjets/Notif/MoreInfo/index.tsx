@@ -1,20 +1,18 @@
 import React from "react";
-import {
-  Title,
-  Text,
-  Time,
-  useNotifStore,
-} from "../../../entities/notification";
+import { Title, Time, INotif} from "../../../entities/notification";
 import { Tag } from "../../../entities/tag";
 import { formatDate } from "../../../shared/config";
 import { Flex } from "../../../shared/ui";
+import { TextMore } from "../style";
 
-export const MoreInfo: React.FC = () => {
-  const { selectNotif } = useNotifStore();
+interface MoreInfoProps {
+  notifData: INotif;
+}
 
-  if (!selectNotif) return <p>Нет данных</p>;
+export const MoreInfo: React.FC<MoreInfoProps> = ({notifData}) => {
+  if (!notifData) return <p>Данных нет</p>;
 
-  const formattedDate = formatDate(selectNotif.time);
+  const formattedDate = formatDate(notifData.time);
 
   return (
     <Flex $width={"100%"} $gap={10}>
@@ -22,14 +20,12 @@ export const MoreInfo: React.FC = () => {
         <Time>{formattedDate}</Time>
       </Flex>
 
-      <Flex $width={"100%"} $align={"center"}>
-        <Title>{selectNotif.title}</Title>
-      </Flex>
+      <Title>{notifData.title}</Title>
 
-      <Text>{selectNotif.description}</Text>
+      <TextMore>{notifData.description}</TextMore>
 
       <Flex $direction={"row"} $align={"center"} $wrap>
-        {selectNotif.tags.map((tag) => (
+        {notifData.tags.map((tag) => (
           <Tag key={tag.id} id={tag.id} name={tag.name} style={"noActive"} />
         ))}
       </Flex>

@@ -6,6 +6,7 @@ import {
   CustomButton,
   PlainTitle,
   ModalWindow,
+  Loader,
 } from "../../../shared/ui/index.ts";
 import Calendar from "../../Calendar/index.tsx";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
@@ -17,10 +18,12 @@ import { MediaItem } from "../../../shared/ui/MediaItem/index.tsx";
 import { isMobile } from "../../../shared/config/index.ts";
 
 interface EditNotifProps {
-  notifData?: INotif;
+  notifData: INotif;
 }
 
-export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
+export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
+  if (!notifData) return <p>Данных нет</p>;
+
   const openModal = useModalStore((state) => state.open);
   const closeModal = useModalStore((state) => state.close);
   const isComplited = useModalStore((state) => state.isOpen("Complited"));
@@ -36,6 +39,8 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
   const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   // Заполнение формы данными из notifData
   useEffect(() => {
     if (notifData) {
@@ -45,7 +50,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
       setSelectedEditTags(notifData.tags || []);
       setMediaFiles(notifData.files || []);
     }
-  }, [notifData, setSelectedEditTags]);
+  }, [ setSelectedEditTags]);
 
   // Сброс формы
   const resetForm = () => {
@@ -60,25 +65,30 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
 
     // Валидация
     if (title.length > 40) {
       setError("Название уведомления должно быть не длиннее 40 символов");
+      setIsLoading(false);
       return;
     }
 
     if (description.length > 300) {
       setError("Текст уведомления должен быть не длиннее 300 символов");
+      setIsLoading(false);
       return;
     }
 
     if (mediaFiles.length > 10) {
       setError("Можно прикрепить не более 10 файлов");
+      setIsLoading(false);
       return;
     }
 
     if (!title || !description || !date || selectedEditTags.length === 0) {
       setError("Заполните все поля");
+      setIsLoading(false);
       return;
     }
 
@@ -102,6 +112,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
       setError(null);
       openModal("Complited");
       resetForm();
+      setIsLoading(false);
 
       // Убираем модалку через несколько секунд
       setTimeout(() => {
@@ -169,16 +180,15 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
           </Container>
 
           <CustomButton type="submit" $style={"blue"}>
-            Подтвердить <Arrow />
+            Подтвердить
+            {isLoading ? <Loader $size={"23px"} $border={"2px"} $color={"white"}/> : <Arrow />}
           </CustomButton>
         </Flex>
 
         {error && <Error>{error}</Error>}
 
         <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
-          <Flex $justify={"center"} $align={"center"} $width={"100%"}>
-            <ComplitedSvg />
-          </Flex>
+          <ComplitedSvg />
         </ModalWindow>
       </Flex>
     </Form>

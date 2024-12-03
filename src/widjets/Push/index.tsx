@@ -1,34 +1,54 @@
-import React from "react";
-import { NotifList } from "../../entities/notification";
+import React, { useEffect, useState } from "react";
+import {
+  NotifList,
+  getNotifs,
+  useNotifStore,
+} from "../../entities/notification";
 import { useAuthStore } from "../../entities/auth";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import { useNotifStore } from "../../entities/notification";
-import { Flex, ModalWindow, PlainTitle, Slider } from "../../shared/ui";
-import { isMobile } from "../../shared/config";
-import { EditNotif } from "../Notif";
+import {
+  ModalWindow,
+  PlainTitle,
+  Slider,
+  Skeleton,
+} from "../../shared/ui";
 import { BellButton, Circle } from "./style.ts";
-import { BellSvg } from "../../shared/ui/Icon/index.tsx";
+import { BellSvg } from "../../shared/ui/Icon";
+import { RolesDict } from "../../shared/types";
 
 const Push: React.FC = () => {
   const { role } = useAuthStore();
 
-  const { selectNotif } = useNotifStore();
+  const { notifs, setFetchNotifs } = useNotifStore();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const openModal = useModalStore((state) => state.open);
   const closeModal = useModalStore((state) => state.close);
   const isOpenPush = useModalStore((state) => state.isOpen("Push"));
 
+  useEffect(() => {
+    const fetchNotifs = async () => {
+      try {
+        const responseData = await getNotifs(RolesDict.MEDIA);
+        setFetchNotifs(responseData);
+        setIsLoading(false)
+        console.log("Загруженные уведомления:", responseData);
+      } catch (error) {
+        console.error("Ошибка загрузки уведомлений:", error);
+      }
+    };
+    fetchNotifs();
+  }, []);
 
-  const push: boolean = true;
   return (
     <>
       <BellButton onClick={() => openModal("Push")}>
-        {push ? (
+        {notifs.length === 0 ? (
+          <BellSvg />
+        ) : (
           <>
             <BellSvg /> <Circle />
           </>
-        ) : (
-          <BellSvg />
         )}
       </BellButton>
 
@@ -38,8 +58,16 @@ const Push: React.FC = () => {
         position={["60px", "", "", "10px"]}
         width={"80%"}
       >
+        <PlainTitle>Неподтвержденные пульсы</PlainTitle>
+
         <Slider $padding={5}>
-          <NotifList title={"Неподтвержденные пульсы"} role={role} />
+          {isLoading ? (
+            Array.from({ length: 3 }).map((_, index) => (
+              <Skeleton key={index} $height="150px" />
+            ))
+          ) : (
+            <NotifList role={role} initialNotifs={notifs} />
+          )}
         </Slider>
       </ModalWindow>
     </>

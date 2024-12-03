@@ -18,3 +18,9 @@ export const Textarea = styled.textarea`
 export const Error = styled.span`
 color: var(--color-delete);
 `
+
+export const TextMore = styled.p`
+  width: 100%;
+  font-size: 20px;
+  text-indent: 20px;
+`;

@@ -61,3 +61,8 @@ export const Status = styled.span<{
     background-color: var(--color-success);
     color: var(--color-font-success);  `}
 `;
+
+export const Message = styled.p`
+  text-align: center;
+  color: var(--color-font-disable);
+`;

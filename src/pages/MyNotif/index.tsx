@@ -7,11 +7,14 @@ import {
   Flex,
   CustomButton,
   PlainTitle,
-  ModalWindow,
-  Slider,
+  Skeleton,
 } from "../../shared/ui";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import { NotifList, useNotifStore } from "../../entities/notification";
+import {
+  NotifList,
+  useNotifStore,
+  getNotifs,
+} from "../../entities/notification";
 import {
   useSubscriptionStore,
   getSubscriptions,
@@ -21,13 +24,16 @@ import { Plus } from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
 import { addTelegramChannel } from "../../entities/user";
 import { useNavigate } from "react-router-dom";
-import { MoreInfo } from "../../widjets/Notif";
-import { isMobile } from "../../shared/config";
+
+import { RolesDict } from "../../shared/types";
 
 export const MyNotif: React.FC = () => {
   const navigate = useNavigate();
 
-  const { selectNotif } = useNotifStore();
+  const { subscriptionNotifs, setSubscriptionNotifs } = useNotifStore();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const openModal = useModalStore((state) => state.open);
 
   const { setSubscriptions } = useSubscriptionStore();
   const { userId, isAuth } = useAuthStore(); // Используем стор для получения userId
@@ -43,8 +49,6 @@ export const MyNotif: React.FC = () => {
     setUserId(event.target.value);
   };
 
-  const openModal = useModalStore((state) => state.open);
-
   // Функция для выполнения запроса, если есть userId
   const addTelegram = async (id: string) => {
     try {
@@ -59,6 +63,14 @@ export const MyNotif: React.FC = () => {
     }
   };
 
+  // Запрос на добавление канала, если userId в сторе присутствует
+  useEffect(() => {
+    if (isAuth && userId) {
+      addTelegram(userId);
+    }
+  }, [isAuth, userId]);
+
+  //получение тегов, на которые подписан
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
@@ -73,12 +85,20 @@ export const MyNotif: React.FC = () => {
     fetchSubscriptions();
   }, [setSubscriptions]);
 
-  // Запрос на добавление канала, если userId в сторе присутствует
+  //запрос на получение уведомлений по подписке как пользователь
   useEffect(() => {
-    if (isAuth && userId) {
-      addTelegram(userId);
-    }
-  }, [isAuth, userId]);
+    const fetchNotifs = async () => {
+      try {
+        const responseData = await getNotifs(RolesDict.USER);
+        setSubscriptionNotifs(responseData);
+        setIsLoading(false);
+        console.log("Загруженные уведомления:", responseData);
+      } catch (error) {
+        console.error("Ошибка загрузки уведомлений:", error);
+      }
+    };
+    fetchNotifs();
+  }, []);
 
   return (
     <>
@@ -143,7 +163,17 @@ export const MyNotif: React.FC = () => {
           </Flex>
         </Flex>
 
-        <NotifList title={"Полученные пульсы"} />
+        <Flex $gap={10} $width={"100%"}>
+          <PlainTitle>Полученные пульсы</PlainTitle>
+
+          {isLoading ? (
+            Array.from({ length: 3 }).map((_, index) => (
+              <Skeleton key={index} $height="150px" />
+            ))
+          ) : (
+            <NotifList initialNotifs={subscriptionNotifs} />
+          )}
+        </Flex>
       </Main>
     </>
   );

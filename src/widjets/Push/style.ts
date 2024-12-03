@@ -4,6 +4,8 @@ import "../../shared/Variables.scss";
 export const BellButton = styled.button`
   transition: all 0.2s ease-in-out;
   position: relative;
+  width: 30px;
+  height: 30px;
 
   svg {
     width: 30px;

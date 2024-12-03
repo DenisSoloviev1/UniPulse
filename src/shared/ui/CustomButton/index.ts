@@ -12,7 +12,7 @@ export const CustomButton = styled.button<{
   align-items: center;
   cursor: pointer;
   border-radius: 16px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   gap: 15px;
   padding: 10px;
 
@@ -21,32 +21,21 @@ export const CustomButton = styled.button<{
     `
       color: var(--color-font-active);
       background-color: var(--color-background-container);
-      border: 2px solid var(--color-background-container);
-
-      &:hover {
-        background-color: inherit;
-      }
   `}
 
   ${(props) =>
     props.$style === "blue" &&
     `
       color: var(--color-background);
-      border: 2px solid var(--color-action);
       background-color: var(--color-action);
+      border: 2px solid var(--color-action);
 
       svg {
-        fill:  var(--color-background);
-        transition: all 0.3s ease-in-out;
+        fill: var(--color-background);
       }
 
       &:hover {
-        background-color: inherit;
-        color: var(--color-action);
-
-        svg {
-        fill: var(--color-action);
-      }
+        background-color: #167ff6;
       }
   `}
 

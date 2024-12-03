@@ -12,15 +12,16 @@ export const SubscriptionList: React.FC = () => {
           subscriptions.map((subscription) => (
             <Subscription
               key={subscription.id}
-              id={subscription.id}
-              tag_id={subscription.tag_id}
-              tag={subscription.tag} 
-              user_id={subscription.user_id}
-              subscriptable={subscription.subscriptable}
+              {...subscription}
+              // id={subscription.id}
+              // tag_id={subscription.tag_id}
+              // tag={subscription.tag} 
+              // user_id={subscription.user_id}
+              // subscriptable={subscription.subscriptable}
             />
           ))
         ) : (
-          <Loader $size={"50px"}/>
+          <Loader $size={"50px"} $border={"3px"}/>
         )}
       </Flex>
     </article>

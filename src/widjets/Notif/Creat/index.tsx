@@ -6,6 +6,7 @@ import {
   CustomButton,
   PlainTitle,
   ModalWindow,
+  Loader,
 } from "../../../shared/ui/index.ts";
 import Calendar from "../../Calendar/index.tsx";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
@@ -32,7 +33,9 @@ export const CreatNotif: React.FC = () => {
   const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Сброс формы
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // Сброс формыXX
   const resetForm = () => {
     setTitle("");
     setDescription("");
@@ -45,25 +48,30 @@ export const CreatNotif: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
 
     // Валидация
     if (title.length > 40) {
       setError("Название уведомления должно быть не длиннее 40 символов");
+      setIsLoading(false);
       return;
     }
 
     if (description.length > 300) {
       setError("Текст уведомления должен быть не длиннее 300 символов");
+      setIsLoading(false);
       return;
     }
 
     if (mediaFiles.length > 10) {
       setError("Можно прикрепить не более 10 файлов");
+      setIsLoading(false);
       return;
     }
 
     if (!title || !description || !date || selectedTags.length === 0) {
       setError("Заполните все поля");
+      setIsLoading(false);
       return;
     }
 
@@ -76,6 +84,7 @@ export const CreatNotif: React.FC = () => {
       setError(null);
       openModal("Complited");
       resetForm();
+      setIsLoading(false);
 
       // Убираем модалку через несколько секунд
       setTimeout(() => {
@@ -143,16 +152,15 @@ export const CreatNotif: React.FC = () => {
           </Container>
 
           <CustomButton type="submit" $style={"blue"}>
-            Отправить <Arrow />
+            Отправить
+            {isLoading ? <Loader $size={"23px"} $border={"2px"} $color={"white"}/> : <Arrow />}
           </CustomButton>
         </Flex>
 
         {error && <Error>{error}</Error>}
 
         <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
-          <Flex $justify={"center"} $align={"center"} $width={"100%"}>
-            <ComplitedSvg />
-          </Flex>
+          <ComplitedSvg />
         </ModalWindow>
       </Flex>
     </Form>

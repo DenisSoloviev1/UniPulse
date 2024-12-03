@@ -8,7 +8,7 @@ interface TagListProps {
 }
 
 export const TagList: React.FC<TagListProps> = ({ initialTags }) => {
-  const { selectedTags, setSelectedTags, selectedEditTags, setSelectedEditTags } = useTagStore();
+  const { selectedTags, setSelectedTags} = useTagStore();
 
   const handleTagClick = (id: ITag["id"]) => {
     const tag = initialTags.find((tag) => tag.id === id);
@@ -25,7 +25,7 @@ export const TagList: React.FC<TagListProps> = ({ initialTags }) => {
 
   return (
     <article>
-      <Flex $direction="row" $wrap={true} $align="center">
+      <Flex $direction={"row"} $wrap={true} $align={"center"}>
         {initialTags.length > 0 ? (
           initialTags.map((tag) => {
             const isSelected = selectedTags.some(

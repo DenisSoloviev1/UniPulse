@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import "../../variables.scss"
+import "../../variables.scss";
 
 export const Skeleton = styled.div<{ $width?: string; $height?: string }>`
-background-color: var(--color-background-container); /* Цвет скелетона */
-  border-radius: 16px; /* Закругление углов */
+  background-color: var(--color-background-container); /* Цвет скелетона */
+  border-radius: 16px; 
   width: ${({ $width }) => $width || "100%"};
   height: ${({ $height }) => $height || "40px"};
   animation: shimmer 2s infinite linear;
@@ -20,11 +20,6 @@ background-color: var(--color-background-container); /* Цвет скелето�
     }
   }
 
-  background: linear-gradient(
-    90deg,
-    #e0e0e0 25%,
-    #faf8f8 50%,
-    #e0e0e0 75%
-  );
+  background: linear-gradient(90deg, #e0e0e0 25%, #faf8f8 50%, #e0e0e0 75%);
   background-size: 200% 100%;
 `;

@@ -24,8 +24,8 @@ export const ModalContent = styled.div<{
   height: ${(props) => (props.$height ? props.$height : `380px`)};
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px;
   border-radius: 16px;
   background-color: var(--color-background);
   padding: 10px 20px 20px;

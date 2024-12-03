@@ -17,24 +17,20 @@ import { useTagStore, getTags } from "../../../entities/tag";
 import { Error } from "../../Notif/style";
 
 export const AddTag: React.FC = () => {
-  const token = localStorage.getItem("authToken") || "";
-
   const [tagName, setTagName] = useState<string>("");
   const [tagDescription, setTagDescription] = useState<string>("");
-
-  const closeModal = useModalStore((state) => state.close);
-  const isOpenAddTag = useModalStore((state) => state.isOpen("AddTag"));
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const closeModal = useModalStore((state) => state.close);
+  const isOpenAddTag = useModalStore((state) => state.isOpen("AddTag"));
 
   const { tags, setTags } = useTagStore();
 
-  const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
-    if (!token) return;
 
     const fetchTags = async () => {
       setIsLoadingTags(true);
