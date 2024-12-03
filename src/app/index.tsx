@@ -7,7 +7,7 @@ import { Routing } from "../pages/lib/guards";
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader color={"blue"}/>}>
         <Routing />
       </Suspense>
     </BrowserRouter>

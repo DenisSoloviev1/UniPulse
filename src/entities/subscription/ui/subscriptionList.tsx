@@ -13,15 +13,10 @@ export const SubscriptionList: React.FC = () => {
             <Subscription
               key={subscription.id}
               {...subscription}
-              // id={subscription.id}
-              // tag_id={subscription.tag_id}
-              // tag={subscription.tag} 
-              // user_id={subscription.user_id}
-              // subscriptable={subscription.subscriptable}
             />
           ))
         ) : (
-          <Loader $size={"50px"} $border={"3px"}/>
+          <Loader size={"30px"} color={"blue"}/>
         )}
       </Flex>
     </article>

@@ -77,7 +77,7 @@ export const AddTag: React.FC = () => {
   return (
     <ModalWindow show={isOpenAddTag} onClick={() => closeModal("AddTag")}>
       {isLoading ? (
-        <Loader $size="300px" />
+        <Loader size={"300px"} color={"blue"} />
       ) : isSuccess ? (
         <ComplitedSvg />
       ) : (

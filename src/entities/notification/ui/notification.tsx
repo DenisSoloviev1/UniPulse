@@ -8,7 +8,7 @@ import { useModalStore } from "../../../shared/ui/ModalWindow/store";
 import { PlainTitle, ModalWindow, Slider } from "../../../shared/ui";
 
 import { Roles, RolesDict } from "../../../shared/types";
-import { MoreInfo, EditNotif } from "../../../widjets/Notif";
+import { MoreInfo, EditNotif, SubmitNotif } from "../../../widjets/Notif";
 
 type NotifProps = INotif & {
   role: Roles;
@@ -37,19 +37,32 @@ export const Notif: React.FC<NotifProps> = ({
     tags,
   });
 
-  const isOpenMoreInfo = useModalStore((state) =>
-    state.isOpen(`Notif-${selectNotif?.id}`)
-  );
+  const getModalKey = (role: Roles, notifId: number) => `${role}-${notifId}`;
+
+  const modalKey = getModalKey(role, selectNotif.id);
+
   const isOpenEditNotif = useModalStore((state) =>
-    state.isOpen(`Notif-${selectNotif?.id}`)
+    state.isOpen(getModalKey(RolesDict.CREATOR, selectNotif.id))
+  );
+  const isOpenMoreInfo = useModalStore((state) =>
+    state.isOpen(getModalKey(RolesDict.USER, selectNotif.id))
+  );
+  const isOpenSubmitNotif = useModalStore((state) =>
+    state.isOpen(getModalKey(RolesDict.MEDIA, selectNotif.id))
   );
 
   const handleNotifClick = (notif: INotif) => {
     setSelectNotif(notif);
-    openModal(`Notif-${notif.id}`);
+    openModal(getModalKey(role, notif.id));
   };
 
   const formattedDate = formatDate(time);
+
+  console.log("Current Role:", role);
+  console.log("Modal Key:", modalKey);
+  console.log("isOpenEditNotif:", isOpenEditNotif);
+  console.log("isOpenMoreInfo:", isOpenMoreInfo);
+  console.log("isOpenSubmitNotif:", isOpenSubmitNotif);
 
   return (
     <>
@@ -79,7 +92,9 @@ export const Notif: React.FC<NotifProps> = ({
 
             <Flex $direction={"row"} $align={"center"} $gap={15}>
               {!isMobile && <Time>{formattedDate}</Time>}
-              {role !== RolesDict.USER && <Status $status={status}>{StatusNotif[status]}</Status>}
+              {role !== RolesDict.USER && (
+                <Status $status={status}>{StatusNotif[status]}</Status>
+              )}
             </Flex>
           </Flex>
 
@@ -87,7 +102,7 @@ export const Notif: React.FC<NotifProps> = ({
           <Flex $direction={"row"}>
             {Array.isArray(tags) &&
               tags
-                .filter((tag) => tag && typeof tag === "object" && "id" in tag) // Проверяем корректность тегов
+                .filter((tag) => tag && typeof tag === "object" && "id" in tag)
                 .map((tag) => (
                   <Tag
                     key={tag.id}
@@ -100,35 +115,60 @@ export const Notif: React.FC<NotifProps> = ({
         </Flex>
       </Container>
 
-      {role === RolesDict.USER ? (
-        <ModalWindow
-          onClick={() => closeModal(`Notif-${selectNotif?.id}`)}
-          show={isOpenMoreInfo}
-          width={isMobile ? "90%" : "50%"}
-          height={isMobile ? "70%" : "90%"}
-        >
-          <Slider $padding={5}>
-            <MoreInfo notifData={selectNotif} />
-          </Slider>
-        </ModalWindow>
-      ) : (
-        <ModalWindow
-          onClick={() => closeModal(`Notif-${selectNotif?.id}`)}
-          show={isOpenEditNotif}
-          width={isMobile ? "90%" : "50%"}
-          height={isMobile ? "70%" : "90%"}
-        >
-          <Flex $gap={10} $width={"100%"}>
-            <PlainTitle style={{ fontSize: "30px", fontWeight: "500" }}>
-              Редактирование
-            </PlainTitle>
+      {(() => {
+        switch (role) {
+          case RolesDict.USER:
+            return (
+              <ModalWindow
+                onClick={() => closeModal(getModalKey(role, selectNotif.id))}
+                show={isOpenMoreInfo}
+                width={isMobile ? "90%" : "50%"}
+                height={isMobile ? "70%" : "90%"}
+              >
+                <Slider $padding={5}>
+                  <MoreInfo notifData={selectNotif} />
+                </Slider>
+              </ModalWindow>
+            );
 
-            <Slider $padding={5}>
-              <EditNotif notifData={selectNotif} />
-            </Slider>
-          </Flex>
-        </ModalWindow>
-      )}
+          case RolesDict.MEDIA:
+            return (
+              <ModalWindow
+                onClick={() => closeModal(getModalKey(role, selectNotif.id))}
+                show={isOpenSubmitNotif}
+                width={isMobile ? "90%" : "50%"}
+                height={isMobile ? "70%" : "90%"}
+              >
+                <Slider $padding={5}>
+                  <SubmitNotif notifData={selectNotif} />
+                </Slider>
+              </ModalWindow>
+            );
+
+          case RolesDict.CREATOR:
+            return (
+              <ModalWindow
+                onClick={() => closeModal(getModalKey(role, selectNotif.id))}
+                show={isOpenEditNotif}
+                width={isMobile ? "90%" : "50%"}
+                height={isMobile ? "70%" : "90%"}
+              >
+                <Flex $gap={10} $width={"100%"}>
+                  <PlainTitle style={{ fontSize: "30px", fontWeight: "500" }}>
+                    Редактирование
+                  </PlainTitle>
+                  <Slider $padding={5}>
+                    <EditNotif notifData={selectNotif} />
+                  </Slider>
+                </Flex>
+              </ModalWindow>
+            );
+
+          default:
+            return null;
+        }
+      })()}
     </>
   );
 };
+

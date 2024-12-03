@@ -44,5 +44,5 @@ export const AddChannel: React.FC = () => {
     }
   }, []);
 
-  return <Loader $size={"200px"} />;
+  return <Loader size={"200px"} color={"blue"}/>;
 };

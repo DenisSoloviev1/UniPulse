@@ -1,18 +1,18 @@
 import React from "react";
 import { Notif } from "../";
 import { INotif } from "../model";
-import { Roles, RolesDict } from "../../../shared/types";
+import { Roles } from "../../../shared/types";
 import { Flex } from "../../../shared/ui";
 import { Message } from "./style";
 
 interface NotifListProps {
   initialNotifs: INotif[]; // Список уведомлений
-  role?: Roles; // Роль пользователя
+  role: Roles; // Роль пользователя
 }
 
 export const NotifList: React.FC<NotifListProps> = ({
   initialNotifs,
-  role = RolesDict.USER, // Значение по умолчанию для роли
+  role,
 }) => {
   return (
     <article style={{ width: "100%" }}>

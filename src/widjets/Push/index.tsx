@@ -4,7 +4,6 @@ import {
   getNotifs,
   useNotifStore,
 } from "../../entities/notification";
-import { useAuthStore } from "../../entities/auth";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import {
   ModalWindow,
@@ -17,9 +16,8 @@ import { BellSvg } from "../../shared/ui/Icon";
 import { RolesDict } from "../../shared/types";
 
 const Push: React.FC = () => {
-  const { role } = useAuthStore();
 
-  const { notifs, setFetchNotifs } = useNotifStore();
+  const { pushNotifs, setPushNotifs } = useNotifStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const openModal = useModalStore((state) => state.open);
@@ -30,7 +28,7 @@ const Push: React.FC = () => {
     const fetchNotifs = async () => {
       try {
         const responseData = await getNotifs(RolesDict.MEDIA);
-        setFetchNotifs(responseData);
+        setPushNotifs(responseData);
         setIsLoading(false)
         console.log("Загруженные уведомления:", responseData);
       } catch (error) {
@@ -43,7 +41,7 @@ const Push: React.FC = () => {
   return (
     <>
       <BellButton onClick={() => openModal("Push")}>
-        {notifs.length === 0 ? (
+        {pushNotifs.length === 0 ? (
           <BellSvg />
         ) : (
           <>
@@ -66,7 +64,7 @@ const Push: React.FC = () => {
               <Skeleton key={index} $height="150px" />
             ))
           ) : (
-            <NotifList role={role} initialNotifs={notifs} />
+            <NotifList role={RolesDict.MEDIA} initialNotifs={pushNotifs} />
           )}
         </Slider>
       </ModalWindow>

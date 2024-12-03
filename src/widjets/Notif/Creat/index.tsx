@@ -7,7 +7,7 @@ import {
   PlainTitle,
   ModalWindow,
   Loader,
-} from "../../../shared/ui/index.ts";
+} from "../../../shared/ui/";
 import Calendar from "../../Calendar/index.tsx";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
 import { useTagStore, TagList, ITag } from "../../../entities/tag/index.ts";
@@ -153,7 +153,7 @@ export const CreatNotif: React.FC = () => {
 
           <CustomButton type="submit" $style={"blue"}>
             Отправить
-            {isLoading ? <Loader $size={"23px"} $border={"2px"} $color={"white"}/> : <Arrow />}
+            {isLoading ? <Loader /> : <Arrow />}
           </CustomButton>
         </Flex>
 

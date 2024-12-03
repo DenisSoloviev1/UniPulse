@@ -65,12 +65,6 @@ export const Message = styled.div`
   gap: 10px;
   animation: slide-y 1.5s;
 
-  button:hover {
-    svg {
-      fill: var(--color-action);
-    }
-  }
-
   svg {
     width: 40px;
     height: 40px;

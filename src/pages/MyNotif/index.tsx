@@ -171,7 +171,7 @@ export const MyNotif: React.FC = () => {
               <Skeleton key={index} $height="150px" />
             ))
           ) : (
-            <NotifList initialNotifs={subscriptionNotifs} />
+            <NotifList role={RolesDict.USER} initialNotifs={subscriptionNotifs} />
           )}
         </Flex>
       </Main>

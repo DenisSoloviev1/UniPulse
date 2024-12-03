@@ -92,7 +92,7 @@ export const SubscribeTag: React.FC = () => {
       onClick={() => closeModal("SubscribeTag")}
     >
       {isLoading ? (
-        <Loader $size="300px" />
+        <Loader size={"300px"} color={"blue"} />
       ) : isSuccess ? (
         <ComplitedSvg />
       ) : (

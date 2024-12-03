@@ -8,20 +8,17 @@ import {
   useNotifStore,
 } from "../../entities/notification";
 import { Flex, PlainTitle, Skeleton } from "../../shared/ui";
-import { useAuthStore } from "../../entities/auth";
 import { RolesDict } from "../../shared/types";
 
 export const AddNotif: React.FC = () => {
-  const { role } = useAuthStore();
-
-  const { notifs, setFetchNotifs } = useNotifStore();
+  const { notifs, setNotifs } = useNotifStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchNotifs = async () => {
       try {
         const responseData = await getNotifs(RolesDict.CREATOR);
-        setFetchNotifs(responseData);
+        setNotifs(responseData);
         setIsLoading(false);
         console.log("Загруженные уведомления:", responseData);
       } catch (error) {
@@ -45,7 +42,7 @@ export const AddNotif: React.FC = () => {
               <Skeleton key={index} $height="150px" />
             ))
           ) : (
-            <NotifList initialNotifs={notifs} role={role} />
+            <NotifList initialNotifs={notifs} role={RolesDict.CREATOR} />
           )}
         </Flex>
       </Main>

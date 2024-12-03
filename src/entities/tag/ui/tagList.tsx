@@ -2,6 +2,7 @@ import React from "react";
 import { Tag } from "../ui";
 import { Flex } from "../../../shared/ui";
 import { ITag, useTagStore } from "../model";
+import { Message } from "../../notification";
 
 interface TagListProps {
   initialTags: ITag[];
@@ -43,7 +44,7 @@ export const TagList: React.FC<TagListProps> = ({ initialTags }) => {
             );
           })
         ) : (
-          <p>Тегов нет</p>
+          <Message>Тегов нет</Message>
         )}
       </Flex>
     </article>

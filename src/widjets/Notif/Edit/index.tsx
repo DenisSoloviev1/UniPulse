@@ -7,7 +7,7 @@ import {
   PlainTitle,
   ModalWindow,
   Loader,
-} from "../../../shared/ui/index.ts";
+} from "../../../shared/ui/";
 import Calendar from "../../Calendar/index.tsx";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
 import { useTagStore, TagList, ITag } from "../../../entities/tag/index.ts";
@@ -62,7 +62,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
   };
 
   // Обработчик отправки формы
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
@@ -126,7 +126,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleEdit}>
       <Flex $gap={10}>
         <PlainTitle>Название уведомления</PlainTitle>
         <Container $border={16} $width={isMobile ? "100%" : "50%"}>
@@ -180,8 +180,8 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
           </Container>
 
           <CustomButton type="submit" $style={"blue"}>
-            Подтвердить
-            {isLoading ? <Loader $size={"23px"} $border={"2px"} $color={"white"}/> : <Arrow />}
+            Редактировать
+            {isLoading ? <Loader/> : <Arrow />}
           </CustomButton>
         </Flex>
 
