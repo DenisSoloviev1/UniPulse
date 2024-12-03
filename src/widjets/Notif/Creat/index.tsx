@@ -51,14 +51,14 @@ export const CreatNotif: React.FC = () => {
     setIsLoading(true);
 
     // Валидация
-    if (title.length > 40) {
-      setError("Название уведомления должно быть не длиннее 40 символов");
+    if (title.length > 60) {
+      setError("Название уведомления должно быть не длиннее 60 символов");
       setIsLoading(false);
       return;
     }
 
-    if (description.length > 300) {
-      setError("Текст уведомления должен быть не длиннее 300 символов");
+    if (mediaFiles && description.length > 1000 || description.length > 4000) {
+      setError("Текст уведомления слишком длинный");
       setIsLoading(false);
       return;
     }

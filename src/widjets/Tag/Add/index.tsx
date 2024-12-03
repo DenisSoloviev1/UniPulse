@@ -15,8 +15,11 @@ import { addTag } from "../../../entities/tag";
 import { ComplitedSvg } from "../../../shared/ui/Icon";
 import { useTagStore, getTags } from "../../../entities/tag";
 import { Error } from "../../Notif/style";
+import { useAuthStore } from "../../../entities/auth";
+import { RolesDict } from "../../../shared/types";
 
 export const AddTag: React.FC = () => {
+  const { role } = useAuthStore();
   const [tagName, setTagName] = useState<string>("");
   const [tagDescription, setTagDescription] = useState<string>("");
 
@@ -31,7 +34,6 @@ export const AddTag: React.FC = () => {
   const { tags, setTags } = useTagStore();
 
   useEffect(() => {
-
     const fetchTags = async () => {
       setIsLoadingTags(true);
       try {
@@ -82,51 +84,58 @@ export const AddTag: React.FC = () => {
         <ComplitedSvg />
       ) : (
         <>
-          <Flex $width={"100%"} $gap={10}>
-            <Flex>
-              <PlainTitle>Существующие теги</PlainTitle>
-              <Slider $height={100} $wrap={true}>
-                {isLoadingTags ? (
-                  Array.from({ length: 7 }).map((_, index) => (
-                    <Skeleton key={index} $width="125px" />
-                  ))
-                ) : (
-                  <TagList initialTags={tags} />
-                )}
-              </Slider>
-            </Flex>
-
-            <Flex $width={"100%"}>
-              <PlainTitle>Новый тег</PlainTitle>
-              <Container $width={"100%"}>
-                <input
-                  type="text"
-                  placeholder="название"
-                  value={tagName}
-                  onChange={(e) => setTagName(e.target.value)}
-                />
-              </Container>
-              <Container $width={"100%"}>
-                <input
-                  type="text"
-                  placeholder="описание"
-                  value={tagDescription}
-                  onChange={(e) => setTagDescription(e.target.value)}
-                />
-              </Container>
-
-              <Error>{error}</Error>
-            </Flex>
+          <Flex>
+            <PlainTitle>Существующие теги</PlainTitle>
+            <Slider
+              $height={role !== RolesDict.MEDIA ? 100 : null}
+              $wrap={true}
+            >
+              {isLoadingTags ? (
+                Array.from({ length: 7 }).map((_, index) => (
+                  <Skeleton key={index} $width="125px" />
+                ))
+              ) : (
+                <TagList initialTags={tags} />
+              )}
+            </Slider>
           </Flex>
 
-          <CustomButton
-            type={"button"}
-            onClick={handleCreateTag}
-            $style={"blue"}
-            $width={"70%"}
-          >
-            Создать
-          </CustomButton>
+          {role === RolesDict.MEDIA ? (
+            <Flex $width={"100%"} $gap={20} $align={"center"}>
+              <Flex $width={"100%"}>
+                <PlainTitle>Новый тег</PlainTitle>
+                <Container $width={"100%"}>
+                  <input
+                    type="text"
+                    placeholder="название"
+                    value={tagName}
+                    onChange={(e) => setTagName(e.target.value)}
+                  />
+                </Container>
+                <Container $width={"100%"}>
+                  <input
+                    type="text"
+                    placeholder="описание"
+                    value={tagDescription}
+                    onChange={(e) => setTagDescription(e.target.value)}
+                  />
+                </Container>
+
+                <Error>{error}</Error>
+              </Flex>
+
+              <CustomButton
+                type={"button"}
+                onClick={handleCreateTag}
+                $style={"blue"}
+                $width={"70%"}
+              >
+                Создать
+              </CustomButton>
+            </Flex>
+          ) : (
+            <></>
+          )}
         </>
       )}
     </ModalWindow>

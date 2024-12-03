@@ -4,7 +4,7 @@ import "../../../shared/variables.scss";
 export const Slider = styled.div<{
   $padding?: number;
   $gap?: number;
-  $height?: number;
+  $height?: number | null;
   $wrap?: boolean;
 }>`
   display: flex;
@@ -18,7 +18,7 @@ export const Slider = styled.div<{
 
   width: 100%;
   min-height: 100px;
-  height: ${(props) => (props.$height ? `${props.$height}px` : `auto`)};
+  max-height: ${(props) => (props.$height ? `${props.$height}px` : `auto`)};
   overflow-y: scroll;
   overflow-x: hidden;
   gap: ${(props) => (props.$gap ? `${props.$gap}px` : "5px")};
