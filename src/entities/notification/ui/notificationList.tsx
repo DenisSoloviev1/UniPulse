@@ -26,7 +26,7 @@ export const NotifList: React.FC<NotifListProps> = ({
             />
           ))
         ) : (
-          <Message>Уведомлений нет</Message>
+          <Message>Пусто</Message>
         )}
       </Flex>
     </article>

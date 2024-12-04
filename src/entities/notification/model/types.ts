@@ -16,6 +16,6 @@ type StatusNotif = {
 
 export const StatusNotif: StatusNotif = {
   "wait_submit": "обработка",
-  "wait_sent": "подтверждение",
+  "wait_sent": "ожидание",
   "sent": "отправлено",
 };

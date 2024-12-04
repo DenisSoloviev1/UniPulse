@@ -27,7 +27,6 @@ export const RolesDict = {
   ADMIN: "admin",
   MEDIA: "media",
   CREATOR: "creator",
-  // MODERATOR: "moderator",
   USER: "user",
 } as const;
 

@@ -3,7 +3,7 @@ import "../../Variables.scss";
 
 export const Container = styled.div<{
   $width?: string;
-  $style?: "noActive" | "normal" | "light" | "choice";
+  $style?: "noAction" | "normal" | "light" | "choice";
   $border?: number;
   $gap?: number;
   $padding?: number | number[];
@@ -71,7 +71,7 @@ export const Container = styled.div<{
       : ""}
 
   ${(props) =>
-    props.$style === "noActive"
+    props.$style === "noAction"
       ? `
     background-color: var(--color-background-container);
 

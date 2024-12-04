@@ -106,7 +106,7 @@ export const MyNotif: React.FC = () => {
       <Main>
         <Flex $gap={20}>
           <Flex $gap={10}>
-            <PlainTitle>Настройка уведомлений</PlainTitle>
+            <PlainTitle>Бот для рассылки</PlainTitle>
 
             <Flex $direction={"row"}>
               <Container>

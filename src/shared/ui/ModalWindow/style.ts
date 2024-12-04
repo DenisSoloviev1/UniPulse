@@ -11,8 +11,7 @@ export const Modal = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 5;
-  background-color: rgba(133, 132, 132, 0.2);
-  backdrop-filter: blur(1px);
+  background-color: rgba(133, 132, 132, 0.3);
 `;
 
 export const ModalContent = styled.div<{
@@ -21,7 +20,7 @@ export const ModalContent = styled.div<{
   $position?: string[];
 }>`
   width: ${(props) => (props.$width ? props.$width : `450px`)};
-  height: ${(props) => (props.$height ? props.$height : `380px`)};
+  height: ${(props) => (props.$height ? props.$height : `385px`)};
   display: flex;
   flex-direction: column;
   align-items: center;

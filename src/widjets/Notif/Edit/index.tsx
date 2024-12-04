@@ -69,13 +69,13 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
 
     // Валидация
     if (title.length > 40) {
-      setError("Название уведомления должно быть не длиннее 40 символов");
+      setError("Название должно быть не длиннее 40 символов");
       setIsLoading(false);
       return;
     }
 
-    if (description.length > 300) {
-      setError("Текст уведомления должен быть не длиннее 300 символов");
+    if (mediaFiles && description.length > 1000 || description.length > 4000) {
+      setError("Текст слишком длинный");
       setIsLoading(false);
       return;
     }
@@ -105,7 +105,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
           date
         );
       } else {
-        setError("Ошибка редактирования уведомления");
+        setError("Ошибка редактирования");
       }
 
       // Успешное завершение
@@ -120,15 +120,15 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
       }, 3000);
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
-      setError("Не удалось отправить уведомление");
+      setError("Не удалось отправить");
       closeModal("Complited");
     }
   };
 
   return (
     <Form onSubmit={handleEdit}>
-      <Flex $gap={10}>
-        <PlainTitle>Название уведомления</PlainTitle>
+      <Flex >
+        <PlainTitle>Название</PlainTitle>
         <Container $border={16} $width={isMobile ? "100%" : "50%"}>
           <Textarea
             rows={1}
@@ -138,8 +138,8 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
         </Container>
       </Flex>
 
-      <Flex $gap={10}>
-        <PlainTitle>Текст уведомления</PlainTitle>
+      <Flex >
+        <PlainTitle>Текст</PlainTitle>
         <Container $border={16} $width={"100%"}>
           <Textarea
             rows={10}
@@ -149,12 +149,12 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
         </Container>
       </Flex>
 
-      <Flex $gap={10}>
+      <Flex >
         <PlainTitle>Прикрепленные медиа</PlainTitle>
         <MediaItem onFilesChange={setMediaFiles} />
       </Flex>
 
-      <Flex $gap={10}>
+      <Flex >
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
           <TagList initialTags={selectedEditTags} />
@@ -169,7 +169,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({notifData}) => {
         </Flex>
       </Flex>
 
-      <Flex $gap={10}>
+      <Flex >
         <PlainTitle>Дата отправки</PlainTitle>
         <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
           <Container $border={16}>

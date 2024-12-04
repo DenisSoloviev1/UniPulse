@@ -5,7 +5,7 @@ import { ITag } from "../model";
 interface PropsTag {
   id: ITag["id"];
   name: ITag["name"];
-  style?: "noActive" | "normal" | "light" | "choice";
+  style?: "noAction" | "normal" | "light" | "choice";
   onClick?: () => void;
 }
 

@@ -33,6 +33,5 @@ export const MainWrapper = styled.div`
     border-radius: 0 0 30px 30px;
     height: 85vh;
     min-height: 85vh;
-    padding-bottom: 0;
   }
 `;

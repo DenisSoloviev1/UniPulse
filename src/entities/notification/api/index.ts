@@ -11,7 +11,7 @@ import { Roles } from "../../../shared/types";
  * @param time - Время получения уведомления.
  * @returns Promise с данными созданного уведомления.
  */
-export const addNotif = async (
+export const creatNotif = async (
   title: INotif["title"],
   description: INotif["description"],
   files: INotif["files"],

@@ -1,9 +1,9 @@
 import React from "react";
-import { Title, Time, INotif} from "../../../entities/notification";
+import { Time, INotif} from "../../../entities/notification";
 import { Tag } from "../../../entities/tag";
 import { formatDate } from "../../../shared/config";
 import { Flex } from "../../../shared/ui";
-import { TextMore } from "../style";
+import { TextMore, Title } from "../style";
 
 interface MoreInfoProps {
   notifData: INotif;
@@ -26,7 +26,7 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({notifData}) => {
 
       <Flex $direction={"row"} $align={"center"} $wrap>
         {notifData.tags.map((tag) => (
-          <Tag key={tag.id} id={tag.id} name={tag.name} style={"noActive"} />
+          <Tag key={tag.id} id={tag.id} name={tag.name} style={"noAction"} />
         ))}
       </Flex>
     </Flex>

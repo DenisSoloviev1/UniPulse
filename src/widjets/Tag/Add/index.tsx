@@ -77,7 +77,10 @@ export const AddTag: React.FC = () => {
   };
 
   return (
-    <ModalWindow show={isOpenAddTag} onClick={() => closeModal("AddTag")}>
+    <ModalWindow
+      show={isOpenAddTag}
+      onClick={() => closeModal("AddTag")}
+    >
       {isLoading ? (
         <Loader size={"300px"} color={"blue"} />
       ) : isSuccess ? (
@@ -87,7 +90,7 @@ export const AddTag: React.FC = () => {
           <Flex>
             <PlainTitle>Существующие теги</PlainTitle>
             <Slider
-              $height={role !== RolesDict.MEDIA ? 100 : null}
+              $height={role === RolesDict.MEDIA ? 100 : null}
               $wrap={true}
             >
               {isLoadingTags ? (
@@ -101,7 +104,7 @@ export const AddTag: React.FC = () => {
           </Flex>
 
           {role === RolesDict.MEDIA ? (
-            <Flex $width={"100%"} $gap={20} $align={"center"}>
+            <Flex $width={"100%"} $gap={15}>
               <Flex $width={"100%"}>
                 <PlainTitle>Новый тег</PlainTitle>
                 <Container $width={"100%"}>
@@ -120,18 +123,20 @@ export const AddTag: React.FC = () => {
                     onChange={(e) => setTagDescription(e.target.value)}
                   />
                 </Container>
-
-                <Error>{error}</Error>
               </Flex>
 
-              <CustomButton
-                type={"button"}
-                onClick={handleCreateTag}
-                $style={"blue"}
-                $width={"70%"}
-              >
-                Создать
-              </CustomButton>
+              <Flex $width={"100%"} $align={"center"}>
+                <CustomButton
+                  type={"button"}
+                  onClick={handleCreateTag}
+                  $style={"blue"}
+                  $width={"70%"}
+                >
+                  Создать
+                </CustomButton>
+
+                {error && <Error>{error}</Error>}
+              </Flex>
             </Flex>
           ) : (
             <></>

@@ -4,6 +4,7 @@ import { ISubscription, deleteSubscriptions, useSubscriptionStore } from "../";
 import { Tag } from "../../tag";
 import { Flex, CustomButton, ModalWindow } from "../../../shared/ui";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store";
+import { isMobile } from "../../../shared/config";
 
 const SubscriptionContainer = styled.div`
   position: relative;
@@ -39,7 +40,7 @@ export const Subscription: React.FC<ISubscription> = ({ id, tag_id, tag }) => {
       <ModalWindow
         onClick={() => closeModal(`DeleteSubscription-${id}`)}
         show={isOpenDeleteSubscription}
-        position={["", "", "20px", ""]}
+        position={isMobile ? undefined : ["", "", "20px", ""]}
         width={"250px"}
         height={"130px"}
       >

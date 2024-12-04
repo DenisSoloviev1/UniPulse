@@ -13,7 +13,7 @@ import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
 import { useTagStore, TagList, ITag } from "../../../entities/tag/index.ts";
 import { Arrow, Plus, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
 import { AddTag } from "../../Tag";
-import { addNotif, INotif } from "../../../entities/notification/index.ts";
+import { creatNotif, INotif } from "../../../entities/notification/index.ts";
 import { MediaItem } from "../../../shared/ui/MediaItem";
 import { isMobile } from "../../../shared/config";
 
@@ -45,20 +45,23 @@ export const CreatNotif: React.FC = () => {
   };
 
   // Обработчик отправки формы
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleCreat = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
     // Валидация
     if (title.length > 60) {
-      setError("Название уведомления должно быть не длиннее 60 символов");
+      setError("Название должно быть не длиннее 60 символов");
       setIsLoading(false);
       return;
     }
 
-    if (mediaFiles && description.length > 1000 || description.length > 4000) {
-      setError("Текст уведомления слишком длинный");
+    if (
+      (mediaFiles && description.length > 1000) ||
+      description.length > 4000
+    ) {
+      setError("Текст слишком длинный");
       setIsLoading(false);
       return;
     }
@@ -78,7 +81,7 @@ export const CreatNotif: React.FC = () => {
     const tagIds: ITag["id"][] = selectedTags.map((tag) => tag.id);
 
     try {
-      await addNotif(title, description, mediaFiles, tagIds, date);
+      await creatNotif(title, description, mediaFiles, tagIds, date);
 
       // Успешное завершение
       setError(null);
@@ -92,15 +95,15 @@ export const CreatNotif: React.FC = () => {
       }, 3000);
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
-      setError("Не удалось отправить уведомление");
+      setError("Не удалось отправить");
       closeModal("Complited");
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Flex $gap={10}>
-        <PlainTitle>Название уведомления</PlainTitle>
+    <Form onSubmit={handleCreat}>
+      <Flex>
+        <PlainTitle>Название</PlainTitle>
         <Container $border={16} $width={isMobile ? "100%" : "50%"}>
           <Textarea
             rows={1}
@@ -110,8 +113,8 @@ export const CreatNotif: React.FC = () => {
         </Container>
       </Flex>
 
-      <Flex $gap={10}>
-        <PlainTitle>Текст уведомления</PlainTitle>
+      <Flex>
+        <PlainTitle>Текст</PlainTitle>
         <Container $border={16} $width={"100%"}>
           <Textarea
             rows={10}
@@ -121,12 +124,12 @@ export const CreatNotif: React.FC = () => {
         </Container>
       </Flex>
 
-      <Flex $gap={10}>
+      <Flex>
         <PlainTitle>Прикрепленные медиа</PlainTitle>
         <MediaItem onFilesChange={setMediaFiles} />
       </Flex>
 
-      <Flex $gap={10}>
+      <Flex>
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
           <TagList initialTags={selectedTags} />
@@ -141,7 +144,7 @@ export const CreatNotif: React.FC = () => {
         </Flex>
       </Flex>
 
-      <Flex $gap={10}>
+      <Flex>
         <PlainTitle>Дата отправки</PlainTitle>
         <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
           <Container $border={16}>

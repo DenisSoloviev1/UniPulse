@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Title,
   Time,
   INotif,
   submitNotif,
@@ -8,9 +7,8 @@ import {
 import { Tag } from "../../../entities/tag";
 import { formatDate } from "../../../shared/config";
 import { CustomButton, Flex, Loader, ModalWindow } from "../../../shared/ui";
-import { Error } from "../style.ts";
+import { Error, TextMore, Title } from "../style.ts";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
-import { TextMore } from "../style";
 import { Arrow, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
 
 interface SubmitNotifProps {
@@ -37,7 +35,7 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
       if (notifData) {
         await submitNotif(notifData.id);
       } else {
-        setError("Ошибка подтверждения уведомления");
+        setError("Ошибка подтверждения");
       }
 
       // Успешное завершение
@@ -51,7 +49,7 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
       }, 3000);
     } catch (error) {
       console.error("Ошибка подтверждения уведомления:", error);
-      setError("Не удалось подтвердить уведомление");
+      setError("Не удалось подтвердить");
       closeModal("Complited");
     }
   };
@@ -74,7 +72,7 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
 
         <Flex $direction={"row"} $align={"center"} $wrap>
           {notifData.tags.map((tag) => (
-            <Tag key={tag.id} id={tag.id} name={tag.name} style={"noActive"} />
+            <Tag key={tag.id} id={tag.id} name={tag.name} style={"noAction"} />
           ))}
         </Flex>
 

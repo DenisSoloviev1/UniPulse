@@ -11,12 +11,9 @@ import {
 import { useModalStore } from "../../../shared/ui/ModalWindow/store";
 import { TagList } from "../../../entities/tag";
 import { Cat, ComplitedSvg } from "../../../shared/ui/Icon";
-import {
-  useTagStore,
-  getSubscriptionToTags,
-} from "../../../entities/tag";
+import { useTagStore, getSubscriptionToTags } from "../../../entities/tag";
 import { subscribeToTag } from "../../../entities/subscription";
-
+import { Error } from "../../Notif/style";
 export const SubscribeTag: React.FC = () => {
   const closeModal = useModalStore((state) => state.close);
   const isOpenSubscribeTag = useModalStore((state) =>
@@ -26,6 +23,7 @@ export const SubscribeTag: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const {
     subscriptionToTags,
@@ -35,7 +33,6 @@ export const SubscribeTag: React.FC = () => {
   } = useTagStore();
 
   useEffect(() => {
-
     const fetchTags = async () => {
       setIsLoadingTags(true);
       try {
@@ -56,7 +53,7 @@ export const SubscribeTag: React.FC = () => {
     setIsLoading(true);
 
     if (selectedTags.length === 0) {
-      console.error("Ошибка: не выбран ни один тег.");
+      setError("Не выбран ни один тег");
       setIsLoading(false);
       return;
     }
@@ -108,17 +105,21 @@ export const SubscribeTag: React.FC = () => {
                 <TagList initialTags={subscriptionToTags} />
               )}
             </Slider>
-
-            <Cat />
           </Flex>
 
-          <CustomButton
-            onClick={handleSubscriptionTag}
-            $style={"blue"}
-            $width={"70%"}
-          >
-            Подписаться
-          </CustomButton>
+          <Cat />
+
+          <Flex $align={"center"} $width={"100%"}>
+            <CustomButton
+              onClick={handleSubscriptionTag}
+              $style={"blue"}
+              $width={"70%"}
+            >
+              Подписаться
+            </CustomButton>
+
+            {error && <Error>{error}</Error>}
+          </Flex>
         </>
       )}
     </ModalWindow>
