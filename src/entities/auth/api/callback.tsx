@@ -5,7 +5,7 @@ import { Loader } from "../../../shared/ui";
 import { RolesDict, Roles } from "../../../shared/types";
 import { useAuthStore } from "../model/store";
 import { baseUrl } from "../../../shared/config";
-
+import { Routes } from "../../../shared/types";
 
 export const Callback: React.FC = () => {
   const { role, setRole } = useAuthStore();
@@ -43,12 +43,12 @@ export const Callback: React.FC = () => {
 
   useEffect(() => {
     if (isRoleSaved) {
-      navigate(role === RolesDict.USER ? "/myNotif" : "/creatNotif");
+      navigate(role === RolesDict.USER ? Routes.MYNOTIF : Routes.ADDNOTIF);
     }
   }, [isRoleSaved, role, navigate]);
 
   if (isLoading) {
-    return <Loader size={"200px"} color={"blue"}/>;
+    return <Loader size={"300px"} color={"blue"} />;
   }
 
   return null;

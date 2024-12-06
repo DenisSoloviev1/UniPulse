@@ -27,7 +27,7 @@ export const ModalContent = styled.div<{
   gap: 10px;
   border-radius: 16px;
   background-color: var(--color-background);
-  padding: 10px 20px 20px;
+  padding: 20px;
   border: 1px solid var(--color-font-disable);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
   position: ${(props) => (props.$position ? `absolute` : `relative`)};

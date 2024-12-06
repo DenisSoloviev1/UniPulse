@@ -82,7 +82,7 @@ export const AddTag: React.FC = () => {
       onClick={() => closeModal("AddTag")}
     >
       {isLoading ? (
-        <Loader size={"300px"} color={"blue"} />
+        <Loader size={"200px"} color={"blue"} />
       ) : isSuccess ? (
         <ComplitedSvg />
       ) : (
@@ -136,7 +136,7 @@ export const AddTag: React.FC = () => {
                 </CustomButton>
 
                 {error && <Error>{error}</Error>}
-              </Flex>
+                </Flex>
             </Flex>
           ) : (
             <></>

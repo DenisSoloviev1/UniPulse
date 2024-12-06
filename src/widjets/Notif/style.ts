@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import "../../shared/Variables.scss"
+import "../../shared/Variables.scss";
 
 export const Form = styled.form`
   width: 100%;
@@ -16,8 +16,8 @@ export const Textarea = styled.textarea`
 `;
 
 export const Error = styled.span`
-color: var(--color-delete);
-`
+  color: var(--color-delete);
+`;
 
 export const TextMore = styled.p`
   width: 100%;

@@ -18,8 +18,8 @@ export const Square = styled.div`
     object-fit: cover;
   }
   svg {
-    width: 20px;
-    height: 20px;
+    width: 21px;
+    height: 21px;
   }
     &:hover{
     cursor: pointer;

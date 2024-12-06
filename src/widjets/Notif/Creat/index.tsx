@@ -96,7 +96,7 @@ export const CreatNotif: React.FC = () => {
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
       setError("Не удалось отправить");
-      closeModal("Complited");
+      setIsLoading(false)
     }
   };
 

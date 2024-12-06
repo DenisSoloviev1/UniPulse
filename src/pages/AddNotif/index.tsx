@@ -26,7 +26,7 @@ export const AddNotif: React.FC = () => {
       }
     };
     fetchNotifs();
-  }, []);
+  }, [getNotifs]);
 
   return (
     <>

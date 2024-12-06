@@ -20,7 +20,12 @@ export const CustomButton = styled.button<{
     props.$style === "gray" &&
     `
       color: var(--color-font-active);
-      background-color: var(--color-background-container);
+      background-color: var(--color-background);
+      border: 2px solid var(--color-background-container);
+
+      &:hover {
+        background-color: var(--color-background-container);
+      }
   `}
 
   ${(props) =>

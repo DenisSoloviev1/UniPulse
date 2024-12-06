@@ -7,6 +7,7 @@ export const Container = styled.div<{
   $border?: number;
   $gap?: number;
   $padding?: number | number[];
+  $noActive?: boolean;
 }>`
   width: ${(props) => props.$width};
   height: fit-content;
@@ -27,10 +28,32 @@ export const Container = styled.div<{
   transition: all 0.3s ease-in-out;
   position: relative;
 
-  &:hover {
+  ${(props) =>
+    props.$noActive
+      ? `
+      cursor: not-allowed;
+  
+      label {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+  
+      input {
+        cursor: not-allowed;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      &:hover {
+        opacity: 0.5;
+        background-color: var(--color-background-container);
+      } 
+    `
+      : `
+    &:hover {
     cursor: pointer;
     background-color: #dfdfdf;
-  }
+  }`};
 
   svg {
     width: 25px;

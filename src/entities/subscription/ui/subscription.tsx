@@ -10,7 +10,12 @@ const SubscriptionContainer = styled.div`
   position: relative;
 `;
 
-export const Subscription: React.FC<ISubscription> = ({ id, tag_id, tag }) => {
+export const Subscription: React.FC<ISubscription> = ({
+  id,
+  tag_id,
+  tag,
+  subscriptable,
+}) => {
   const { subscriptions, setSubscriptions } = useSubscriptionStore();
 
   const openModal = useModalStore((state) => state.open);
@@ -42,28 +47,39 @@ export const Subscription: React.FC<ISubscription> = ({ id, tag_id, tag }) => {
         show={isOpenDeleteSubscription}
         position={isMobile ? undefined : ["", "", "20px", ""]}
         width={"250px"}
-        height={"130px"}
+        height={"auto"}
       >
-        <p>
-          Отписаться от тега: <strong>{tag.name}</strong>?
-        </p>
-        <Flex $direction={"row"} $align={"center"} $width={"100%"} $gap={10}>
-          <CustomButton
-            $style={"gray"}
-            $width={"50%"}
-            onClick={handleDeleteSubscription}
-          >
-            Да
-          </CustomButton>
+        {subscriptable ? (
+          <>
+            <p>
+              Отписаться от тега: <strong>{tag.name}</strong>?
+            </p>
+            <Flex
+              $direction={"row"}
+              $align={"center"}
+              $width={"100%"}
+              $gap={10}
+            >
+              <CustomButton
+                $style={"gray"}
+                $width={"50%"}
+                onClick={handleDeleteSubscription}
+              >
+                Да
+              </CustomButton>
 
-          <CustomButton
-            $style={"blue"}
-            $width={"50%"}
-            onClick={() => closeModal(`DeleteSubscription-${id}`)}
-          >
-            Нет
-          </CustomButton>
-        </Flex>
+              <CustomButton
+                $style={"blue"}
+                $width={"50%"}
+                onClick={() => closeModal(`DeleteSubscription-${id}`)}
+              >
+                Нет
+              </CustomButton>
+            </Flex>
+          </>
+        ) : (
+          <p>От тега нельзя отписаться</p>
+        )}
       </ModalWindow>
     </SubscriptionContainer>
   );

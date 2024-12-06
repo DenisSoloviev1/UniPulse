@@ -98,7 +98,7 @@ export const MyNotif: React.FC = () => {
       }
     };
     fetchNotifs();
-  }, []);
+  }, [setSubscriptionNotifs]);
 
   return (
     <>
@@ -109,13 +109,13 @@ export const MyNotif: React.FC = () => {
             <PlainTitle>Бот для рассылки</PlainTitle>
 
             <Flex $direction={"row"}>
-              <Container>
+              <Container $noActive={true}>
                 <label>
                   <input
                     type="radio"
                     value="vk"
                     checked={selectedPlatform === "vk"}
-                    onChange={handlePlatformChange}
+                    // onChange={handlePlatformChange}
                   />
                   Вконтакте
                 </label>

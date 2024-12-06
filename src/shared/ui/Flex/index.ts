@@ -11,7 +11,6 @@ export const Flex = styled.div<{
   $position?: string;
 }>`
   width: ${(props) => props.$width ?? ""};
-  min-height: 45px;
   display: flex;
   flex-direction: ${(props) => props.$direction ?? "column"};
   justify-content: ${(props) => props.$justify ?? "flex-start"};

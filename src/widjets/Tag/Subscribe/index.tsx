@@ -89,7 +89,7 @@ export const SubscribeTag: React.FC = () => {
       onClick={() => closeModal("SubscribeTag")}
     >
       {isLoading ? (
-        <Loader size={"300px"} color={"blue"} />
+        <Loader size={"200px"} color={"blue"} />
       ) : isSuccess ? (
         <ComplitedSvg />
       ) : (
@@ -119,7 +119,7 @@ export const SubscribeTag: React.FC = () => {
             </CustomButton>
 
             {error && <Error>{error}</Error>}
-          </Flex>
+            </Flex>
         </>
       )}
     </ModalWindow>

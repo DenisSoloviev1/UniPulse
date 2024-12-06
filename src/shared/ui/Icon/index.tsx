@@ -53,8 +53,8 @@ export const Back: React.FC = () => (
 export const Plus: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="15px"
-    height="15px"
+    width="21px"
+    height="21px"
     viewBox="0 0 60.364 60.364"
   >
     <g>

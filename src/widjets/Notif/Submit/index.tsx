@@ -81,7 +81,7 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
           {isLoading ? <Loader /> : <Arrow />}
         </CustomButton>
         
-        {error && <Error>{error}</Error>}{" "}
+        {error && <Error>{error}</Error>}
       </Flex>
 
       <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
