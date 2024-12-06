@@ -60,8 +60,8 @@ export const CustomButton = styled.button<{
 
       svg{
         fill: var(--color-delete);
-        width: 25px;
-        height: 25px;
+        width: 26px;
+        height: 26px;
       }
   `}
 `;

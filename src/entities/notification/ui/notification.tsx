@@ -55,11 +55,6 @@ export const Notif: React.FC<NotifProps> = ({
 
   const formattedDate = formatDate(time);
 
-  console.log("Current Role:", role);
-  console.log("isOpenEditNotif:", isOpenEditNotif);
-  console.log("isOpenMoreInfo:", isOpenMoreInfo);
-  console.log("isOpenSubmitNotif:", isOpenSubmitNotif);
-
   return (
     <>
       <Container

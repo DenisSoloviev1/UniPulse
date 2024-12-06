@@ -25,14 +25,16 @@ interface CalendarProps {
 const Calendar: React.FC<CalendarProps> = ({ onChange, value }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(value || null);
   const [displayDate, setDisplayDate] = useState<string>(
-      value ? formatDate(Math.floor(value.getTime() / 1000)) : ""
+    value ? formatDate(Math.floor(value.getTime() / 1000)) : ""
   );
 
   useEffect(() => {
-    // Обновление selectedDate при изменении внешнего значения
     if (value) {
       setSelectedDate(value);
       setDisplayDate(formatDate(Math.floor(value.getTime() / 1000)));
+    } else {
+      setSelectedDate(null);
+      setDisplayDate("");
     }
   }, [value]);
 

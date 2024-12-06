@@ -35,7 +35,7 @@ export const MyNotif: React.FC = () => {
 
   const openModal = useModalStore((state) => state.open);
 
-  const { setSubscriptions } = useSubscriptionStore();
+  const { subscriptions, setSubscriptions } = useSubscriptionStore();
   const { userId, isAuth } = useAuthStore(); // Используем стор для получения userId
 
   const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
@@ -83,7 +83,7 @@ export const MyNotif: React.FC = () => {
     };
 
     fetchSubscriptions();
-  }, [setSubscriptions]);
+  }, [subscriptions]);
 
   //запрос на получение уведомлений по подписке как пользователь
   useEffect(() => {

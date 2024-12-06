@@ -48,7 +48,7 @@ export const Callback: React.FC = () => {
   }, [isRoleSaved, role, navigate]);
 
   if (isLoading) {
-    return <Loader size={"300px"} color={"blue"} />;
+    return <Loader size={"200px"} color={"blue"} />;
   }
 
   return null;

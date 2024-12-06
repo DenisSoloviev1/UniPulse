@@ -34,7 +34,13 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
   const [title, setTitle] = useState<INotif["title"]>("");
   const [description, setDescription] = useState<INotif["description"]>("");
   const [mediaFiles, setMediaFiles] = useState<
-    Array<{ fileName: string; fileSize: number; data: string }>
+    Array<{
+      fileName: string;
+      fileSize: number;
+      data: string;
+      type: string;
+      id: string;
+    }>
   >([]);
   const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
@@ -154,7 +160,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
 
       <Flex>
         <PlainTitle>Прикрепленные медиа</PlainTitle>
-        <MediaItem onFilesChange={setMediaFiles} />
+        <MediaItem onFilesChange={setMediaFiles} files={mediaFiles} />
       </Flex>
 
       <Flex>
@@ -177,14 +183,14 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
         <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
           <Container $border={16}>
             <Calendar
-              onChange={(newDate) => setDate(newDate)}
+              onChange={(newDate) => setDate(newDate)} 
               value={date ? new Date(date * 1000) : null}
             />
           </Container>
 
           <CustomButton type="submit" $style={"blue"}>
             Редактировать
-            {isLoading ? <Loader /> : <Arrow />}
+            {isLoading ? <Loader size={"23px"} /> : <Arrow />}
           </CustomButton>
         </Flex>
 

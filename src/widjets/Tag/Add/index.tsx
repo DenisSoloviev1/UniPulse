@@ -77,13 +77,8 @@ export const AddTag: React.FC = () => {
   };
 
   return (
-    <ModalWindow
-      show={isOpenAddTag}
-      onClick={() => closeModal("AddTag")}
-    >
-      {isLoading ? (
-        <Loader size={"200px"} color={"blue"} />
-      ) : isSuccess ? (
+    <ModalWindow show={isOpenAddTag} onClick={() => closeModal("AddTag")}>
+      {isSuccess ? (
         <ComplitedSvg />
       ) : (
         <>
@@ -132,11 +127,11 @@ export const AddTag: React.FC = () => {
                   $style={"blue"}
                   $width={"70%"}
                 >
-                  Создать
+                  {isLoading ? <Loader size={"23px"} /> : "Создать"}
                 </CustomButton>
 
                 {error && <Error>{error}</Error>}
-                </Flex>
+              </Flex>
             </Flex>
           ) : (
             <></>

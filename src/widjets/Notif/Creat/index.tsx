@@ -28,14 +28,14 @@ export const CreatNotif: React.FC = () => {
   const [title, setTitle] = useState<INotif["title"]>("");
   const [description, setDescription] = useState<INotif["description"]>("");
   const [mediaFiles, setMediaFiles] = useState<
-    Array<{ fileName: string; fileSize: number; data: string }>
+    Array<{ fileName: string; fileSize: number; data: string; type: string; id: string; }>
   >([]);
   const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // Сброс формыXX
+  // Сброс формы
   const resetForm = () => {
     setTitle("");
     setDescription("");
@@ -126,7 +126,7 @@ export const CreatNotif: React.FC = () => {
 
       <Flex>
         <PlainTitle>Прикрепленные медиа</PlainTitle>
-        <MediaItem onFilesChange={setMediaFiles} />
+        <MediaItem onFilesChange={setMediaFiles} files={mediaFiles}/>
       </Flex>
 
       <Flex>
@@ -156,7 +156,7 @@ export const CreatNotif: React.FC = () => {
 
           <CustomButton type="submit" $style={"blue"}>
             Отправить
-            {isLoading ? <Loader /> : <Arrow />}
+            {isLoading ? <Loader size={"23px"}/> : <Arrow />}
           </CustomButton>
         </Flex>
 

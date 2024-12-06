@@ -78,7 +78,7 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
 
         <CustomButton $style={"blue"} onClick={handleSubmit}>
           Подтвердить
-          {isLoading ? <Loader /> : <Arrow />}
+          {isLoading ? <Loader size={"23px"}/> : <Arrow />}
         </CustomButton>
         
         {error && <Error>{error}</Error>}

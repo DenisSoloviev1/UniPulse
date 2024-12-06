@@ -114,12 +114,12 @@ const JellyMaker = styled.svg`
 `;
 
 interface LoaderProps {
-  size?: string;
+  size: string;
   color?: "white" | "blue";
 }
 
 export const Loader: React.FC<LoaderProps> = ({
-  size = "23px",
+  size,
   color = "white",
 }) => (
   <>
