@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-import {
-  Time,
-  INotif,
-  submitNotif,
-} from "../../../entities/notification";
+import { Time, INotif, submitNotif } from "../../../entities/notification";
 import { Tag } from "../../../entities/tag";
 import { formatDate } from "../../../shared/config";
-import { CustomButton, Flex, Loader, ModalWindow } from "../../../shared/ui";
+import { CustomButton, Flex, Loader, ModalWindow, ShowFile } from "../../../shared/ui";
 import { Error, TextMore, Title } from "../style.ts";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
 import { Arrow, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
@@ -70,6 +66,8 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
 
         <TextMore>{notifData.description}</TextMore>
 
+        {notifData.files && <ShowFile files={notifData.files} />}
+
         <Flex $direction={"row"} $align={"center"} $wrap>
           {notifData.tags.map((tag) => (
             <Tag key={tag.id} id={tag.id} name={tag.name} style={"noAction"} />
@@ -78,9 +76,9 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
 
         <CustomButton $style={"blue"} onClick={handleSubmit}>
           Подтвердить
-          {isLoading ? <Loader size={"23px"}/> : <Arrow />}
+          {isLoading ? <Loader size={"23px"} /> : <Arrow />}
         </CustomButton>
-        
+
         {error && <Error>{error}</Error>}
       </Flex>
 

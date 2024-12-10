@@ -8,9 +8,11 @@ export const Flex = styled.div<{
   $shadow?: boolean;
   $wrap?: boolean;
   $width?: string;
+  $height?: string;
   $position?: string;
 }>`
   width: ${(props) => props.$width ?? ""};
+  height: ${(props) => props.$height && `${props.$height}`};
   display: flex;
   flex-direction: ${(props) => props.$direction ?? "column"};
   justify-content: ${(props) => props.$justify ?? "flex-start"};

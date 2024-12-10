@@ -66,3 +66,15 @@ export const Message = styled.p`
   text-align: center;
   color: var(--color-font-disable);
 `;
+
+export const Files = styled.div`
+  width: 40px;
+  height: 40px;
+  position: relative;
+
+  svg {
+    fill: var(--color-font);
+    width: 40px;
+    height: 40px;
+  }
+`;

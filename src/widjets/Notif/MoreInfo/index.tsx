@@ -1,15 +1,15 @@
 import React from "react";
-import { Time, INotif} from "../../../entities/notification";
+import { Time, INotif } from "../../../entities/notification";
 import { Tag } from "../../../entities/tag";
 import { formatDate } from "../../../shared/config";
-import { Flex } from "../../../shared/ui";
+import { Flex, ShowFile } from "../../../shared/ui";
 import { TextMore, Title } from "../style";
 
 interface MoreInfoProps {
   notifData: INotif;
 }
 
-export const MoreInfo: React.FC<MoreInfoProps> = ({notifData}) => {
+export const MoreInfo: React.FC<MoreInfoProps> = ({ notifData }) => {
   if (!notifData) return <p>Данных нет</p>;
 
   const formattedDate = formatDate(notifData.time);
@@ -23,6 +23,8 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({notifData}) => {
       <Title>{notifData.title}</Title>
 
       <TextMore>{notifData.description}</TextMore>
+
+      {notifData.files && <ShowFile files={notifData.files} />}
 
       <Flex $direction={"row"} $align={"center"} $wrap>
         {notifData.tags.map((tag) => (

@@ -22,7 +22,6 @@ export enum Routes {
 }
 
 // roles
-
 export const RolesDict = {
   ADMIN: "admin",
   MEDIA: "media",
@@ -33,11 +32,20 @@ export const RolesDict = {
 export type Roles = ValueOf<typeof RolesDict>;
 
 // router types
-
 export interface IPrivateRoute {
   id: number;
   path: string;
   isPublic: boolean;
   component: LazyExoticComponent<React.FC<any>>;
   roles: Roles[];
+}
+
+//file type
+export interface IFile {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  src?: string;
+  data?: string;
 }

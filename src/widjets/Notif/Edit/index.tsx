@@ -14,8 +14,9 @@ import { useTagStore, TagList, ITag } from "../../../entities/tag/index.ts";
 import { Arrow, Plus, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
 import { AddTag } from "../../Tag";
 import { editNotif, INotif } from "../../../entities/notification/index.ts";
-import { MediaItem } from "../../../shared/ui/MediaItem/index.tsx";
+import { AddFile } from "../../../shared/ui/AddFile/index.tsx";
 import { isMobile } from "../../../shared/config/index.ts";
+import { IFile } from "../../../shared/types";
 
 interface EditNotifProps {
   notifData: INotif;
@@ -33,15 +34,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
   // Состояния для формы
   const [title, setTitle] = useState<INotif["title"]>("");
   const [description, setDescription] = useState<INotif["description"]>("");
-  const [mediaFiles, setMediaFiles] = useState<
-    Array<{
-      fileName: string;
-      fileSize: number;
-      data: string;
-      type: string;
-      id: string;
-    }>
-  >([]);
+  const [mediaFiles, setMediaFiles] = useState<IFile[]>([]);
   const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -160,7 +153,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
 
       <Flex>
         <PlainTitle>Прикрепленные медиа</PlainTitle>
-        <MediaItem onFilesChange={setMediaFiles} files={mediaFiles} />
+        <AddFile onFilesChange={setMediaFiles} files={mediaFiles} />
       </Flex>
 
       <Flex>
@@ -183,7 +176,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
         <Flex $direction={isMobile ? "column" : "row"} $gap={10}>
           <Container $border={16}>
             <Calendar
-              onChange={(newDate) => setDate(newDate)} 
+              onChange={(newDate) => setDate(newDate)}
               value={date ? new Date(date * 1000) : null}
             />
           </Container>

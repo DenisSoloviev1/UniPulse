@@ -6,8 +6,8 @@ import { Flex } from "../../../shared/ui";
 import { Message } from "./style";
 
 interface NotifListProps {
-  initialNotifs: INotif[]; // Список уведомлений
-  role: Roles; // Роль пользователя
+  initialNotifs: INotif[];
+  role: Roles;
 }
 
 export const NotifList: React.FC<NotifListProps> = ({
@@ -19,11 +19,7 @@ export const NotifList: React.FC<NotifListProps> = ({
       <Flex $gap={10}>
         {initialNotifs.length > 0 ? (
           initialNotifs.map((notifItem) => (
-            <Notif
-              key={notifItem.id}
-              {...notifItem} // Передача всех свойств уведомления в компонент
-              role={role} // Роль передаётся из списка
-            />
+            <Notif key={notifItem.id} {...notifItem} role={role} />
           ))
         ) : (
           <Message>Пусто</Message>

@@ -1,41 +1,19 @@
 import React from "react";
 import { Square, FileItem } from "./style.ts";
 import { Container, CustomButton, Flex } from "../index";
-import { Close, Plus } from "../Icon";
+import { Close, Plus } from "../Icon/index.tsx";
+import { IFile } from "../../types/index.ts";
 
-interface MediaItemProps {
-  files: Array<{
-    id: string;
-    fileName: string;
-    fileSize: number;
-    data: string;
-    type: string;
-  }>;
-  onFilesChange: (
-    files: Array<{
-      id: string;
-      fileName: string;
-      fileSize: number;
-      data: string;
-      type: string;
-    }>
-  ) => void;
+interface AddFileProps {
+  files: IFile[];
+  onFilesChange: (files: IFile[]) => void;
 }
 
-export const MediaItem: React.FC<MediaItemProps> = ({
-  files,
-  onFilesChange,
-}) => {
+export const AddFile: React.FC<AddFileProps> = ({ files, onFilesChange }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
-      const processedFiles: Array<{
-        id: string;
-        fileName: string;
-        fileSize: number;
-        data: string;
-        type: string;
-      }> = [];
+      const processedFiles: IFile[] = [];
 
       Array.from(selectedFiles).forEach((file) => {
         const fileType = file.type.split("/")[0];
@@ -45,10 +23,10 @@ export const MediaItem: React.FC<MediaItemProps> = ({
           if (e.target?.result) {
             processedFiles.push({
               id: crypto.randomUUID(), // Генерация уникального id
-              fileName: file.name,
-              fileSize: file.size,
-              data: (e.target.result as string).split(",")[1] || "",
+              name: file.name,
+              size: file.size,
               type: fileType,
+              src: e.target.result as string,
             });
 
             if (processedFiles.length === selectedFiles.length) {
@@ -66,9 +44,8 @@ export const MediaItem: React.FC<MediaItemProps> = ({
         } else {
           processedFiles.push({
             id: crypto.randomUUID(),
-            fileName: file.name,
-            fileSize: file.size,
-            data: "",
+            name: file.name,
+            size: file.size,
             type: fileType,
           });
 
@@ -87,31 +64,33 @@ export const MediaItem: React.FC<MediaItemProps> = ({
 
   return (
     <Flex $direction={"row"} $align={"center"} $gap={15}>
-      {files.map((media, index) => (
-        <FileItem key={media.id || index}> {/* Уникальный ключ */}
+      {files.map((media) => (
+        <FileItem key={media.id}>
           {media.type === "image" ||
           media.type === "video" ||
-          media.fileName?.endsWith(".svg") ? ( // Добавили проверку fileName
+          media.name?.endsWith(".svg") ? (
             <Square>
-              {media.type === "image" || media.fileName?.endsWith(".svg") ? (
+              {media.type === "image" || media.name?.endsWith(".svg") ? (
                 <img
-                  src={`data:image/*;base64,${media.data}`}
-                  alt={media.fileName || "Uploaded"}
+                  src={media.src}
+                  alt={media.name || "Uploaded"}
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
                 />
               ) : (
                 <video
-                  src={`data:video/*;base64,${media.data}`}
+                  src={media.src}
                   controls
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
                 />
               )}
             </Square>
           ) : (
-            <span>{media.fileName}</span>
+            <span>{media.name}</span>
           )}
           <CustomButton
             $style={"close"}
             type="button"
-            onClick={() => handleRemoveFile(media.id)} // Удаляем файл по id
+            onClick={() => handleRemoveFile(media.id)}
           >
             <Close />
           </CustomButton>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Title, Text, Time, Status } from "./style";
+import { Title, Text, Time, Status, Files } from "./style";
 import { Container, Flex } from "../../../shared/ui";
 import { Tag } from "../../tag";
 import { INotif, StatusNotif } from "../model";
@@ -8,6 +8,7 @@ import { useModalStore } from "../../../shared/ui/ModalWindow/store";
 import { PlainTitle, ModalWindow, Slider } from "../../../shared/ui";
 import { Roles, RolesDict } from "../../../shared/types";
 import { MoreInfo, EditNotif, SubmitNotif } from "../../../widjets/Notif";
+import { ImageSvg, VideoSvg, FileSvg, FilesSvg } from "../../../shared/ui/Icon";
 
 type NotifProps = INotif & {
   role: Roles;
@@ -90,18 +91,49 @@ export const Notif: React.FC<NotifProps> = ({
           </Flex>
 
           <Text>{description}</Text>
-          <Flex $direction={"row"} $align={"center"} $wrap={true}>
-            {Array.isArray(tags) &&
-              tags
-                .filter((tag) => tag && typeof tag === "object" && "id" in tag)
-                .map((tag) => (
-                  <Tag
-                    key={tag.id}
-                    id={tag.id}
-                    name={tag.name}
-                    style={"light"}
-                  />
-                ))}
+
+          <Flex
+            $width={"100%"}
+            $direction={"row"}
+            $justify={"space-between"}
+            $align={"center"}
+          >
+            <Flex $direction={"row"} $align={"center"} $wrap={true}>
+              {Array.isArray(tags) &&
+                tags
+                  .filter(
+                    (tag) => tag && typeof tag === "object" && "id" in tag
+                  )
+                  .map((tag) => (
+                    <Tag
+                      key={tag.id}
+                      id={tag.id}
+                      name={tag.name}
+                      style={"light"}
+                    />
+                  ))}
+            </Flex>
+
+            {files?.length !== 0 && (
+              <Files>
+                {(() => {
+                  // Проверяем приоритетные типы файлов
+                  const hasImage = files?.some((file) => file.type === "image");
+                  const hasVideo = files?.some((file) => file.type === "video");
+                  const hasSvg = files?.some(
+                    (file) =>
+                      file.type === "application" && file.name?.endsWith(".svg")
+                  );
+
+                  // Возвращаем приоритетную иконку
+                  if (hasImage || hasSvg) return <ImageSvg />;
+                  if (hasVideo) return <VideoSvg />;
+
+                  // Если нет приоритетных типов
+                  return files?.length === 1 ? <FileSvg /> : <FilesSvg />;
+                })()}
+              </Files>
+            )}
           </Flex>
         </Flex>
       </Container>
@@ -121,10 +153,11 @@ export const Notif: React.FC<NotifProps> = ({
             <SubmitNotif notifData={selectNotif} />
           </Slider>
         ) : role === RolesDict.CREATOR ? (
-          <Flex $gap={10} $width={"100%"}>
+          <Flex $gap={10} $width={"100%"} $height={"100%"}>
             <PlainTitle style={{ fontSize: "30px", fontWeight: "500" }}>
               Редактирование
             </PlainTitle>
+
             <Slider $padding={5}>
               <EditNotif notifData={selectNotif} />
             </Slider>

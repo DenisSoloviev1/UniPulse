@@ -14,8 +14,9 @@ import { useTagStore, TagList, ITag } from "../../../entities/tag/index.ts";
 import { Arrow, Plus, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
 import { AddTag } from "../../Tag";
 import { creatNotif, INotif } from "../../../entities/notification/index.ts";
-import { MediaItem } from "../../../shared/ui/MediaItem";
+import { AddFile } from "../../../shared/ui/AddFile/index.tsx";
 import { isMobile } from "../../../shared/config";
+import { IFile } from "../../../shared/types";
 
 export const CreatNotif: React.FC = () => {
   const openModal = useModalStore((state) => state.open);
@@ -27,9 +28,7 @@ export const CreatNotif: React.FC = () => {
   // Состояния для формы
   const [title, setTitle] = useState<INotif["title"]>("");
   const [description, setDescription] = useState<INotif["description"]>("");
-  const [mediaFiles, setMediaFiles] = useState<
-    Array<{ fileName: string; fileSize: number; data: string; type: string; id: string; }>
-  >([]);
+  const [mediaFiles, setMediaFiles] = useState<IFile[]>([]);
   const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -126,7 +125,7 @@ export const CreatNotif: React.FC = () => {
 
       <Flex>
         <PlainTitle>Прикрепленные медиа</PlainTitle>
-        <MediaItem onFilesChange={setMediaFiles} files={mediaFiles}/>
+        <AddFile onFilesChange={setMediaFiles} files={mediaFiles}/>
       </Flex>
 
       <Flex>

@@ -1,3 +1,4 @@
+import { IFile } from "../../../shared/types";
 import { ITag } from "../../tag";
 
 export interface INotif {
@@ -6,7 +7,7 @@ export interface INotif {
   description: string;
   status: "wait_submit" | "wait_sent" | "sent";
   time: number | null;
-  files: any | null;
+  files: IFile[] | null;
   tags: ITag[];
 }
 

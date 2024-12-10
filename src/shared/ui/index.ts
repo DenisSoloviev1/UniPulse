@@ -1,7 +1,8 @@
 export { Container } from "./Container";
 export { CustomButton } from "./CustomButton";
 export { Flex } from "./Flex";
-export { MediaItem } from "./MediaItem";
+export { AddFile } from "./AddFile";
+export { ShowFile } from "./ShowFile";
 export { ModalWindow } from "./ModalWindow";
 export { Loader } from "./Loader";
 export { PlainTitle } from "./PlainTitle";
