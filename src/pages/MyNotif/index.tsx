@@ -49,7 +49,7 @@ export const MyNotif: React.FC = () => {
     setUserId(event.target.value);
   };
 
-  // Функция для выполнения запроса, если есть userId
+  // Функция для выполнения запроса
   const addTelegram = async (id: string) => {
     try {
       const result = await addTelegramChannel(id);
@@ -83,7 +83,7 @@ export const MyNotif: React.FC = () => {
     };
 
     fetchSubscriptions();
-  }, [subscriptions]);
+  }, [setSubscriptions]);
 
   //запрос на получение уведомлений по подписке как пользователь
   useEffect(() => {

@@ -138,7 +138,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
     <Form onSubmit={handleEdit}>
       <Flex>
         <PlainTitle>Название</PlainTitle>
-        <Container $border={16} $width={isMobile ? "100%" : "50%"}>
+        <Container $border={16} $width={isMobile ? "100%" : "80%"}>
           <Textarea
             rows={1}
             value={title}

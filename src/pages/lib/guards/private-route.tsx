@@ -1,7 +1,8 @@
-import { ComponentType, FC } from "react";
+import { ComponentType, FC, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Auth, NotFound } from "../../index";
 import { useAuthStore } from "../../../entities/auth";
-import { Roles } from "../../../shared/types";
+import { Roles, Routes } from "../../../shared/types";
 
 interface IPrivateRoute {
   element: ComponentType;
@@ -15,6 +16,16 @@ export const PrivateRoute: FC<IPrivateRoute> = ({
   isPublic,
 }) => {
   const { isAuth, role } = useAuthStore((state) => state);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Логика перенаправления для авторизованных пользователей на главную
+  useEffect(() => {
+    if (isAuth && location.pathname === Routes.AUTH) {
+      console.log("Redirecting from AUTH to MYNOTIF...");
+      navigate(Routes.MYNOTIF, { replace: true }); // Используем replace, чтобы не добавлять переход в историю
+    }
+  }, [isAuth, location.pathname, navigate]);
 
   // Если страница публичная, рендерим её без проверок
   if (isPublic) {

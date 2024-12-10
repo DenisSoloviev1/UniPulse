@@ -14,6 +14,7 @@ import { Cat, ComplitedSvg } from "../../../shared/ui/Icon";
 import { useTagStore, getSubscriptionToTags } from "../../../entities/tag";
 import { subscribeToTag } from "../../../entities/subscription";
 import { Error } from "../../Notif/style";
+
 export const SubscribeTag: React.FC = () => {
   const closeModal = useModalStore((state) => state.close);
   const isOpenSubscribeTag = useModalStore((state) =>
