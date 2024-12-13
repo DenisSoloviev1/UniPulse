@@ -68,9 +68,10 @@ export const Message = styled.p`
 `;
 
 export const Files = styled.div`
-  width: 40px;
   height: 40px;
   position: relative;
+  display: flex;
+  gap: 5px;
 
   svg {
     fill: var(--color-font);

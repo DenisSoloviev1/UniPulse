@@ -22,7 +22,6 @@ export const PrivateRoute: FC<IPrivateRoute> = ({
   // Логика перенаправления для авторизованных пользователей на главную
   useEffect(() => {
     if (isAuth && location.pathname === Routes.AUTH) {
-      console.log("Redirecting from AUTH to MYNOTIF...");
       navigate(Routes.MYNOTIF, { replace: true }); // Используем replace, чтобы не добавлять переход в историю
     }
   }, [isAuth, location.pathname, navigate]);

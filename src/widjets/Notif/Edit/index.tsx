@@ -67,7 +67,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
     setIsLoading(true);
 
     // Валидация
-    if (title.length > 40) {
+    if (title.length > 100) {
       setError("Название должно быть не длиннее 40 символов");
       setIsLoading(false);
       return;

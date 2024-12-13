@@ -50,7 +50,7 @@ export const CreatNotif: React.FC = () => {
     setIsLoading(true);
 
     // Валидация
-    if (title.length > 60) {
+    if (title.length > 100) {
       setError("Название должно быть не длиннее 60 символов");
       setIsLoading(false);
       return;

@@ -42,10 +42,9 @@ export interface IPrivateRoute {
 
 //file type
 export interface IFile {
+  fileName: string;
+  fileSize: number;
   id: string;
-  name: string;
-  size: number;
   type: string;
-  src?: string;
-  data?: string;
+  data: string;
 }

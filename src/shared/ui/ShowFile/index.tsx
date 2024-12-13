@@ -1,20 +1,23 @@
 import React from "react";
 import { IFile } from "../../types";
 import { Flex } from "../Flex";
-import { MediaGrid, MediaItem, FileList,  } from "./style";
+import { MediaGrid, MediaItem, FileList } from "./style";
+import { baseUrl } from "../../config";
+import { INotif } from "../../../entities/notification";
 
 interface ShowFileProps {
   files: IFile[];
+  idNotif: INotif["id"];
 }
 
-export const ShowFile: React.FC<ShowFileProps> = ({ files }) => {
+export const ShowFile: React.FC<ShowFileProps> = ({ files, idNotif }) => {
   // Фильтрация изображений, видео и SVG
   const media = files.filter(
     (file) =>
       (file.type === "image" ||
         file.type === "video" ||
-        (file.type === "application" && file.name?.endsWith(".svg"))) &&
-      file.src
+        (file.type === "application" && file.fileName?.endsWith(".svg"))) &&
+      file.fileName
   );
 
   // Фильтрация остальных файлов
@@ -23,7 +26,7 @@ export const ShowFile: React.FC<ShowFileProps> = ({ files }) => {
       !(
         file.type === "image" ||
         file.type === "video" ||
-        (file.type === "application" && file.name?.endsWith(".svg"))
+        (file.type === "application" && file.fileName?.endsWith(".svg"))
       )
   );
 
@@ -35,11 +38,14 @@ export const ShowFile: React.FC<ShowFileProps> = ({ files }) => {
           {media.map((file, index) => (
             <MediaItem key={file.id || index}>
               {file.type === "video" ? (
-                <video src={file.src} controls />
+                <video
+                  src={`${baseUrl}/api/notifications/${idNotif}/${file.fileName}`}
+                  controls
+                />
               ) : (
                 <img
-                  src={file.src}
-                  alt={file.name || `media ${index}`}
+                  src={`${baseUrl}/api/notifications/${idNotif}/${file.fileName}`}
+                  alt={file.fileName || `media ${index}`}
                   loading="lazy"
                 />
               )}
@@ -53,8 +59,13 @@ export const ShowFile: React.FC<ShowFileProps> = ({ files }) => {
         <FileList>
           {otherFiles.map((file, index) => (
             <li key={file.id || index}>
-              <a href={file.src} download={file.name} target="_blank" rel="noopener noreferrer">
-                {file.name || `file-${index}`}
+              <a
+                href={`${baseUrl}/api/notifications/${idNotif}/${file.fileName}`}
+                download={file.fileName}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {file.fileName || `file-${index}`}
               </a>
             </li>
           ))}

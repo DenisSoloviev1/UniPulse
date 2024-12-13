@@ -24,7 +24,7 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({ notifData }) => {
 
       <TextMore>{notifData.description}</TextMore>
 
-      {notifData.files && <ShowFile files={notifData.files} />}
+      {notifData.files && <ShowFile files={notifData.files} idNotif={notifData.id}/>}
 
       <Flex $direction={"row"} $align={"center"} $wrap>
         {notifData.tags.map((tag) => (

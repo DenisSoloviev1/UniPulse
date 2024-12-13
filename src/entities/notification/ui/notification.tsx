@@ -8,7 +8,7 @@ import { useModalStore } from "../../../shared/ui/ModalWindow/store";
 import { PlainTitle, ModalWindow, Slider } from "../../../shared/ui";
 import { Roles, RolesDict } from "../../../shared/types";
 import { MoreInfo, EditNotif, SubmitNotif } from "../../../widjets/Notif";
-import { ImageSvg, VideoSvg, FileSvg, FilesSvg } from "../../../shared/ui/Icon";
+import { ImageSvg, VideoSvg, FileSvg } from "../../../shared/ui/Icon";
 
 type NotifProps = INotif & {
   role: Roles;
@@ -117,20 +117,51 @@ export const Notif: React.FC<NotifProps> = ({
             {files?.length !== 0 && (
               <Files>
                 {(() => {
-                  // Проверяем приоритетные типы файлов
-                  const hasImage = files?.some((file) => file.type === "image");
-                  const hasVideo = files?.some((file) => file.type === "video");
-                  const hasSvg = files?.some(
-                    (file) =>
-                      file.type === "application" && file.name?.endsWith(".svg")
+                  // Флаги для проверки, какие типы уже добавлены
+                  let hasImage = false;
+                  let hasVideo = false;
+                  let hasSvg = false;
+                  let hasOther = false;
+
+                  // Перебор массива файлов для установки флагов
+                  files?.forEach((file) => {
+                    if (
+                      file.type === "image" ||
+                      (file.type === "application" &&
+                        file.fileName?.endsWith(".svg"))
+                    ) {
+                      hasImage = true;
+                    }
+                    if (file.type === "video") {
+                      hasVideo = true;
+                    }
+                    if (
+                      file.type === "application" &&
+                      file.fileName?.endsWith(".svg")
+                    ) {
+                      hasSvg = true;
+                    }
+                    if (
+                      file.type !== "image" &&
+                      file.type !== "video" &&
+                      !(
+                        file.type === "application" &&
+                        file.fileName?.endsWith(".svg")
+                      )
+                    ) {
+                      hasOther = true;
+                    }
+                  });
+
+                  // Рендерим уникальные иконки
+                  return (
+                    <>
+                      {hasImage && <ImageSvg />}
+                      {hasVideo && <VideoSvg />}
+                      {hasSvg && !hasImage && <ImageSvg />}
+                      {hasOther && <FileSvg />}
+                    </>
                   );
-
-                  // Возвращаем приоритетную иконку
-                  if (hasImage || hasSvg) return <ImageSvg />;
-                  if (hasVideo) return <VideoSvg />;
-
-                  // Если нет приоритетных типов
-                  return files?.length === 1 ? <FileSvg /> : <FilesSvg />;
                 })()}
               </Files>
             )}
@@ -144,7 +175,7 @@ export const Notif: React.FC<NotifProps> = ({
         width={isMobile ? "90%" : "50%"}
         height={isMobile ? "70%" : "90%"}
       >
-        {role === RolesDict.USER || selectNotif.status === "sent" ? (
+        {role === RolesDict.USER || selectNotif.status === "sent"  || selectNotif.status === "wait_sent" ? (
           <Slider $padding={5}>
             <MoreInfo notifData={selectNotif} />
           </Slider>

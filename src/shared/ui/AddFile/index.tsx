@@ -14,6 +14,7 @@ export const AddFile: React.FC<AddFileProps> = ({ files, onFilesChange }) => {
     const selectedFiles = event.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
       const processedFiles: IFile[] = [];
+      let readCount = 0; // Для отслеживания завершения чтения всех файлов
 
       Array.from(selectedFiles).forEach((file) => {
         const fileType = file.type.split("/")[0];
@@ -23,13 +24,14 @@ export const AddFile: React.FC<AddFileProps> = ({ files, onFilesChange }) => {
           if (e.target?.result) {
             processedFiles.push({
               id: crypto.randomUUID(), // Генерация уникального id
-              name: file.name,
-              size: file.size,
+              fileName: file.name,
+              fileSize: file.size,
               type: fileType,
-              src: e.target.result as string,
+              data: e.target.result as string, // Сохранение base64 данных
             });
 
-            if (processedFiles.length === selectedFiles.length) {
+            readCount++;
+            if (readCount === selectedFiles.length) {
               onFilesChange([...files, ...processedFiles]);
             }
           }
@@ -44,12 +46,14 @@ export const AddFile: React.FC<AddFileProps> = ({ files, onFilesChange }) => {
         } else {
           processedFiles.push({
             id: crypto.randomUUID(),
-            name: file.name,
-            size: file.size,
+            fileName: file.name,
+            fileSize: file.size,
             type: fileType,
+            data: "", // Для других типов файлов `data` будет пустым
           });
 
-          if (processedFiles.length === selectedFiles.length) {
+          readCount++;
+          if (readCount === selectedFiles.length) {
             onFilesChange([...files, ...processedFiles]);
           }
         }
@@ -68,24 +72,24 @@ export const AddFile: React.FC<AddFileProps> = ({ files, onFilesChange }) => {
         <FileItem key={media.id}>
           {media.type === "image" ||
           media.type === "video" ||
-          media.name?.endsWith(".svg") ? (
+          media.fileName?.endsWith(".svg") ? (
             <Square>
-              {media.type === "image" || media.name?.endsWith(".svg") ? (
+              {media.type === "image" || media.fileName?.endsWith(".svg") ? (
                 <img
-                  src={media.src}
-                  alt={media.name || "Uploaded"}
+                  src={media.data} // Используем base64 для отображения изображения
+                  alt={media.fileName || "Uploaded"}
                   style={{ maxWidth: "100%", maxHeight: "100%" }}
                 />
               ) : (
                 <video
-                  src={media.src}
+                  src={media.data} // Используем base64 для отображения видео
                   controls
                   style={{ maxWidth: "100%", maxHeight: "100%" }}
                 />
               )}
             </Square>
           ) : (
-            <span>{media.name}</span>
+            <span>{media.fileName}</span>
           )}
           <CustomButton
             $style={"close"}

@@ -10,21 +10,23 @@ export const Square = styled.div`
   border-radius: 16px;
   overflow: hidden;
   background-color: var(--color-background-container);
+  padding: 5px;
 
   img,
   video {
     width: 100%;
     height: 100%;
+    border-radius: 11px;
     object-fit: cover;
   }
   svg {
     width: 21px;
     height: 21px;
   }
-    &:hover{
+  &:hover {
     cursor: pointer;
-     background-color: #dfdfdf;
-    }
+    background-color: #dfdfdf;
+  }
 `;
 
 export const FileItem = styled.div`
