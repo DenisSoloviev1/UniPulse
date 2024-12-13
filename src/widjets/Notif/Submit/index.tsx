@@ -66,7 +66,7 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
 
         <TextMore>{notifData.description}</TextMore>
 
-        {notifData.files && <ShowFile files={notifData.files} />}
+        {notifData.files && <ShowFile files={notifData.files} idNotif={notifData.id}/>}
 
         <Flex $direction={"row"} $align={"center"} $wrap>
           {notifData.tags.map((tag) => (
