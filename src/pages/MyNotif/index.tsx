@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import { SubscribeTag } from "../../widjets/Tag";
-import {
-  Container,
-  Flex,
-  CustomButton,
-  PlainTitle,
-  Skeleton,
-} from "../../shared/ui";
+import { Flex, CustomButton, PlainTitle, Skeleton } from "../../shared/ui";
 import { SocialWeb } from "../style";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import {
@@ -38,17 +32,6 @@ export const MyNotif: React.FC = () => {
 
   const { setSubscriptions } = useSubscriptionStore();
   const { userId, isAuth } = useAuthStore(); // Используем стор для получения userId
-
-  const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
-  const [inputUserId, setUserId] = useState<string>("");
-
-  const handlePlatformChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedPlatform(event.target.value);
-  };
-
-  const handleUserIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserId(event.target.value);
-  };
 
   // Функция для выполнения запроса
   const addTelegram = async (id: string) => {
@@ -157,37 +140,3 @@ export const MyNotif: React.FC = () => {
     </>
   );
 };
-
-{
-  /* <Container $noActive={true}>
-                <label>
-                  <input
-                    type="radio"
-                    value="vk"
-                    checked={selectedPlatform === "vk"}
-                    // onChange={handlePlatformChange}
-                  />
-                  Вконтакте
-                </label>
-              </Container>
-
-              <Container>
-                <label>
-                  <input
-                    type="radio"
-                    value="telegram"
-                    checked={selectedPlatform === "telegram"}
-                    onChange={handlePlatformChange}
-                  />
-                  Телеграм
-                </label>
-              </Container> 
-              <Container>
-              <input
-                type="text"
-                placeholder={`Введите ID ${selectedPlatform}`}
-                value={inputUserId}
-                onChange={handleUserIdChange}
-              />
-            </Container>*/
-}
