@@ -29,3 +29,9 @@ export const Title = styled.h4`
   font-size: 20px;
   font-weight: 700;
 `;
+
+export const Creator = styled.h4`
+  color: var(--color-font-disable);
+  font-size: 16px;
+  // white-space: nowrap;
+`;

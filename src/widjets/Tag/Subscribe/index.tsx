@@ -14,12 +14,15 @@ import { Cat, ComplitedSvg } from "../../../shared/ui/Icon";
 import { useTagStore, getSubscriptionToTags } from "../../../entities/tag";
 import { subscribeToTag } from "../../../entities/subscription";
 import { Error } from "../../Notif/style";
+import { isMobile } from "../../../shared/config";
 
 export const SubscribeTag: React.FC = () => {
   const closeModal = useModalStore((state) => state.close);
+  const openModal = useModalStore((state) => state.open);
   const isOpenSubscribeTag = useModalStore((state) =>
     state.isOpen("SubscribeTag")
   );
+  const isOpenError = useModalStore((state) => state.isOpen("Error"));
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
@@ -55,6 +58,7 @@ export const SubscribeTag: React.FC = () => {
 
     if (selectedTags.length === 0) {
       setError("Не выбран ни один тег");
+      openModal("Error");
       setIsLoading(false);
       return;
     }
@@ -88,6 +92,7 @@ export const SubscribeTag: React.FC = () => {
     <ModalWindow
       show={isOpenSubscribeTag}
       onClick={() => closeModal("SubscribeTag")}
+      height={isMobile ? "auto" : ""}
     >
       {isSuccess ? (
         <ComplitedSvg />
@@ -117,7 +122,17 @@ export const SubscribeTag: React.FC = () => {
               {isLoading ? <Loader size={"23px"} /> : "Подписаться"}
             </CustomButton>
 
-            {error && <Error>{error}</Error>}
+            {error && (
+              <ModalWindow
+                onClick={() => closeModal("Error")}
+                show={isOpenError}
+                position={["", "", "30px", ""]}
+                width={"250px"}
+                height={"auto"}
+              >
+                <Error>{error}</Error>
+              </ModalWindow>
+            )}
           </Flex>
         </>
       )}

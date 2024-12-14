@@ -9,6 +9,7 @@ import {
   PlainTitle,
   Skeleton,
 } from "../../shared/ui";
+import { SocialWeb } from "../style";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import {
   NotifList,
@@ -20,7 +21,7 @@ import {
   getSubscriptions,
   SubscriptionList,
 } from "../../entities/subscription";
-import { Plus } from "../../shared/ui/Icon";
+import { Plus, TelegramSvg, VKSvg } from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
 import { addTelegramChannel } from "../../entities/user";
 import { useNavigate } from "react-router-dom";
@@ -108,40 +109,15 @@ export const MyNotif: React.FC = () => {
           <Flex $gap={10}>
             <PlainTitle>Бот для рассылки</PlainTitle>
 
-            <Flex $direction={"row"}>
-              <Container $noActive={true}>
-                <label>
-                  <input
-                    type="radio"
-                    value="vk"
-                    checked={selectedPlatform === "vk"}
-                    // onChange={handlePlatformChange}
-                  />
-                  Вконтакте
-                </label>
-              </Container>
+            <Flex $direction={"row"} $gap={20}>
+              <SocialWeb href="https://t.me/unipulse_dstu_bot" target="_blanck">
+                <TelegramSvg />
+              </SocialWeb>
 
-              <Container>
-                <label>
-                  <input
-                    type="radio"
-                    value="telegram"
-                    checked={selectedPlatform === "telegram"}
-                    onChange={handlePlatformChange}
-                  />
-                  Телеграм
-                </label>
-              </Container>
+              <SocialWeb href="/" target="_blanck">
+                <VKSvg />
+              </SocialWeb>
             </Flex>
-
-            <Container>
-              <input
-                type="text"
-                placeholder={`Введите ID ${selectedPlatform}`}
-                value={inputUserId}
-                onChange={handleUserIdChange}
-              />
-            </Container>
           </Flex>
 
           <Flex $gap={10}>
@@ -171,10 +147,47 @@ export const MyNotif: React.FC = () => {
               <Skeleton key={index} $height="150px" />
             ))
           ) : (
-            <NotifList role={RolesDict.USER} initialNotifs={subscriptionNotifs} />
+            <NotifList
+              role={RolesDict.USER}
+              initialNotifs={subscriptionNotifs}
+            />
           )}
         </Flex>
       </Main>
     </>
   );
 };
+
+{
+  /* <Container $noActive={true}>
+                <label>
+                  <input
+                    type="radio"
+                    value="vk"
+                    checked={selectedPlatform === "vk"}
+                    // onChange={handlePlatformChange}
+                  />
+                  Вконтакте
+                </label>
+              </Container>
+
+              <Container>
+                <label>
+                  <input
+                    type="radio"
+                    value="telegram"
+                    checked={selectedPlatform === "telegram"}
+                    onChange={handlePlatformChange}
+                  />
+                  Телеграм
+                </label>
+              </Container> 
+              <Container>
+              <input
+                type="text"
+                placeholder={`Введите ID ${selectedPlatform}`}
+                value={inputUserId}
+                onChange={handleUserIdChange}
+              />
+            </Container>*/
+}

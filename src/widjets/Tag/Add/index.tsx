@@ -17,6 +17,7 @@ import { useTagStore, getTags } from "../../../entities/tag";
 import { Error } from "../../Notif/style";
 import { useAuthStore } from "../../../entities/auth";
 import { RolesDict } from "../../../shared/types";
+import { isMobile } from "../../../shared/config";
 
 export const AddTag: React.FC = () => {
   const { role } = useAuthStore();
@@ -29,7 +30,9 @@ export const AddTag: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const closeModal = useModalStore((state) => state.close);
+  const openModal = useModalStore((state) => state.open);
   const isOpenAddTag = useModalStore((state) => state.isOpen("AddTag"));
+  const isOpenError = useModalStore((state) => state.isOpen("Error"));
 
   const { tags, setTags } = useTagStore();
 
@@ -55,6 +58,7 @@ export const AddTag: React.FC = () => {
     try {
       if (tagName.length === 0 || tagDescription.length === 0) {
         setError("Заполните все поля");
+        openModal("Error");
         return;
       }
       await addTag(tagName, tagDescription);
@@ -64,6 +68,7 @@ export const AddTag: React.FC = () => {
       setTagName("");
       setIsSuccess(true);
       setError("");
+      closeModal("Error");
 
       setTimeout(() => {
         closeModal("AddTag");
@@ -77,7 +82,11 @@ export const AddTag: React.FC = () => {
   };
 
   return (
-    <ModalWindow show={isOpenAddTag} onClick={() => closeModal("AddTag")}>
+    <ModalWindow
+      show={isOpenAddTag}
+      onClick={() => closeModal("AddTag")}
+      height={isMobile ? "auto" : ""}
+    >
       {isSuccess ? (
         <ComplitedSvg />
       ) : (
@@ -130,7 +139,17 @@ export const AddTag: React.FC = () => {
                   {isLoading ? <Loader size={"23px"} /> : "Создать"}
                 </CustomButton>
 
-                {error && <Error>{error}</Error>}
+                {error && (
+                  <ModalWindow
+                    onClick={() => closeModal("Error")}
+                    show={isOpenError}
+                    position={["", "", "30px", ""]}
+                    width={"250px"}
+                    height={"auto"}
+                  >
+                    <Error>{error}</Error>
+                  </ModalWindow>
+                )}
               </Flex>
             </Flex>
           ) : (

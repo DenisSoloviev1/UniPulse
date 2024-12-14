@@ -9,14 +9,11 @@ export const MediaGrid = styled.div`
   gap: 10px;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr); /* Два столбца для телефонов */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: repeat(
-      1,
-      1fr
-    ); /* Один столбец для маленьких экранов */
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -47,4 +44,3 @@ export const FileList = styled.ul`
   display: flex;
   gap: 20px;
 `;
-

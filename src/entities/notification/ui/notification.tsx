@@ -22,6 +22,7 @@ export const Notif: React.FC<NotifProps> = ({
   files,
   time,
   tags,
+  creator,
   role,
 }) => {
   const openModal = useModalStore((state) => state.open);
@@ -35,6 +36,7 @@ export const Notif: React.FC<NotifProps> = ({
     time,
     files,
     tags,
+    creator,
   });
 
   const getModalKey = (role: Roles, notifId: number) => `${role}-${notifId}`;
@@ -69,6 +71,7 @@ export const Notif: React.FC<NotifProps> = ({
             time,
             files,
             tags,
+            creator,
           })
         }
       >
