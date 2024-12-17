@@ -77,8 +77,8 @@ export const Message = styled.div`
 `;
 
 export const SocialWeb = styled.a`
-  width: 128px;
-  height: 128px;
+  width: 64px;
+  height: 64px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,8 +89,8 @@ export const SocialWeb = styled.a`
 
   &::before {
     content: "";
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     position: absolute;
     inset: 0;
@@ -101,8 +101,8 @@ export const SocialWeb = styled.a`
   }
 
   svg {
-    width: 78px;
-    height: 78px;
+    width: 36px;
+    height: 36px;
     fill: var(--color-font-disable);
     transition: fill 0.5s ease-in-out;
     z-index: 1; /* Содержимое поверх градиента */
