@@ -85,7 +85,7 @@ export const AddTag: React.FC = () => {
     <ModalWindow
       show={isOpenAddTag}
       onClick={() => closeModal("AddTag")}
-      height={isMobile ? "auto" : ""}
+      height={isMobile ? "auto" : "490px"}
     >
       {isSuccess ? (
         <ComplitedSvg />
@@ -94,7 +94,7 @@ export const AddTag: React.FC = () => {
           <Flex>
             <PlainTitle>Существующие теги</PlainTitle>
             <Slider
-              $height={role === RolesDict.MEDIA ? 100 : null}
+              $height={role === RolesDict.MEDIA ? 200 : null}
               $wrap={true}
             >
               {isLoadingTags ? (
@@ -108,7 +108,7 @@ export const AddTag: React.FC = () => {
           </Flex>
 
           {role === RolesDict.MEDIA ? (
-            <Flex $width={"100%"} $gap={15}>
+            <Flex $width={"100%"} $gap={30}>
               <Flex $width={"100%"}>
                 <PlainTitle>Новый тег</PlainTitle>
                 <Container $width={"100%"}>

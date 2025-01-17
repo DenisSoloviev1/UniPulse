@@ -1,22 +1,28 @@
 import { create } from "zustand";
 import { Roles } from "../../../shared/types";
+import { getRole } from "../../user";
 
 interface IAuthState {
   isAuth: boolean;
   role: Roles;
-  setRole: (newRole: Roles) => void;
-  setAuthStatus: (authStatus: boolean) => void;
+  userId: string;
+  setRole: (role?: Roles) => void;
   setUserId: (id: string) => void;
   resetAuth: () => void;
-  userId: string | "";
 }
 
 export const useAuthStore = create<IAuthState>((set) => ({
   isAuth: false,
   role: "" as Roles,
   userId: "",
-  setAuthStatus: (authStatus: boolean) => set({ isAuth: authStatus }),
-  setRole: (newRole: Roles) => set({ role: newRole }),
+  setRole: async (role) => {
+    if (role) {
+      set({ role: role, isAuth: true });
+    } else {
+      const response = await getRole();
+      set({ role: response, isAuth: true });
+    }
+  },
   setUserId: (id: string) => set({ userId: id }),
   resetAuth: () =>
     set({

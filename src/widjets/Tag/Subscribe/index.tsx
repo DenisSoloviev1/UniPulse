@@ -92,7 +92,7 @@ export const SubscribeTag: React.FC = () => {
     <ModalWindow
       show={isOpenSubscribeTag}
       onClick={() => closeModal("SubscribeTag")}
-      height={isMobile ? "auto" : ""}
+      height={isMobile ? "auto" : "450px"}
     >
       {isSuccess ? (
         <ComplitedSvg />
@@ -100,7 +100,7 @@ export const SubscribeTag: React.FC = () => {
         <>
           <Flex $width={"100%"}>
             <PlainTitle>Доступные теги</PlainTitle>
-            <Slider $height={100} $wrap={true}>
+            <Slider $height={200} $wrap={true}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
                   <Skeleton key={index} $width="125px" />
