@@ -22,7 +22,7 @@ export const Error = styled.span`
 export const TextMore = styled.p`
   width: 100%;
   font-size: 20px;
-  text-indent: 20px;
+  min-height: 1rem;
 `;
 
 export const Title = styled.h4`

@@ -79,3 +79,10 @@ export const Files = styled.div`
     height: 40px;
   }
 `;
+
+export const WrapperFilters = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+`

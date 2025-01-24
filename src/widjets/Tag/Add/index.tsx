@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Container,
   Flex,
@@ -13,42 +13,27 @@ import { useModalStore } from "../../../shared/ui/ModalWindow/store";
 import { TagList } from "../../../entities/tag";
 import { addTag } from "../../../entities/tag";
 import { ComplitedSvg } from "../../../shared/ui/Icon";
-import { useTagStore, getTags } from "../../../entities/tag";
+import { useTagStore } from "../../../entities/tag";
 import { Error } from "../../Notif/style";
 import { useAuthStore } from "../../../entities/auth";
 import { RolesDict } from "../../../shared/types";
+import { useFetchTags } from "../../../shared/hooks/useFetchTags";
 
-export const AddTag: React.FC = () => {
+export const AddTag = () => {
   const { role } = useAuthStore();
-  const [tagName, setTagName] = useState<string>("");
-  const [tagDescription, setTagDescription] = useState<string>("");
+  const [tagName, setTagName] = useState(""); // лишняя типизация
+  const [tagDescription, setTagDescription] = useState("");
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const { isLoadingTags } = useFetchTags();
 
   const closeModal = useModalStore((state) => state.close);
   const isOpenAddTag = useModalStore((state) => state.isOpen("AddTag"));
 
-  const { tags, setTags } = useTagStore();
-
-  useEffect(() => {
-    const fetchTags = async () => {
-      setIsLoadingTags(true);
-      try {
-        const responseData = await getTags();
-        setTags(responseData);
-        console.log("Загруженные теги:", responseData);
-      } catch (error) {
-        console.error("Ошибка загрузки тегов:", error);
-      } finally {
-        setIsLoadingTags(false);
-      }
-    };
-
-    fetchTags();
-  }, []);
+  const { tags } = useTagStore();
 
   const handleCreateTag = async () => {
     setIsLoading(true);
@@ -74,7 +59,7 @@ export const AddTag: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }; // надо вынести и переписать логику на react hook form
 
   return (
     <ModalWindow show={isOpenAddTag} onClick={() => closeModal("AddTag")}>
@@ -98,7 +83,7 @@ export const AddTag: React.FC = () => {
             </Slider>
           </Flex>
 
-          {role === RolesDict.MEDIA ? (
+          {role === RolesDict.MEDIA && (
             <Flex $width={"100%"} $gap={15}>
               <Flex $width={"100%"}>
                 <PlainTitle>Новый тег</PlainTitle>
@@ -117,6 +102,7 @@ export const AddTag: React.FC = () => {
                     value={tagDescription}
                     onChange={(e) => setTagDescription(e.target.value)}
                   />
+                  {/* вынести в компонент */}
                 </Container>
               </Flex>
 
@@ -133,8 +119,6 @@ export const AddTag: React.FC = () => {
                 {error && <Error>{error}</Error>}
               </Flex>
             </Flex>
-          ) : (
-            <></>
           )}
         </>
       )}

@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   NotifList,
   getNotifs,
   useNotifStore,
 } from "../../entities/notification";
 import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import {
-  ModalWindow,
-  PlainTitle,
-  Slider,
-  Skeleton,
-} from "../../shared/ui";
+import { ModalWindow, PlainTitle, Slider, Skeleton } from "../../shared/ui";
 import { BellButton, Circle } from "./style.ts";
 import { BellSvg } from "../../shared/ui/Icon";
 import { RolesDict } from "../../shared/types";
 
-const Push: React.FC = () => {
+const Push = () => {
+  // не надо тут писать React.FC, пиши его если хочешь использовать его дженерик
 
   const { pushNotifs, setPushNotifs } = useNotifStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -29,14 +25,14 @@ const Push: React.FC = () => {
       try {
         const responseData = await getNotifs(RolesDict.MEDIA);
         setPushNotifs(responseData);
-        setIsLoading(false)
+        setIsLoading(false);
         console.log("Загруженные уведомления:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки уведомлений:", error);
       }
     };
     fetchNotifs();
-  }, []);
+  }, [setPushNotifs]);
 
   return (
     <>
@@ -59,7 +55,7 @@ const Push: React.FC = () => {
         <PlainTitle>Неподтвержденные пульсы</PlainTitle>
 
         <Slider $padding={5}>
-          {isLoading ? (
+          {isLoading ? ( // мне кажется скелетон можно написать по другому
             Array.from({ length: 3 }).map((_, index) => (
               <Skeleton key={index} $height="150px" />
             ))

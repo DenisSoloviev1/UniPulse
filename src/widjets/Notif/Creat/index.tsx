@@ -18,7 +18,7 @@ import { AddFile } from "../../../shared/ui/AddFile/index.tsx";
 import { isMobile } from "../../../shared/config";
 import { IFile } from "../../../shared/types";
 
-export const CreatNotif: React.FC = () => {
+export const CreatNotif = () => {
   const openModal = useModalStore((state) => state.open);
   const closeModal = useModalStore((state) => state.close);
   const isComplited = useModalStore((state) => state.isOpen("Complited"));
@@ -31,8 +31,9 @@ export const CreatNotif: React.FC = () => {
   const [mediaFiles, setMediaFiles] = useState<IFile[]>([]);
   const [date, setDate] = useState<INotif["time"]>(null);
   const [error, setError] = useState<string | null>(null);
+  // Лучше использовать реакт хук форм, слишком много рендеров выходит со стейтами
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Сброс формы
   const resetForm = () => {
@@ -45,15 +46,16 @@ export const CreatNotif: React.FC = () => {
 
   // Обработчик отправки формы
   const handleCreat = async (e: React.FormEvent) => {
+    // лучше типизировать всю функцию
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
     // Валидация
     if (title.length > 100) {
-      setError("Название должно быть не длиннее 60 символов");
+      setError("Название должно быть не длиннее 60 символов"); // тут написано 60 выше 100, и такие числа лучше выносить в переменные
       setIsLoading(false);
-      return;
+      return; // вместо ретернов можно к следущему if добавить else (else if)
     }
 
     if (
@@ -95,8 +97,8 @@ export const CreatNotif: React.FC = () => {
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
       setError("Не удалось отправить");
-      setIsLoading(false)
-    }
+      setIsLoading(false);
+    } // вынести в отдельный хук и из него возвращать функцию
   };
 
   return (
@@ -121,11 +123,12 @@ export const CreatNotif: React.FC = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </Container>
+        {/* дважды используется одна и та же jsx конструкция, лучше такое выносить в отдельные компоненты */}
       </Flex>
 
       <Flex>
         <PlainTitle>Прикрепленные медиа</PlainTitle>
-        <AddFile onFilesChange={setMediaFiles} files={mediaFiles}/>
+        <AddFile onFilesChange={setMediaFiles} files={mediaFiles} />
       </Flex>
 
       <Flex>
@@ -155,7 +158,7 @@ export const CreatNotif: React.FC = () => {
 
           <CustomButton type="submit" $style={"blue"}>
             Отправить
-            {isLoading ? <Loader size={"23px"}/> : <Arrow />}
+            {isLoading ? <Loader size={"23px"} /> : <Arrow />}
           </CustomButton>
         </Flex>
 
@@ -164,6 +167,7 @@ export const CreatNotif: React.FC = () => {
         <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
           <ComplitedSvg />
         </ModalWindow>
+        {/* плохой компонент модалки, по хорошему он должен отвечать только за логику открытия и закрытия и не привязываться к пропсам */}
       </Flex>
     </Form>
   );

@@ -19,7 +19,7 @@ const Main: React.FC<MainProps> = ({ children }) => {
           {children}
         </Slider>
 
-        {role === RolesDict.USER ? <></> : <Menu />}
+        {role !== RolesDict.USER && <Menu />}
       </MainWrapper>
     </MainContainer>
   );

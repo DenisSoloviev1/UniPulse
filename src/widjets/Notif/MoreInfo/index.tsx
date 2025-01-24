@@ -14,6 +14,17 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({ notifData }) => {
 
   const formattedDate = formatDate(notifData.time);
 
+  const hrefMatch = notifData.description.match(/<a[^>]+href='([^']+)'/);
+
+  let hrefValue = "";
+  if (hrefMatch && hrefMatch[1]) {
+    hrefValue = hrefMatch[1];
+  }
+
+  const descriptionArr = notifData.description
+    .replace(/<a[^>]*>.*?<\/a>/g, "")
+    .split("\n");
+
   return (
     <Flex $width={"100%"} $gap={10}>
       <Flex $width={"100%"} $direction={"row"} $justify={"flex-end"} $gap={15}>
@@ -22,9 +33,18 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({ notifData }) => {
 
       <Title>{notifData.title}</Title>
 
-      <TextMore>{notifData.description}</TextMore>
+      <TextMore>
+        {descriptionArr.map((el, i) => (
+          <TextMore key={el + "_" + i}>{el}</TextMore>
+        ))}
+        <TextMore>
+          <a href={hrefValue}>Читать полностью</a>
+        </TextMore>
+      </TextMore>
 
-      {notifData.files && <ShowFile files={notifData.files} idNotif={notifData.id}/>}
+      {notifData.files && (
+        <ShowFile files={notifData.files} idNotif={notifData.id} />
+      )}
 
       <Flex $direction={"row"} $align={"center"} $wrap>
         {notifData.tags.map((tag) => (

@@ -13,7 +13,7 @@ export interface INotif {
 
 type StatusNotif = {
   [key: string]: string;
-};
+}; // лучше используй утили тайпсы тут record можно
 
 export const StatusNotif: StatusNotif = {
   "wait_submit": "обработка",

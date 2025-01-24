@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   Flex,
   CustomButton,
@@ -11,78 +10,24 @@ import {
 import { useModalStore } from "../../../shared/ui/ModalWindow/store";
 import { TagList } from "../../../entities/tag";
 import { Cat, ComplitedSvg } from "../../../shared/ui/Icon";
-import { useTagStore, getSubscriptionToTags } from "../../../entities/tag";
-import { subscribeToTag } from "../../../entities/subscription";
+import { useTagStore } from "../../../entities/tag";
 import { Error } from "../../Notif/style";
+// import { Modal } from "../../../shared/ui/ModalWindow/indexNew";
+import { useSubscribeToTag } from "../../../shared/hooks/useSubscribeToTag";
+import { useFetchSubscriptionToTags } from "../../../shared/hooks/useFetchSubscriptionToTags";
 
-export const SubscribeTag: React.FC = () => {
+export const SubscribeTag = () => {
   const closeModal = useModalStore((state) => state.close);
   const isOpenSubscribeTag = useModalStore((state) =>
     state.isOpen("SubscribeTag")
   );
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const { isSuccess, error, handleSubscriptionTag, isLoading } =
+    useSubscribeToTag();
 
-  const {
-    subscriptionToTags,
-    selectedTags,
-    setSubscriptionToTags,
-    setSelectedTags,
-  } = useTagStore();
+  const { isLoading: isLoadingTags } = useFetchSubscriptionToTags();
 
-  useEffect(() => {
-    const fetchTags = async () => {
-      setIsLoadingTags(true);
-      try {
-        const responseData = await getSubscriptionToTags();
-        setSubscriptionToTags(responseData);
-        console.log("Загруженные теги:", responseData);
-      } catch (error) {
-        console.error("Ошибка загрузки тегов:", error);
-      } finally {
-        setIsLoadingTags(false);
-      }
-    };
-
-    fetchTags();
-  }, []);
-
-  const handleSubscriptionTag = async () => {
-    setIsLoading(true);
-
-    if (selectedTags.length === 0) {
-      setError("Не выбран ни один тег");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      // Подписываемся на все выбранные теги
-      await Promise.all(
-        selectedTags.map(async (tag) => {
-          if (tag.id) {
-            await subscribeToTag(tag.id);
-          }
-        })
-      );
-
-      // Очистка формы и показ успеха
-      setSelectedTags([]);
-      setIsSuccess(true);
-
-      setTimeout(() => {
-        closeModal("SubscribeTag");
-        setIsSuccess(false);
-      }, 1500);
-    } catch (error) {
-      console.error("Ошибка подписки на тег:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { subscriptionToTags } = useTagStore();
 
   return (
     <ModalWindow

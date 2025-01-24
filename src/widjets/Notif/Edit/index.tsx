@@ -21,10 +21,11 @@ import { IFile } from "../../../shared/types";
 interface EditNotifProps {
   notifData: INotif;
 }
+// поэтому компоненту уже много написал в коментах к другому, тежи ошибки
 
 export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
-  if (!notifData) return <p>Данных нет</p>;
-
+  // if (!notifData) return <p>Данных нет</p>; // опа поймали, так делать не в уоем случаи нельзя
+  //  нельзя ли этот компонент условно рендерить и там показывать нет данных?
   const openModal = useModalStore((state) => state.open);
   const closeModal = useModalStore((state) => state.close);
   const isComplited = useModalStore((state) => state.isOpen("Complited"));
@@ -49,7 +50,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
       setSelectedEditTags(notifData.tags || []);
       setMediaFiles(notifData.files || []);
     }
-  }, [setSelectedEditTags]);
+  }, [notifData, setSelectedEditTags]);
 
   // Сброс формы
   const resetForm = () => {

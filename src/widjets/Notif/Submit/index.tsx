@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { Time, INotif, submitNotif } from "../../../entities/notification";
 import { Tag } from "../../../entities/tag";
 import { formatDate } from "../../../shared/config";
-import { CustomButton, Flex, Loader, ModalWindow, ShowFile } from "../../../shared/ui";
+import {
+  CustomButton,
+  Flex,
+  Loader,
+  ModalWindow,
+  ShowFile,
+} from "../../../shared/ui";
 import { Error, TextMore, Title } from "../style.ts";
 import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
 import { Arrow, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
@@ -12,14 +18,14 @@ interface SubmitNotifProps {
 }
 
 export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
-  if (!notifData) return <p>Данных нет</p>;
+  // if (!notifData) return <p>Данных нет</p> // опять поймали
 
   const openModal = useModalStore((state) => state.open);
   const closeModal = useModalStore((state) => state.close);
   const isComplited = useModalStore((state) => state.isOpen("Complited"));
 
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const formattedDate = formatDate(notifData.time);
 
@@ -35,7 +41,7 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
       }
 
       // Успешное завершение
-      setError(null);
+      setError("");
       openModal("Complited");
       setIsLoading(false);
 
@@ -66,7 +72,9 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
 
         <TextMore>{notifData.description}</TextMore>
 
-        {notifData.files && <ShowFile files={notifData.files} idNotif={notifData.id}/>}
+        {notifData.files && (
+          <ShowFile files={notifData.files} idNotif={notifData.id} />
+        )}
 
         <Flex $direction={"row"} $align={"center"} $wrap>
           {notifData.tags.map((tag) => (

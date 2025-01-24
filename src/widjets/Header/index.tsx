@@ -14,14 +14,8 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <HeaderWrapper>
         <Logo />
-
         <Flex $direction={"row"} $align={"center"} $gap={20}>
-          {role === RolesDict.MEDIA ? (
-            <Push />
-          ) : (
-            <></>
-          )}
-
+          {role === RolesDict.MEDIA && <Push />}
           <NavBar />
         </Flex>
       </HeaderWrapper>

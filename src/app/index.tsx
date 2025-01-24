@@ -1,35 +1,19 @@
-import React, { useEffect, useState } from "react";
 import { Suspense } from "react";
 import { Loader } from "../shared/ui";
 import { BrowserRouter } from "react-router-dom";
 import { Routing } from "../pages/lib/guards";
-import { useAuthStore } from "../entities/auth"; 
-import { getRole } from "../entities/user"; 
 import "./styles.scss";
+import { useFetchRole } from "../shared/hooks/useFetchRole";
 
-const App: React.FC = () => {
-  const { setRole, setAuthStatus, resetAuth } = useAuthStore();
-  const [isLoading, setIsLoading] = useState(true); 
-
-  useEffect(() => {
-    const fetchRole = async () => {
-      try {
-        const role = await getRole();
-        setRole(role);
-        setAuthStatus(true);
-      } catch (error) {
-        console.error("Ошибка получения роли:", error);
-        resetAuth();
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchRole();
-  }, [setRole, setAuthStatus, resetAuth]);
+const App = () => {
+  const { isLoading, isError } = useFetchRole();
 
   if (isLoading) {
     return <Loader size={"200px"} color={"blue"} />;
+  }
+
+  if (isError) {
+    return <p>Извините что-то пошло не так</p>;
   }
 
   return (

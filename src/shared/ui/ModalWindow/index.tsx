@@ -3,13 +3,14 @@ import { Modal, ModalContent } from "./style.ts";
 
 interface ModalWindowProps {
   children: ReactNode;
-  onClick: () => void; // Функция закрытия модального окна
-  show: boolean; // Флаг отображения модального окна
+  onClick: () => void; // Функция закрытия модального окна || плохое название onClose
+  show: boolean; // Флаг отображения модального окна || плохое название все булеевые переменные называй с is или has
   width?: string; // Ширина модального окна
   height?: string; // Высота модального окна
   position?: string[]; // Позиция модального окна
+  // не понял зачем пропсам коменты
 }
-
+// убрать эту модалку использовать мою
 export const ModalWindow: React.FC<ModalWindowProps> = ({
   children,
   onClick,
@@ -22,7 +23,10 @@ export const ModalWindow: React.FC<ModalWindowProps> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClick();
       }
     };
@@ -36,12 +40,15 @@ export const ModalWindow: React.FC<ModalWindowProps> = ({
     };
   }, [show, onClick]);
 
-  return show ? (
+  if (!show) return null;
+
+  return (
+    // лучше вынести эту проверку выше
     position.length === 0 ? (
       <Modal>
         <ModalContent
           ref={modalRef}
-          onClick={(e) => e.stopPropagation()} 
+          onClick={(e) => e.stopPropagation()}
           $width={width}
           $height={height}
           $position={position}
@@ -52,7 +59,7 @@ export const ModalWindow: React.FC<ModalWindowProps> = ({
     ) : (
       <ModalContent
         ref={modalRef}
-        onClick={(e) => e.stopPropagation()} 
+        onClick={(e) => e.stopPropagation()}
         $width={width}
         $height={height}
         $position={position}
@@ -60,5 +67,5 @@ export const ModalWindow: React.FC<ModalWindowProps> = ({
         {children}
       </ModalContent>
     )
-  ) : null;
+  );
 };
