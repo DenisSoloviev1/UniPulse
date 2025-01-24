@@ -14,7 +14,7 @@ export const ShowFile: React.FC<ShowFileProps> = ({ files, idNotif }) => {
   // Фильтрация изображений, видео и SVG
   const media = files.filter(
     (
-      file // думаю можно в интерфейса добавить перечисление типов и избавится от таких больших проверок
+      file // думаю можно в интерфейс добавить перечисление типов и избавится от таких больших проверок
     ) =>
       (file.type === "image" ||
         file.type === "video" ||

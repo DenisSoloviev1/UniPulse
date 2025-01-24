@@ -1,12 +1,12 @@
-import React from "react"
-import { Notif } from "../"
-import { INotif } from "../model"
-import { Roles } from "../../../shared/types"
-import { Flex } from "../../../shared/ui"
-import { Message, WrapperFilters } from "./style"
-import Select from "@mui/material/Select"
-import MenuItem from "@mui/material/MenuItem"
-import { useFilters } from "../../../shared/hooks/useFilters"
+import React from "react";
+import { Notif } from "../";
+import { INotif } from "../model";
+import { Roles } from "../../../shared/types";
+import { Flex } from "../../../shared/ui";
+import { Message, WrapperFilters } from "./style";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { useFilters } from "../../../shared/hooks/useFilters";
 
 const MOCK_SUBS = [
   { id: 1, name: "Всё" },
@@ -18,21 +18,21 @@ const MOCK_SUBS = [
   { id: 534, name: "Интервью" },
   { id: 535, name: "СМИ о нас" },
   { id: 539, name: "Жизнь университета" },
-]
+];
 // потом привязаться к тому что приходит с апи
 
-const MOCK_SORTS = ["Сначала новые", "Сначала старые"]
+const MOCK_SORTS = ["Сначала новые", "Сначала старые"];
 
 interface NotifListProps {
-  initialNotifs: INotif[]
-  role: Roles
+  initialNotifs: INotif[];
+  role: Roles;
 }
 
 export const NotifList: React.FC<NotifListProps> = ({
   initialNotifs,
   role,
 }) => {
-  const { filteredArr, setGroupId, setSort } = useFilters(initialNotifs)
+  const { filteredArr, setGroupId, setSort } = useFilters(initialNotifs);
 
   return (
     <article style={{ width: "100%" }}>
@@ -41,7 +41,7 @@ export const NotifList: React.FC<NotifListProps> = ({
         <WrapperFilters>
           <Select
             onChange={(e) => {
-              setGroupId(+e.target.value)
+              setGroupId(+e.target.value);
             }}
             defaultValue={1} // 1 это айди для группы всё
           >
@@ -51,7 +51,10 @@ export const NotifList: React.FC<NotifListProps> = ({
               </MenuItem>
             ))}
           </Select>
-          <Select onChange={(e) => setSort(+e.target.value)} defaultValue={0}>
+          <Select
+            onChange={(e) => setSort(+e.target.value === 0 ? "desc" : "asc")}
+            defaultValue={0}
+          >
             {MOCK_SORTS.map((sortElem, i) => (
               <MenuItem key={sortElem + i} value={i}>
                 {sortElem}
@@ -70,5 +73,5 @@ export const NotifList: React.FC<NotifListProps> = ({
         {!initialNotifs.length && <Message>Пусто</Message>}
       </Flex>
     </article>
-  )
-}
+  );
+};
