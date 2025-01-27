@@ -4,8 +4,12 @@ import { CustomButton } from "../../shared/ui";
 import { Wrapper, Message } from "../style";
 import { WalcomingSvg, LogoDSTU } from "../../shared/ui/Icon";
 import { Callback } from "../../entities/auth/api/callback";
+import { useAuthStore } from "../../entities/auth";
 
 export const Auth: React.FC = () => {
+  const { setRole } = useAuthStore();
+  setRole()
+
   return (
     <Wrapper>
       <WalcomingSvg />
@@ -22,7 +26,7 @@ export const Auth: React.FC = () => {
 
         <Callback />
         <CustomButton $style={"blue"} onClick={handleAuth}>
-          <LogoDSTU /> Войти через edu.donst.ru
+          <LogoDSTU /> Войти через edu.donstu.ru
         </CustomButton>
       </Message>
     </Wrapper>

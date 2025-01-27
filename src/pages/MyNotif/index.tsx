@@ -20,7 +20,7 @@ import { useAuthStore } from "../../entities/auth";
 import { addTelegramChannel } from "../../entities/user";
 import { useNavigate } from "react-router-dom";
 
-import { RolesDict } from "../../shared/types";
+import { RolesDict, Routes } from "../../shared/types";
 
 export const MyNotif: React.FC = () => {
   const navigate = useNavigate();
@@ -37,10 +37,9 @@ export const MyNotif: React.FC = () => {
   const addTelegram = async (id: string) => {
     try {
       const result = await addTelegramChannel(id);
-      console.log("Успех:", result);
       if (result.success) {
         // Если сервер вернул положительный ответ
-        navigate("/myNotif");
+        navigate(Routes.MYNOTIF);
       }
     } catch (error) {
       console.error("Ошибка при добавлении канала:", error);
@@ -60,7 +59,6 @@ export const MyNotif: React.FC = () => {
       try {
         const responseData = await getSubscriptions();
         setSubscriptions(responseData);
-        console.log("Загруженные подписки:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки подписок:", error);
       }
@@ -76,7 +74,6 @@ export const MyNotif: React.FC = () => {
         const responseData = await getNotifs(RolesDict.USER);
         setSubscriptionNotifs(responseData);
         setIsLoading(false);
-        console.log("Загруженные уведомления:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки уведомлений:", error);
       }

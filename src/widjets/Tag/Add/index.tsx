@@ -42,7 +42,6 @@ export const AddTag: React.FC = () => {
       try {
         const responseData = await getTags();
         setTags(responseData);
-        console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
       } finally {

@@ -42,7 +42,6 @@ export const SubscribeTag: React.FC = () => {
       try {
         const responseData = await getSubscriptionToTags();
         setSubscriptionToTags(responseData);
-        console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
       } finally {

@@ -20,7 +20,6 @@ export const AddNotif: React.FC = () => {
         const responseData = await getNotifs(RolesDict.CREATOR);
         setNotifs(responseData);
         setIsLoading(false);
-        console.log("Загруженные уведомления:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки уведомлений:", error);
       }

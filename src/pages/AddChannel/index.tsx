@@ -1,30 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { addTelegramChannel } from "../../entities/user";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../entities/auth";
 import { Loader } from "../../shared/ui";
+import { Routes } from "../../shared/types";
 
 export const AddChannel: React.FC = () => {
   const navigate = useNavigate();
   const { isAuth, setUserId } = useAuthStore();
 
-  const [channelId, setChannelId] = useState<string | null>(null);
-
   useEffect(() => {
     // Получаем текущий URL
-    console.log(channelId)
     const url = new URL(window.location.href);
     // Извлекаем параметр id
     const id = url.searchParams.get("id");
-    setChannelId(id);
-
-    console.log("isAuth", isAuth);
 
     if (!isAuth) {
       if (id != null) {
         setUserId(id);
       }
-      navigate("/");
+      navigate(Routes.AUTH);
     } else {
       void addTelegram();
     }
@@ -33,10 +28,9 @@ export const AddChannel: React.FC = () => {
       try {
         const result = await addTelegramChannel(id);
 
-        console.log("Успех:", result);
         if (result.success) {
           // Если сервер вернул положительный ответ
-          navigate("/myNotif");
+          navigate(Routes.MYNOTIF);
         }
       } catch (error) {
         console.error("Ошибка при добавлении канала:", error);
@@ -44,5 +38,5 @@ export const AddChannel: React.FC = () => {
     }
   }, []);
 
-  return <Loader size={"200px"} color={"blue"}/>;
+  return <Loader size={"200px"} color={"blue"} />;
 };

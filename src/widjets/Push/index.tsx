@@ -30,7 +30,6 @@ const Push: React.FC = () => {
         const responseData = await getNotifs(RolesDict.MEDIA);
         setPushNotifs(responseData);
         setIsLoading(false)
-        console.log("Загруженные уведомления:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки уведомлений:", error);
       }

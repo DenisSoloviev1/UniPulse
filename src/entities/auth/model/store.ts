@@ -24,10 +24,12 @@ export const useAuthStore = create<IAuthState>((set) => ({
     }
   },
   setUserId: (id: string) => set({ userId: id }),
-  resetAuth: () =>
+  resetAuth: () => {
     set({
       isAuth: false,
       role: "" as Roles,
       userId: "",
     }),
+      localStorage.removeItem("authToken");
+  },
 }));
