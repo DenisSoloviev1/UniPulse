@@ -1,85 +1,62 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import { SubscribeTag } from "../../widjets/Tag";
-import { Flex, CustomButton, PlainTitle, Skeleton } from "../../shared/ui";
-import { SocialWeb } from "../style";
-import { useModalStore } from "../../shared/ui/ModalWindow/store";
 import {
-  NotifList,
-  useNotifStore,
-  getNotifs,
-} from "../../entities/notification";
+  Flex,
+  CustomButton,
+  PlainTitle,
+  Skeleton,
+  Slider,
+  Loader,
+} from "../../shared/ui";
+import { NotifList } from "../../entities/notification";
+import { SubscriptionList } from "../../entities/subscription";
 import {
-  useSubscriptionStore,
-  getSubscriptions,
-  SubscriptionList,
-} from "../../entities/subscription";
-import { Plus, TelegramSvg, VKSvg } from "../../shared/ui/Icon";
+  Cat,
+  ComplitedSvg,
+  Plus,
+  TelegramSvg,
+  VKSvg,
+} from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
-import { addTelegramChannel } from "../../entities/user";
-import { useNavigate } from "react-router-dom";
+import { RolesDict } from "../../shared/types";
+import { useFetchNotifs } from "../../shared/hooks/useFetchNotifs";
+import { useAddTelegram } from "../../shared/hooks/useAddTelegram";
+import { useFetchSubscriptions } from "../../shared/hooks/useFetchSubscriptions";
+import { Modal } from "../../shared/ui/ModalWindow/indexNew";
+import { TagList } from "../../entities/tag";
+import { Error } from "../../widjets/Notif/style";
+import { useSubscribeToTag } from "../../shared/hooks/useSubscribeToTag";
+import { useFetchSubscriptionToTags } from "../../shared/hooks/useFetchSubscriptionToTags";
+import { ModalContent } from "../../shared/ui/ModalWindow/style";
+import { SocialWeb } from "../style";
 
-import { RolesDict, Routes } from "../../shared/types";
-
-export const MyNotif: React.FC = () => {
-  const navigate = useNavigate();
-
-  const { subscriptionNotifs, setSubscriptionNotifs } = useNotifStore();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const openModal = useModalStore((state) => state.open);
-
-  const { setSubscriptions } = useSubscriptionStore();
+export const MyNotif = () => {
   const { userId, isAuth, user } = useAuthStore(); // Используем стор для получения userId
 
+  //получение тегов, на которые подписан
+  const { isLoading: isLoadingSubs } = useFetchSubscriptions();
+
+  const { isLoading: isLoadingNotifs, data: subscriptionNotifs } =
+    useFetchNotifs("user");
+
+  const { isLoading: isLoadingTags, data: subscriptionToTags } =
+    useFetchSubscriptionToTags();
+
   // Функция для выполнения запроса
-  const addTelegram = async (id: string) => {
-    try {
-      const result = await addTelegramChannel(id);
-      if (result.success) {
-        // Если сервер вернул положительный ответ
-        navigate(Routes.MYNOTIF);
-      }
-    } catch (error) {
-      console.error("Ошибка при добавлении канала:", error);
-    }
-  };
+  const { addTelegram } = useAddTelegram();
+
+  const { isSuccess, error, handleSubscriptionTag } = useSubscribeToTag();
+
+  // const { subscriptionToTags } = useTagStore();
 
   // Запрос на добавление канала, если userId в сторе присутствует
   useEffect(() => {
     if (isAuth && userId) {
       addTelegram(userId);
     }
-  }, [isAuth, userId]);
-
-  //получение тегов, на которые подписан
-  useEffect(() => {
-    const fetchSubscriptions = async () => {
-      try {
-        const responseData = await getSubscriptions();
-        setSubscriptions(responseData);
-      } catch (error) {
-        console.error("Ошибка загрузки подписок:", error);
-      }
-    };
-
-    fetchSubscriptions();
-  }, [setSubscriptions]);
-
-  //запрос на получение уведомлений по подписке как пользователь
-  useEffect(() => {
-    const fetchNotifs = async () => {
-      try {
-        const responseData = await getNotifs(RolesDict.USER);
-        setSubscriptionNotifs(responseData);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Ошибка загрузки уведомлений:", error);
-      }
-    };
-    fetchNotifs();
-  }, [setSubscriptionNotifs]);
+  }, [addTelegram, isAuth, userId]); // не пон зачем это и что делает
+  // мне кажется эта функция должна вызываться где-то выше
 
   const telegramLink = `https://t.me/unipulse_dstu_bot?start=${user.eduCode}`
 
@@ -108,15 +85,50 @@ export const MyNotif: React.FC = () => {
             <Flex $direction={"row"} $align={"center"} $gap={10}>
               <SubscriptionList />
 
-              <CustomButton
-                type={"button"}
-                $style={"blue"}
-                onClick={() => openModal("SubscribeTag")}
-              >
-                <Plus />
-              </CustomButton>
+              <Modal
+                renderProp={() =>
+                  isSuccess ? (
+                    <ComplitedSvg />
+                  ) : (
+                    <ModalContent>
+                      <Flex $width={"100%"}>
+                        <PlainTitle>Доступные теги</PlainTitle>
+                        <Slider $wrap={true}>
+                          {isLoadingTags ? (
+                            Array.from({ length: 7 }).map((_, index) => (
+                              <Skeleton key={index} $width="125px" />
+                            ))
+                          ) : (
+                            <TagList initialTags={subscriptionToTags} />
+                          )}
+                        </Slider>
+                      </Flex>
 
-              <SubscribeTag />
+                      <Cat />
+
+                      <Flex $align={"center"} $width={"100%"}>
+                        <CustomButton
+                          onClick={handleSubscriptionTag}
+                          $style={"blue"}
+                          $width={"70%"}
+                        >
+                          {isLoadingNotifs ? (
+                            <Loader size={"23px"} />
+                          ) : (
+                            "Подписаться"
+                          )}
+                        </CustomButton>
+
+                        {error && <Error>{error}</Error>}
+                      </Flex>
+                    </ModalContent>
+                  )
+                }
+              >
+                <CustomButton type={"button"} $style={"blue"}>
+                  <Plus />
+                </CustomButton>
+              </Modal>
             </Flex>
           </Flex>
         </Flex>
@@ -124,7 +136,7 @@ export const MyNotif: React.FC = () => {
         <Flex $gap={10} $width={"100%"}>
           <PlainTitle>Полученные пульсы</PlainTitle>
 
-          {isLoading ? (
+          {isLoadingNotifs || isLoadingSubs ? (
             Array.from({ length: 3 }).map((_, index) => (
               <Skeleton key={index} $height="150px" />
             ))

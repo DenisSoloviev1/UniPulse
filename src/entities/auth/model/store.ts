@@ -42,7 +42,7 @@ export const useAuthStore = create<IAuthState>((set) => ({
       isAuth: false,
       role: "" as Roles,
       userId: "",
-    }),
+    })
       localStorage.removeItem("authToken");
-  },
+  }, 
 }));

@@ -1,19 +1,21 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addTelegramChannel } from "../../entities/user";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../entities/auth";
 import { Loader } from "../../shared/ui";
 import { Routes } from "../../shared/types";
 
-export const AddChannel: React.FC = () => {
+export const AddChannel = () => {
   const navigate = useNavigate();
   const { isAuth, setUserId } = useAuthStore();
 
+  const [channelId, setChannelId] = useState<string>("");
+
   useEffect(() => {
-    // Получаем текущий URL
     const url = new URL(window.location.href);
-    // Извлекаем параметр id
-    const id = url.searchParams.get("id");
+    const id = url.searchParams.get("id") ?? "";
+    // const location = useLocation(); есть такая запись
+    setChannelId(id);
 
     if (!isAuth) {
       if (id != null) {
@@ -38,7 +40,7 @@ export const AddChannel: React.FC = () => {
         console.error("Ошибка при добавлении канала:", error);
       }
     }
-  }, []);
+  }, [channelId, isAuth, navigate, setUserId]);
 
   return <Loader size={"200px"} color={"blue"} />;
 };

@@ -10,11 +10,12 @@ export interface INotif {
   files: IFile[] | null;
   tags: ITag[];
   creator: string;
+  media: string[];
 }
 
 type StatusNotif = {
   [key: string]: string;
-};
+}; // лучше используй утили тайпсы тут record можно
 
 export const StatusNotif: StatusNotif = {
   "wait_submit": "обработка",

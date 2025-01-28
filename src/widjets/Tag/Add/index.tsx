@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-  Container,
   Flex,
   CustomButton,
   PlainTitle,
@@ -9,81 +8,32 @@ import {
   Loader,
   Skeleton,
 } from "../../../shared/ui";
-import { useModalStore } from "../../../shared/ui/ModalWindow/store";
 import { TagList } from "../../../entities/tag";
-import { addTag } from "../../../entities/tag";
 import { ComplitedSvg } from "../../../shared/ui/Icon";
-import { useTagStore, getTags } from "../../../entities/tag";
+import { useTagStore } from "../../../entities/tag";
 import { Error } from "../../Notif/style";
 import { useAuthStore } from "../../../entities/auth";
 import { RolesDict } from "../../../shared/types";
+import { useFetchTags } from "../../../shared/hooks/useFetchTags";
+import { InputText } from "../../../shared/ui/InputText/InputText";
+import { useCreateTag } from "../../../shared/hooks/useCreateTag";
 
-export const AddTag: React.FC = () => {
+export const AddTag = () => {
+  const [tagName, setTagName] = useState("");
+  const [tagDescription, setTagDescription] = useState("");
+
   const { role } = useAuthStore();
-  const [tagName, setTagName] = useState<string>("");
-  const [tagDescription, setTagDescription] = useState<string>("");
+  const { isLoadingTags } = useFetchTags();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const { tags } = useTagStore();
 
-  const closeModal = useModalStore((state) => state.close);
-  const openModal = useModalStore((state) => state.open);
-  const isOpenAddTag = useModalStore((state) => state.isOpen("AddTag"));
-  const isOpenError = useModalStore((state) => state.isOpen("Error"));
-
-  const { tags, setTags } = useTagStore();
-
-  useEffect(() => {
-    const fetchTags = async () => {
-      setIsLoadingTags(true);
-      try {
-        const responseData = await getTags();
-        setTags(responseData);
-      } catch (error) {
-        console.error("Ошибка загрузки тегов:", error);
-      } finally {
-        setIsLoadingTags(false);
-      }
-    };
-
-    fetchTags();
-  }, []);
-
-  const handleCreateTag = async () => {
-    setIsLoading(true);
-    try {
-      if (tagName.length === 0 || tagDescription.length === 0) {
-        setError("Заполните все поля");
-        openModal("Error");
-        return;
-      }
-      await addTag(tagName, tagDescription);
-
-      // Очистка формы и показ успеха
-      setTagDescription("");
-      setTagName("");
-      setIsSuccess(true);
-      setError("");
-      closeModal("Error");
-
-      setTimeout(() => {
-        closeModal("AddTag");
-        setIsSuccess(false);
-      }, 1500);
-    } catch (error) {
-      console.error("Ошибка создания тега:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { error, handleCreateTag, isLoading, isSuccess } = useCreateTag(
+    tagDescription,
+    tagName
+  );
 
   return (
-    <ModalWindow
-      show={isOpenAddTag}
-      onClick={() => closeModal("AddTag")}
-    >
+    <ModalWindow>
       {isSuccess ? (
         <ComplitedSvg />
       ) : (
@@ -104,26 +54,22 @@ export const AddTag: React.FC = () => {
             </Slider>
           </Flex>
 
-          {role === RolesDict.MEDIA ? (
-            <Flex $width={"100%"} $gap={30}>
+          {role === RolesDict.MEDIA && (
+            <Flex $width={"100%"} $gap={15}>
               <Flex $width={"100%"}>
                 <PlainTitle>Новый тег</PlainTitle>
-                <Container $width={"100%"}>
-                  <input
-                    type="text"
-                    placeholder="название"
-                    value={tagName}
-                    onChange={(e) => setTagName(e.target.value)}
-                  />
-                </Container>
-                <Container $width={"100%"}>
-                  <input
-                    type="text"
-                    placeholder="описание"
-                    value={tagDescription}
-                    onChange={(e) => setTagDescription(e.target.value)}
-                  />
-                </Container>
+                <InputText
+                  type="text"
+                  placeholder="название"
+                  value={tagName}
+                  onChange={(e) => setTagName(e.target.value)}
+                />
+                <InputText
+                  type="text"
+                  placeholder="описание"
+                  value={tagDescription}
+                  onChange={(e) => setTagDescription(e.target.value)}
+                />
               </Flex>
 
               <Flex $width={"100%"} $align={"center"}>
@@ -149,8 +95,6 @@ export const AddTag: React.FC = () => {
                 )}
               </Flex>
             </Flex>
-          ) : (
-            <></>
           )}
         </>
       )}

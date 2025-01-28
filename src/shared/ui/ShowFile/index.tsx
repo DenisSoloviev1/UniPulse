@@ -7,13 +7,15 @@ import { INotif } from "../../../entities/notification";
 
 interface ShowFileProps {
   files: IFile[];
-  idNotif: INotif["id"];
+  idNotif: INotif["id"]; // не понял зачем ты так обращаешься, если нужно так обратится то лучше вынести в отдельный тип
 }
 
 export const ShowFile: React.FC<ShowFileProps> = ({ files, idNotif }) => {
   // Фильтрация изображений, видео и SVG
   const media = files.filter(
-    (file) =>
+    (
+      file // думаю можно в интерфейс добавить перечисление типов и избавится от таких больших проверок
+    ) =>
       (file.type === "image" ||
         file.type === "video" ||
         (file.type === "application" && file.fileName?.endsWith(".svg"))) &&
@@ -29,15 +31,16 @@ export const ShowFile: React.FC<ShowFileProps> = ({ files, idNotif }) => {
         (file.type === "application" && file.fileName?.endsWith(".svg"))
       )
   );
+  //  две этих фильтра лучше переписать на один reduce, который вернет объект с двумя полями {otherFiles, media}
 
   return (
     <Flex $width={"100%"}>
       {/* Отображение медиафайлов */}
-      {media.length > 0 && (
+      {media.length > 0 && ( // можно проще !!media.length
         <MediaGrid>
           {media.map((file, index) => (
             <MediaItem key={file.id || index}>
-              {file.type === "video" ? (
+              {file.type === "video" ? ( // это стоит вынести в компонент и проверять в нем или сделать либо сделать объект возвращающий компонент
                 <video
                   src={`${baseUrl}/api/notifications/${idNotif}/${file.fileName}`}
                   controls

@@ -2,24 +2,23 @@ import React, { useState } from "react";
 import { Time, INotif, submitNotif } from "../../../entities/notification";
 import { Tag } from "../../../entities/tag";
 import { formatDate } from "../../../shared/config";
-import { CustomButton, Flex, Loader, ModalWindow, ShowFile } from "../../../shared/ui";
+import { CustomButton, Flex, Loader, ShowFile } from "../../../shared/ui";
 import { Error, TextMore, Title } from "../style.ts";
-import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
-import { Arrow, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
+import { Arrow } from "../../../shared/ui/Icon/index.tsx";
 
 interface SubmitNotifProps {
   notifData: INotif;
 }
 
 export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
-  if (!notifData) return <p>Данных нет</p>;
+  // if (!notifData) return <p>Данных нет</p> // опять поймали
 
-  const openModal = useModalStore((state) => state.open);
-  const closeModal = useModalStore((state) => state.close);
-  const isComplited = useModalStore((state) => state.isOpen("Complited"));
+  // const openModal = useModalStore((state) => state.open);
+  // const closeModal = useModalStore((state) => state.close);
+  // const isComplited = useModalStore((state) => state.isOpen("Complited"));
 
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const formattedDate = formatDate(notifData.time);
 
@@ -35,18 +34,18 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
       }
 
       // Успешное завершение
-      setError(null);
-      openModal("Complited");
+      setError("");
+      // openModal("Complited");
       setIsLoading(false);
 
       // Убираем модалку через несколько секунд
       setTimeout(() => {
-        closeModal("Complited");
+        // closeModal("Complited");
       }, 3000);
     } catch (error) {
       console.error("Ошибка подтверждения уведомления:", error);
       setError("Не удалось подтвердить");
-      closeModal("Complited");
+      // closeModal("Complited");
     }
   };
 
@@ -66,7 +65,9 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
 
         <TextMore>{notifData.description}</TextMore>
 
-        {notifData.files && <ShowFile files={notifData.files} idNotif={notifData.id}/>}
+        {notifData.files && (
+          <ShowFile files={notifData.files} idNotif={notifData.id} />
+        )}
 
         <Flex $direction={"row"} $align={"center"} $wrap>
           {notifData.tags.map((tag) => (
@@ -82,9 +83,9 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
         {error && <Error>{error}</Error>}
       </Flex>
 
-      <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
+      {/* <ModпппппalWindow show={isComplited} onClick={() => closeModal("Complited")}>
         <ComplitedSvg />
-      </ModalWindow>
+      </ModalWindow> */}
     </>
   );
 };

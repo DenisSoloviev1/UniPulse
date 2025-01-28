@@ -4,15 +4,42 @@ import { Tag } from "../../../entities/tag";
 import { formatDate, isMobile } from "../../../shared/config";
 import { Flex, ShowFile } from "../../../shared/ui";
 import { TextMore, Title } from "../style";
+import Carousel from "react-material-ui-carousel";
+import styled from "styled-components";
 
-interface MoreInfoProps {
-  notifData: INotif;
-}
+const CarouselItemWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 1rem;
+`;
 
-export const MoreInfo: React.FC<MoreInfoProps> = ({ notifData }) => {
-  if (!notifData) return <p>Данных нет</p>;
+const hrefSearch = (text: string) => {
+  const hrefMatch = text.match(/<a[^>]+href='([^']+)'/);
+  if (hrefMatch?.[1]) {
+    return hrefMatch[1];
+  }
+  return "";
+};
 
-  const formattedDate = formatDate(notifData.time);
+const descriptionToArr = (text: string) =>
+  text.replace(/<a[^>]*>.*?<\/a>/g, "").split("\n");
+
+export const MoreInfo: React.FC<INotif> = ({
+  media,
+  description,
+  id,
+  tags,
+  title,
+  files,
+  time,
+}) => {
+  const formattedDate = formatDate(time);
+
+  const descriptionArr = descriptionToArr(description);
+
+  const hrefValue = hrefSearch(description);
 
   return (
     <Flex $width={"100%"} $gap={15}>
@@ -25,16 +52,37 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({ notifData }) => {
         <Time>{formattedDate}</Time>
       </Flex>
 
-      <Title>{notifData.title}</Title>
+      <Title>{title}</Title>
 
-      <TextMore>{notifData.description}</TextMore>
+      <TextMore>
+        {descriptionArr.map((el, i) => (
+          <TextMore key={el + "_" + i}>{el}</TextMore>
+        ))}
 
-      {notifData.files && (
-        <ShowFile files={notifData.files} idNotif={notifData.id} />
-      )}
+        <Carousel
+          autoPlay={true}
+          stopAutoPlayOnHover={true}
+          interval={4000}
+          animation="slide"
+          duration={300}
+          indicators={false}
+          navButtonsAlwaysVisible={true}
+        >
+          {media.map((el) => (
+            <CarouselItemWrapper>
+              <img key={el} height={300} src={el} />
+            </CarouselItemWrapper>
+          ))}
+        </Carousel>
+        <TextMore>
+          <a href={hrefValue}>Читать полностью</a>
+        </TextMore>
+      </TextMore>
+
+      {files && <ShowFile files={files} idNotif={id} />}
 
       <Flex $direction={"row"} $align={"center"} $wrap>
-        {notifData.tags.map((tag) => (
+        {tags.map((tag) => (
           <Tag key={tag.id} id={tag.id} name={tag.name} style={"noAction"} />
         ))}
       </Flex>

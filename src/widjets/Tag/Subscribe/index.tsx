@@ -1,140 +1,62 @@
-import React, { useState, useEffect } from "react";
-import {
-  Flex,
-  CustomButton,
-  PlainTitle,
-  ModalWindow,
-  Slider,
-  Loader,
-  Skeleton,
-} from "../../../shared/ui";
-import { useModalStore } from "../../../shared/ui/ModalWindow/store";
-import { TagList } from "../../../entities/tag";
-import { Cat, ComplitedSvg } from "../../../shared/ui/Icon";
-import { useTagStore, getSubscriptionToTags } from "../../../entities/tag";
-import { subscribeToTag } from "../../../entities/subscription";
-import { Error } from "../../Notif/style";
-import { isMobile } from "../../../shared/config";
+// import {
+//   Flex,
+//   CustomButton,
+//   PlainTitle,
+//   ModalWindow,
+//   Slider,
+//   Loader,
+//   Skeleton,
+// } from "../../../shared/ui";
+// import { TagList } from "../../../entities/tag";
+// import { Cat, ComplitedSvg } from "../../../shared/ui/Icon";
+// import { Error } from "../../Notif/style";
+// import { useSubscribeToTag } from "../../../shared/hooks/useSubscribeToTag";
+// import { useFetchSubscriptionToTags } from "../../../shared/hooks/useFetchSubscriptionToTags";
 
-export const SubscribeTag: React.FC = () => {
-  const closeModal = useModalStore((state) => state.close);
-  const openModal = useModalStore((state) => state.open);
-  const isOpenSubscribeTag = useModalStore((state) =>
-    state.isOpen("SubscribeTag")
-  );
-  const isOpenError = useModalStore((state) => state.isOpen("Error"));
+// export const SubscribeTag = () => {
+//   const { isSuccess, error, handleSubscriptionTag, isLoading } =
+//     useSubscribeToTag();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingTags, setIsLoadingTags] = useState<boolean>(true);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+//   const { isLoading: isLoadingTags, data: subscriptionToTags } =
+//     useFetchSubscriptionToTags();
 
-  const {
-    subscriptionToTags,
-    selectedTags,
-    setSubscriptionToTags,
-    setSelectedTags,
-  } = useTagStore();
+//   return (
+//     <ModalWindow
+//     // show={isOpenSubscribeTag}
+//     // onClick={() => closeModal("SubscribeTag")}
+//     >
+//       {isSuccess ? (
+//         <ComplitedSvg />
+//       ) : (
+//         <>
+//           <Flex $width={"100%"}>
+//             <PlainTitle>Доступные теги</PlainTitle>
+//             <Slider $wrap={true}>
+//               {isLoadingTags ? (
+//                 Array.from({ length: 7 }).map((_, index) => (
+//                   <Skeleton key={index} $width="125px" />
+//                 ))
+//               ) : (
+//                 <TagList initialTags={subscriptionToTags} />
+//               )}
+//             </Slider>
+//           </Flex>
 
-  useEffect(() => {
-    const fetchTags = async () => {
-      setIsLoadingTags(true);
-      try {
-        const responseData = await getSubscriptionToTags();
-        setSubscriptionToTags(responseData);
-      } catch (error) {
-        console.error("Ошибка загрузки тегов:", error);
-      } finally {
-        setIsLoadingTags(false);
-      }
-    };
+//           <Cat />
 
-    fetchTags();
-  }, []);
+//           <Flex $align={"center"} $width={"100%"}>
+//             <CustomButton
+//               onClick={handleSubscriptionTag}
+//               $style={"blue"}
+//               $width={"70%"}
+//             >
+//               {isLoading ? <Loader size={"23px"} /> : "Подписаться"}
+//             </CustomButton>
 
-  const handleSubscriptionTag = async () => {
-    setIsLoading(true);
-
-    if (selectedTags.length === 0) {
-      setError("Не выбран ни один тег");
-      openModal("Error");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      // Подписываемся на все выбранные теги
-      await Promise.all(
-        selectedTags.map(async (tag) => {
-          if (tag.id) {
-            await subscribeToTag(tag.id);
-          }
-        })
-      );
-
-      // Очистка формы и показ успеха
-      setSelectedTags([]);
-      setIsSuccess(true);
-
-      setTimeout(() => {
-        closeModal("SubscribeTag");
-        setIsSuccess(false);
-      }, 1500);
-    } catch (error) {
-      console.error("Ошибка подписки на тег:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <ModalWindow
-      show={isOpenSubscribeTag}
-      onClick={() => closeModal("SubscribeTag")}
-      height={isMobile ? "auto" : "450px"}
-    >
-      {isSuccess ? (
-        <ComplitedSvg />
-      ) : (
-        <>
-          <Flex $width={"100%"}>
-            <PlainTitle>Доступные теги</PlainTitle>
-            <Slider $height={"200px"} $wrap={true}>
-              {isLoadingTags ? (
-                Array.from({ length: 7 }).map((_, index) => (
-                  <Skeleton key={index} $width="125px" />
-                ))
-              ) : (
-                <TagList initialTags={subscriptionToTags} />
-              )}
-            </Slider>
-          </Flex>
-
-          <Cat />
-
-          <Flex $align={"center"} $width={"100%"}>
-            <CustomButton
-              onClick={handleSubscriptionTag}
-              $style={"blue"}
-              $width={"70%"}
-            >
-              {isLoading ? <Loader size={"23px"} /> : "Подписаться"}
-            </CustomButton>
-
-            {error && (
-              <ModalWindow
-                onClick={() => closeModal("Error")}
-                show={isOpenError}
-                position={["", "", "30px", ""]}
-                width={"250px"}
-                height={"auto"}
-              >
-                <Error>{error}</Error>
-              </ModalWindow>
-            )}
-          </Flex>
-        </>
-      )}
-    </ModalWindow>
-  );
-};
+//             {error && <Error>{error}</Error>}
+//           </Flex>
+//         </>
+//       )}
+//     </ModalWindow>
+//   );
+// };

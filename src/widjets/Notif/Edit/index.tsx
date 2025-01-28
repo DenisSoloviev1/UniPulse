@@ -5,11 +5,9 @@ import {
   Flex,
   CustomButton,
   PlainTitle,
-  ModalWindow,
   Loader,
 } from "../../../shared/ui/";
 import Calendar from "../../Calendar/index.tsx";
-import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
 import { useTagStore, TagList, ITag } from "../../../entities/tag/index.ts";
 import { Arrow, Plus, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
 import { AddTag } from "../../Tag";
@@ -17,18 +15,13 @@ import { editNotif, INotif } from "../../../entities/notification/index.ts";
 import { AddFile } from "../../../shared/ui/AddFile/index.tsx";
 import { isMobile } from "../../../shared/config/index.ts";
 import { IFile } from "../../../shared/types";
+import { toast } from "react-toastify";
 
 interface EditNotifProps {
   notifData: INotif;
 }
 
 export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
-  if (!notifData) return <p>Данных нет</p>;
-
-  const openModal = useModalStore((state) => state.open);
-  const closeModal = useModalStore((state) => state.close);
-  const isComplited = useModalStore((state) => state.isOpen("Complited"));
-
   const { selectedEditTags, setSelectedEditTags } = useTagStore();
 
   // Состояния для формы
@@ -36,9 +29,11 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
   const [description, setDescription] = useState<INotif["description"]>("");
   const [mediaFiles, setMediaFiles] = useState<IFile[]>([]);
   const [date, setDate] = useState<INotif["time"]>(null);
-  const [error, setError] = useState<string | null>(null);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const notify = () => toast(<ComplitedSvg />);
 
   // Заполнение формы данными из notifData
   useEffect(() => {
@@ -49,7 +44,7 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
       setSelectedEditTags(notifData.tags || []);
       setMediaFiles(notifData.files || []);
     }
-  }, [setSelectedEditTags]);
+  }, [notifData, setSelectedEditTags]);
 
   // Сброс формы
   const resetForm = () => {
@@ -112,13 +107,12 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
 
       // Успешное завершение
       setError(null);
-      openModal("Complited");
       resetForm();
       setIsLoading(false);
 
       // Убираем модалку через несколько секунд
       setTimeout(() => {
-        closeModal("Complited");
+        // closeModal("Complited");
       }, 3000);
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
@@ -160,13 +154,11 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
           <TagList initialTags={selectedEditTags} />
-          <CustomButton
-            type="button"
-            $style="blue"
-            onClick={() => openModal("AddTag")}
-          >
+
+          <CustomButton onClick={notify} type="button" $style="blue">
             <Plus />
           </CustomButton>
+
           <AddTag />
         </Flex>
       </Flex>
@@ -177,7 +169,8 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
           <Container $border={16}>
             <Calendar
               onChange={(newDate) => setDate(newDate)}
-              value={date ? new Date(date * 1000) : null}
+              value={date ? new Date(date * 1000) : null} // не пон зачем умножать на 1000 или отправлять null,
+              //  можно же просто положить date по типам норм выйдет
             />
           </Container>
 
@@ -188,10 +181,6 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
         </Flex>
 
         {error && <Error>{error}</Error>}
-
-        <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
-          <ComplitedSvg />
-        </ModalWindow>
       </Flex>
     </Form>
   );

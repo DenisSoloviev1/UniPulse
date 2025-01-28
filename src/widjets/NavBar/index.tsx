@@ -1,7 +1,7 @@
-import React from "react";
+import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuthStore } from "../../entities/auth";
-import { NavItems, INav } from "./constants";
+import { NavItems } from "./constants";
 import styled from "styled-components";
 import "../../shared/Variables.scss";
 
@@ -41,26 +41,31 @@ export const Nav = styled.nav`
   }
 `;
 
-export const NavBar: React.FC = () => {
+export const NavBar = () => {
   const { role, resetAuth } = useAuthStore((state) => state);
 
   return (
     <Nav>
-      {NavItems.filter(
-        (link: INav) =>
-          Array.isArray(link.allowedRoles) && link.allowedRoles.includes(role)
-      ).map((link: INav) => (
-        <NavLink
-          key={link.id}
-          data-id={`${link.id}`}
-          to={link.path}
-          className={({ isActive }) => (isActive ? "active" : "")}
-          onClick={link.label === "Выйти" ? resetAuth : undefined}
-        >
-          <span>{link.label}</span>
-          {link.svg}
-        </NavLink>
-      ))}
+      {NavItems.reduce((acc, link) => {
+        const { id, path, label, svg, allowedRoles } = link;
+        if (!allowedRoles.includes(role)) {
+          return acc;
+        }
+
+        return [
+          ...acc,
+          <NavLink
+            key={id}
+            data-id={String(id)}
+            to={path}
+            className={({ isActive }) => (isActive ? "active" : "")}
+            onClick={label === "Выйти" ? resetAuth : () => {}}
+          >
+            <span>{label}</span>
+            {svg}
+          </NavLink>,
+        ];
+      }, [] as ReactNode[])}
     </Nav>
   );
 };

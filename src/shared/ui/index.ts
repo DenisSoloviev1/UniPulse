@@ -3,7 +3,7 @@ export { CustomButton } from "./CustomButton";
 export { Flex } from "./Flex";
 export { AddFile } from "./AddFile";
 export { ShowFile } from "./ShowFile";
-export { ModalWindow } from "./ModalWindow";
+export { ModalWindow } from "./ModalWindow/index";
 export { Loader } from "./Loader";
 export { PlainTitle } from "./PlainTitle";
 export { Slider } from "./Slider";

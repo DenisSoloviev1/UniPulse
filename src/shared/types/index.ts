@@ -36,7 +36,9 @@ export interface IPrivateRoute {
   id: number;
   path: string;
   isPublic: boolean;
-  component: LazyExoticComponent<React.FC<any>>;
+  component: LazyExoticComponent<React.FC<any>>; 
+  // по возможности не стоит использовать any никогда лучше используй unknown
+  // но и то и то на моей практике используется когда не справились с ts
   roles: Roles[];
 }
 
