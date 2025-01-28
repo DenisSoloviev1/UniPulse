@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useFilters } from "../../../shared/hooks/useFilters";
 
 const MOCK_SUBS = [
-  { id: 1, name: "Всё" },
+  { id: 1, name: "Все" },
   { id: 529, name: "Опорный вуз" },
   { id: 530, name: "Наука" },
   { id: 531, name: "Образование" },
@@ -37,14 +37,13 @@ export const NotifList: React.FC<NotifListProps> = ({
 
   return (
     <article style={{ width: "100%" }}>
-      {/* инлайновые стили зло  */}
       <Flex $gap={10}>
         <WrapperFilters>
           <Select
             onChange={(e) => {
               setGroupId(+e.target.value);
             }}
-            defaultValue={1} // 1 это айди для группы всё
+            defaultValue={1} // 1 это айди для группы все
           >
             {MOCK_SUBS.map(({ id, name }) => (
               <MenuItem key={name + "_" + id} value={id}>
