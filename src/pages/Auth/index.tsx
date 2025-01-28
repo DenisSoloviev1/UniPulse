@@ -7,8 +7,9 @@ import { Callback } from "../../entities/auth/api/callback";
 import { useAuthStore } from "../../entities/auth";
 
 export const Auth: React.FC = () => {
-  const { setRole } = useAuthStore();
+  const { setRole, setUser } = useAuthStore();
   setRole()
+  setUser()
 
   return (
     <Wrapper>

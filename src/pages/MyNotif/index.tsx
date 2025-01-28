@@ -31,7 +31,7 @@ export const MyNotif: React.FC = () => {
   const openModal = useModalStore((state) => state.open);
 
   const { setSubscriptions } = useSubscriptionStore();
-  const { userId, isAuth } = useAuthStore(); // Используем стор для получения userId
+  const { userId, isAuth, user } = useAuthStore(); // Используем стор для получения userId
 
   // Функция для выполнения запроса
   const addTelegram = async (id: string) => {
@@ -81,6 +81,8 @@ export const MyNotif: React.FC = () => {
     fetchNotifs();
   }, [setSubscriptionNotifs]);
 
+  const telegramLink = `https://t.me/unipulse_dstu_bot?start=${user.eduCode}`
+
   return (
     <>
       <Header />
@@ -90,7 +92,7 @@ export const MyNotif: React.FC = () => {
             <PlainTitle>Бот для рассылки</PlainTitle>
 
             <Flex $direction={"row"} $gap={20}>
-              <SocialWeb href="https://t.me/unipulse_dstu_bot" target="_blanck">
+              <SocialWeb href={telegramLink} target="_blanck">
                 <TelegramSvg />
               </SocialWeb>
 
