@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { getNotifs, INotif, useNotifStore } from "../../entities/notification";
+import { getNotifs, INotif } from "../../entities/notification";
 import { Roles } from "../types";
 
 export const useFetchNotifs = (Roles: Roles) => {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<INotif[]>([]); 
-    // const { setNotifs } = useNotifStore();
   
     useEffect(() => {
       const fetchNotifs = async () => {

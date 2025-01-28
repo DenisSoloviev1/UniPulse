@@ -183,7 +183,7 @@ export const CreatNotif = () => {
                     <Flex>
                       <PlainTitle>Существующие теги</PlainTitle>
                       <Slider
-                        $height={role === RolesDict.MEDIA ? 100 : null}
+                        $height={role === RolesDict.MEDIA ? "200px" : undefined}
                         $wrap={true}
                       >
                         {isLoadingTags ? (
