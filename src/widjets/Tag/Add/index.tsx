@@ -32,8 +32,11 @@ export const AddTag = () => {
     tagName
   );
 
+  const [show, setShow] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(!!error);
+
   return (
-    <ModalWindow>
+    <ModalWindow show={show} onClick={() => setShow(false)}>
       {isSuccess ? (
         <ComplitedSvg />
       ) : (
@@ -84,8 +87,8 @@ export const AddTag = () => {
 
                 {error && (
                   <ModalWindow
-                    onClick={() => closeModal("Error")}
-                    show={isOpenError}
+                    onClick={() => setIsError(false)}
+                    show={isError}
                     position={["", "", "30px", ""]}
                     width={"250px"}
                     height={"auto"}
