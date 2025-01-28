@@ -1,6 +1,6 @@
-import { ReactNode, useState } from "react"
-import { createPortal } from "react-dom"
-import styled from "styled-components"
+import { ReactNode, useState } from "react";
+import { createPortal } from "react-dom";
+import styled from "styled-components";
 
 const Button = styled.button`
   position: fixed;
@@ -14,16 +14,16 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   text-align: left;
-`
+`;
 
 export const Modal = ({
   children,
   renderProp,
 }: {
-  children: ReactNode
-  renderProp: () => ReactNode
+  children: ReactNode;
+  renderProp: () => ReactNode;
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -31,9 +31,9 @@ export const Modal = ({
         createPortal(
           <Button
             onClick={(e) => {
-              e.stopPropagation()
-              setIsOpen(false)
-              document.body.style.overflow = "unset"
+              e.stopPropagation();
+              setIsOpen(false);
+              document.body.style.overflow = "unset";
             }}
           >
             {renderProp()}
@@ -43,12 +43,12 @@ export const Modal = ({
       <button
         style={{ width: "100%" }}
         onClick={() => {
-          setIsOpen(true)
-          document.body.style.overflow = "hidden"
+          setIsOpen(true);
+          document.body.style.overflow = "hidden";
         }}
       >
         {children}
       </button>
     </>
-  )
-}
+  );
+};

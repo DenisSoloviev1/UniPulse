@@ -8,7 +8,7 @@ import { Roles, RolesDict } from "../../../shared/types";
 import { useIsMobile } from "../../../shared/hooks/useIsMobile";
 import { Modal } from "../../../shared/ui/ModalWindow/indexNew";
 import { ModalContent } from "../../../shared/ui/ModalWindow/style";
-import { Icons } from "./icons";
+import { Icons } from "./Icons.tsx";
 import { SlidersFactory } from "./SlidersFactory";
 
 export type NotifProps = INotif & {

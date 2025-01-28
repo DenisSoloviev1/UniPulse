@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Routing } from "../pages/lib/guards";
 import "./styles.scss";
 import { useFetchRole } from "../shared/hooks/useFetchRole";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const { isLoading, isError } = useFetchRole();
@@ -21,6 +22,7 @@ const App = () => {
       <Suspense fallback={<Loader size={"200px"} color={"blue"} />}>
         <Routing />
       </Suspense>
+      <ToastContainer />
     </BrowserRouter>
   );
 };

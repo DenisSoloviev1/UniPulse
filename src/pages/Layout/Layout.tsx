@@ -1,11 +1,12 @@
+import { ReactNode } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 
-export const Layout = () => {
+export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Header />
-      <Main></Main>
+      <Main>{children}</Main>
     </>
   );
 };

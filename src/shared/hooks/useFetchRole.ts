@@ -9,6 +9,7 @@ export const useFetchRole = () => {
   useEffect(() => {
     const fetchRole = async () => {
       try {
+        setIsLoading(true);
         const role = await getRole();
         setRole(role);
         setAuthStatus(true);

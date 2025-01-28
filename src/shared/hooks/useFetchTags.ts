@@ -12,7 +12,7 @@ export const useFetchTags = () => {
       try {
         const responseData = await getTags();
         setTags(responseData);
-        console.log("Загруженные теги:", responseData);
+        // console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
       } finally {

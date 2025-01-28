@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React, { InputHTMLAttributes, useState } from "react";
 import { Error, Form, Textarea } from "../style.ts";
 import {
   Container,
   Flex,
   CustomButton,
   PlainTitle,
-  ModalWindow,
   Loader,
+  Slider,
+  Skeleton,
 } from "../../../shared/ui/";
 import Calendar from "../../Calendar/index.tsx";
-import { useModalStore } from "../../../shared/ui/ModalWindow/store.ts";
 import { useTagStore, TagList, ITag } from "../../../entities/tag/index.ts";
 import { Arrow, Plus, ComplitedSvg } from "../../../shared/ui/Icon/index.tsx";
 import { AddTag } from "../../Tag";
 import { creatNotif, INotif } from "../../../entities/notification/index.ts";
 import { AddFile } from "../../../shared/ui/AddFile/index.tsx";
 import { isMobile } from "../../../shared/config";
-import { IFile } from "../../../shared/types";
+import { IFile, RolesDict } from "../../../shared/types";
+import { Modal } from "../../../shared/ui/ModalWindow/indexNew.tsx";
+import { ModalContent } from "../../../shared/ui/ModalWindow/style.ts";
+import { useCreateTag } from "../../../shared/hooks/useCreateTag.tsx";
+import { InputText } from "../../../shared/ui/InputText/InputText.tsx";
+import { useAuthStore } from "../../../entities/auth/index.ts";
+import { useFetchTags } from "../../../shared/hooks/useFetchTags.ts";
+import { toast } from "react-toastify";
 
-export const CreatNotif = () => {
-  const openModal = useModalStore((state) => state.open);
-  const closeModal = useModalStore((state) => state.close);
-  const isComplited = useModalStore((state) => state.isOpen("Complited"));
+export const useSendForm = () => {
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { selectedTags, setSelectedTags } = useTagStore();
 
@@ -30,11 +36,8 @@ export const CreatNotif = () => {
   const [description, setDescription] = useState<INotif["description"]>("");
   const [mediaFiles, setMediaFiles] = useState<IFile[]>([]);
   const [date, setDate] = useState<INotif["time"]>(null);
-  const [error, setError] = useState<string | null>(null);
-  // Лучше использовать реакт хук форм, слишком много рендеров выходит со стейтами
 
-  const [isLoading, setIsLoading] = useState(false);
-
+  const notify = () => toast(<ComplitedSvg />);
   // Сброс формы
   const resetForm = () => {
     setTitle("");
@@ -44,11 +47,9 @@ export const CreatNotif = () => {
     setSelectedTags([]);
   };
 
-  // Обработчик отправки формы
   const handleCreat = async (e: React.FormEvent) => {
-    // лучше типизировать всю функцию
     e.preventDefault();
-    setError(null);
+    setError("");
     setIsLoading(true);
 
     // Валидация
@@ -85,15 +86,10 @@ export const CreatNotif = () => {
       await creatNotif(title, description, mediaFiles, tagIds, date);
 
       // Успешное завершение
-      setError(null);
-      openModal("Complited");
+      setError("");
+      notify();
       resetForm();
       setIsLoading(false);
-
-      // Убираем модалку через несколько секунд
-      setTimeout(() => {
-        closeModal("Complited");
-      }, 3000);
     } catch (error) {
       console.error("Ошибка при отправке уведомления:", error);
       setError("Не удалось отправить");
@@ -101,30 +97,72 @@ export const CreatNotif = () => {
     } // вынести в отдельный хук и из него возвращать функцию
   };
 
+  return {
+    handleCreat,
+    error,
+    isLoading,
+    setDate,
+    setMediaFiles,
+    setDescription,
+    setTitle,
+    description,
+    mediaFiles,
+    date,
+  };
+};
+
+type FlexInputProps = {
+  title: string;
+} & InputHTMLAttributes<HTMLTextAreaElement>;
+
+const FlexInput: React.FC<FlexInputProps> = ({ title, ...props }) => {
+  return (
+    <Flex>
+      <PlainTitle>{title}</PlainTitle>
+      <Container $border={16} $width={isMobile ? "100%" : "50%"}>
+        <Textarea rows={1} {...props} />
+      </Container>
+    </Flex>
+  );
+};
+
+export const CreatNotif = () => {
+  const { selectedTags } = useTagStore();
+
+  const [tagName, setTagName] = useState("");
+
+  const { role } = useAuthStore();
+  const { isLoadingTags } = useFetchTags();
+
+  const { tags } = useTagStore();
+
+  const {
+    error,
+    handleCreat,
+    isLoading,
+    setDate,
+    setDescription,
+    setMediaFiles,
+    setTitle,
+    mediaFiles,
+    description,
+    date,
+  } = useSendForm();
+
+  const {
+    error: errorCreatTag,
+    handleCreateTag,
+    isLoading: isLoadingCreateTag,
+    isSuccess,
+  } = useCreateTag(description, tagName);
+
   return (
     <Form onSubmit={handleCreat}>
-      <Flex>
-        <PlainTitle>Название</PlainTitle>
-        <Container $border={16} $width={isMobile ? "100%" : "50%"}>
-          <Textarea
-            rows={1}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </Container>
-      </Flex>
-
-      <Flex>
-        <PlainTitle>Текст</PlainTitle>
-        <Container $border={16} $width={"100%"}>
-          <Textarea
-            rows={10}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </Container>
-        {/* дважды используется одна и та же jsx конструкция, лучше такое выносить в отдельные компоненты */}
-      </Flex>
+      <FlexInput title="Название" onChange={(e) => setTitle(e.target.value)} />
+      <FlexInput
+        title="Текст"
+        onChange={(e) => setDescription(e.target.value)}
+      />
 
       <Flex>
         <PlainTitle>Прикрепленные медиа</PlainTitle>
@@ -135,13 +173,75 @@ export const CreatNotif = () => {
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
           <TagList initialTags={selectedTags} />
-          <CustomButton
-            type="button"
-            $style="blue"
-            onClick={() => openModal("AddTag")}
+          <Modal
+            renderProp={() => (
+              <ModalContent>
+                {isSuccess ? (
+                  <ComplitedSvg />
+                ) : (
+                  <>
+                    <Flex>
+                      <PlainTitle>Существующие теги</PlainTitle>
+                      <Slider
+                        $height={role === RolesDict.MEDIA ? 100 : null}
+                        $wrap={true}
+                      >
+                        {isLoadingTags ? (
+                          Array.from({ length: 7 }).map((_, index) => (
+                            <Skeleton key={index} $width="125px" />
+                          ))
+                        ) : (
+                          <TagList initialTags={tags} />
+                        )}
+                      </Slider>
+                    </Flex>
+
+                    {role === RolesDict.MEDIA && (
+                      <Flex $width={"100%"} $gap={15}>
+                        <Flex $width={"100%"}>
+                          <PlainTitle>Новый тег</PlainTitle>
+                          <InputText
+                            type="text"
+                            placeholder="название"
+                            value={tagName}
+                            onChange={(e) => setTagName(e.target.value)}
+                          />
+                          <InputText
+                            type="text"
+                            placeholder="описание"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                          />
+                        </Flex>
+
+                        <Flex $width={"100%"} $align={"center"}>
+                          <CustomButton
+                            type={"button"}
+                            onClick={handleCreateTag}
+                            $style={"blue"}
+                            $width={"70%"}
+                          >
+                            {isLoadingCreateTag ? (
+                              <Loader size={"23px"} />
+                            ) : (
+                              "Создать"
+                            )}
+                          </CustomButton>
+
+                          {errorCreatTag && <Error>{errorCreatTag}</Error>}
+                        </Flex>
+                      </Flex>
+                    )}
+                  </>
+                )}
+              </ModalContent>
+            )}
           >
-            <Plus />
-          </CustomButton>
+            <CustomButton type="button" $style="blue">
+              <Plus />
+            </CustomButton>
+          </Modal>
+
           <AddTag />
         </Flex>
       </Flex>
@@ -163,11 +263,6 @@ export const CreatNotif = () => {
         </Flex>
 
         {error && <Error>{error}</Error>}
-
-        <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
-          <ComplitedSvg />
-        </ModalWindow>
-        {/* плохой компонент модалки, по хорошему он должен отвечать только за логику открытия и закрытия и не привязываться к пропсам */}
       </Flex>
     </Form>
   );

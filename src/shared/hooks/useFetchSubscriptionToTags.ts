@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { getSubscriptionToTags, useTagStore } from "../../entities/tag";
+import { getSubscriptionToTags, ITag, useTagStore } from "../../entities/tag";
 
 export const useFetchSubscriptionToTags = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState<ITag[]>([]);
 
   const { setSubscriptionToTags } = useTagStore();
 
   useEffect(() => {
     const fetchTags = async () => {
-      setIsLoading(true);
       try {
+        setIsLoading(true);
         const responseData = await getSubscriptionToTags();
         setSubscriptionToTags(responseData);
-        console.log("Загруженные теги:", responseData);
+        setData(responseData)
+        // console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
       } finally {
@@ -23,5 +25,5 @@ export const useFetchSubscriptionToTags = () => {
     fetchTags();
   }, [setSubscriptionToTags]);
 
-  return { isLoading };
+  return { isLoading, data };
 };

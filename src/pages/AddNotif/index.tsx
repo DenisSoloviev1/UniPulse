@@ -8,7 +8,7 @@ import { useFetchNotifs } from "../../shared/hooks/useFetchNotifs";
 
 export const AddNotif = () => {
   const { notifs } = useNotifStore();
-  const { isLoading } = useFetchNotifs();
+  const { isLoading } = useFetchNotifs("creator");
 
   return (
     <>

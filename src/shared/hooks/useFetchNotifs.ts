@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
-import { getNotifs, useNotifStore } from "../../entities/notification";
-import { RolesDict } from "../types";
+import { getNotifs, INotif, useNotifStore } from "../../entities/notification";
+import { Roles } from "../types";
 
-export const useFetchNotifs = () => {
-    const [isLoading, setIsLoading] = useState(true);
-  
-    const { setNotifs } = useNotifStore();
+export const useFetchNotifs = (Roles: Roles) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [data, setData] = useState<INotif[]>([]); 
+    // const { setNotifs } = useNotifStore();
   
     useEffect(() => {
       const fetchNotifs = async () => {
         try {
-          const responseData = await getNotifs(RolesDict.CREATOR);
-          setNotifs(responseData);
-          setIsLoading(false);
-          console.log("Загруженные уведомления:", responseData);
+          setIsLoading(true);
+          const responseData = await getNotifs(Roles);
+          setData(responseData);
         } catch (error) {
           console.error("Ошибка загрузки уведомлений:", error);
         }
+        finally {
+          setIsLoading(false)
+        }
       };
       fetchNotifs();
-    }, [setNotifs]);
+    }, [Roles]);
   
-    return { isLoading };
+    return {data, isLoading };
   };

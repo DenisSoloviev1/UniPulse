@@ -1,104 +1,59 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
-import { SubscribeTag } from "../../widjets/Tag";
 import {
   Container,
   Flex,
   CustomButton,
   PlainTitle,
   Skeleton,
+  Slider,
+  Loader,
 } from "../../shared/ui";
-import { useModalStore } from "../../shared/ui/ModalWindow/store";
-import {
-  NotifList,
-  useNotifStore,
-  getNotifs,
-} from "../../entities/notification";
-import {
-  useSubscriptionStore,
-  getSubscriptions,
-  SubscriptionList,
-} from "../../entities/subscription";
-import { Plus } from "../../shared/ui/Icon";
+import { NotifList } from "../../entities/notification";
+import { SubscriptionList } from "../../entities/subscription";
+import { Cat, ComplitedSvg, Plus } from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
-import { addTelegramChannel } from "../../entities/user";
-import { useNavigate } from "react-router-dom";
-
 import { RolesDict } from "../../shared/types";
+import { useFetchNotifs } from "../../shared/hooks/useFetchNotifs";
+import { useAddTelegram } from "../../shared/hooks/useAddTelegram";
+import { useFetchSubscriptions } from "../../shared/hooks/useFetchSubscriptions";
+import { Modal } from "../../shared/ui/ModalWindow/indexNew";
+import { TagList } from "../../entities/tag";
+import { Error } from "../../widjets/Notif/style";
+import { useSubscribeToTag } from "../../shared/hooks/useSubscribeToTag";
+import { useFetchSubscriptionToTags } from "../../shared/hooks/useFetchSubscriptionToTags";
+import { ModalContent } from "../../shared/ui/ModalWindow/style";
 
-export const MyNotif: React.FC = () => {
-  const navigate = useNavigate();
-
-  const { subscriptionNotifs, setSubscriptionNotifs } = useNotifStore();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  const openModal = useModalStore((state) => state.open);
-
-  const { setSubscriptions } = useSubscriptionStore();
+export const MyNotif = () => {
   const { userId, isAuth } = useAuthStore(); // Используем стор для получения userId
 
-  const [selectedPlatform, setSelectedPlatform] = useState<string>("профиля");
-  const [inputUserId, setUserId] = useState<string>("");
+  const [selectedPlatform, setSelectedPlatform] = useState("профиля");
+  const [inputUserId, setUserId] = useState("");
 
-  const handlePlatformChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedPlatform(event.target.value);
-  };
+  //получение тегов, на которые подписан
+  const { isLoading: isLoadingSubs } = useFetchSubscriptions();
 
-  const handleUserIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserId(event.target.value);
-  };
+  const { isLoading: isLoadingNotifs, data: subscriptionNotifs } =
+    useFetchNotifs("user");
+
+  const { isLoading: isLoadingTags, data: subscriptionToTags } =
+    useFetchSubscriptionToTags();
 
   // Функция для выполнения запроса
-  const addTelegram = async (id: string) => {
-    try {
-      const result = await addTelegramChannel(id);
-      console.log("Успех:", result);
-      if (result.success) {
-        // Если сервер вернул положительный ответ
-        navigate("/myNotif");
-      }
-    } catch (error) {
-      console.error("Ошибка при добавлении канала:", error);
-    }
-  };
+  const { addTelegram } = useAddTelegram();
+
+  const { isSuccess, error, handleSubscriptionTag } = useSubscribeToTag();
+
+  // const { subscriptionToTags } = useTagStore();
 
   // Запрос на добавление канала, если userId в сторе присутствует
   useEffect(() => {
     if (isAuth && userId) {
       addTelegram(userId);
     }
-  }, [isAuth, userId]);
-
-  //получение тегов, на которые подписан
-  useEffect(() => {
-    const fetchSubscriptions = async () => {
-      try {
-        const responseData = await getSubscriptions();
-        setSubscriptions(responseData);
-        console.log("Загруженные подписки:", responseData);
-      } catch (error) {
-        console.error("Ошибка загрузки подписок:", error);
-      }
-    };
-
-    fetchSubscriptions();
-  }, [setSubscriptions]);
-
-  //запрос на получение уведомлений по подписке как пользователь
-  useEffect(() => {
-    const fetchNotifs = async () => {
-      try {
-        const responseData = await getNotifs(RolesDict.USER);
-        setSubscriptionNotifs(responseData);
-        setIsLoading(false);
-        console.log("Загруженные уведомления:", responseData);
-      } catch (error) {
-        console.error("Ошибка загрузки уведомлений:", error);
-      }
-    };
-    fetchNotifs();
-  }, [setSubscriptionNotifs]);
+  }, [addTelegram, isAuth, userId]); // не пон зачем это и что делает
+  // мне кажется эта функция должна вызываться где-то выше
 
   return (
     <>
@@ -114,7 +69,7 @@ export const MyNotif: React.FC = () => {
                   <input
                     type="radio"
                     value="vk"
-                    checked={selectedPlatform === "vk"}
+                    defaultChecked={selectedPlatform === "vk"}
                     // onChange={handlePlatformChange}
                   />
                   Вконтакте
@@ -126,8 +81,8 @@ export const MyNotif: React.FC = () => {
                   <input
                     type="radio"
                     value="telegram"
-                    checked={selectedPlatform === "telegram"}
-                    onChange={handlePlatformChange}
+                    defaultChecked={selectedPlatform === "telegram"}
+                    onChange={(e) => setSelectedPlatform(e.target.value)}
                   />
                   Телеграм
                 </label>
@@ -139,7 +94,7 @@ export const MyNotif: React.FC = () => {
                 type="text"
                 placeholder={`Введите ID ${selectedPlatform}`}
                 value={inputUserId}
-                onChange={handleUserIdChange}
+                onChange={(e) => setUserId(e.target.value)}
               />
             </Container>
           </Flex>
@@ -150,15 +105,50 @@ export const MyNotif: React.FC = () => {
             <Flex $direction={"row"} $align={"center"} $gap={10}>
               <SubscriptionList />
 
-              <CustomButton
-                type={"button"}
-                $style={"blue"}
-                onClick={() => openModal("SubscribeTag")}
-              >
-                <Plus />
-              </CustomButton>
+              <Modal
+                renderProp={() =>
+                  isSuccess ? (
+                    <ComplitedSvg />
+                  ) : (
+                    <ModalContent>
+                      <Flex $width={"100%"}>
+                        <PlainTitle>Доступные теги</PlainTitle>
+                        <Slider $wrap={true}>
+                          {isLoadingTags ? (
+                            Array.from({ length: 7 }).map((_, index) => (
+                              <Skeleton key={index} $width="125px" />
+                            ))
+                          ) : (
+                            <TagList initialTags={subscriptionToTags} />
+                          )}
+                        </Slider>
+                      </Flex>
 
-              <SubscribeTag />
+                      <Cat />
+
+                      <Flex $align={"center"} $width={"100%"}>
+                        <CustomButton
+                          onClick={handleSubscriptionTag}
+                          $style={"blue"}
+                          $width={"70%"}
+                        >
+                          {isLoadingNotifs ? (
+                            <Loader size={"23px"} />
+                          ) : (
+                            "Подписаться"
+                          )}
+                        </CustomButton>
+
+                        {error && <Error>{error}</Error>}
+                      </Flex>
+                    </ModalContent>
+                  )
+                }
+              >
+                <CustomButton type={"button"} $style={"blue"}>
+                  <Plus />
+                </CustomButton>
+              </Modal>
             </Flex>
           </Flex>
         </Flex>
@@ -166,12 +156,15 @@ export const MyNotif: React.FC = () => {
         <Flex $gap={10} $width={"100%"}>
           <PlainTitle>Полученные пульсы</PlainTitle>
 
-          {isLoading ? (
+          {isLoadingNotifs || isLoadingSubs ? (
             Array.from({ length: 3 }).map((_, index) => (
               <Skeleton key={index} $height="150px" />
             ))
           ) : (
-            <NotifList role={RolesDict.USER} initialNotifs={subscriptionNotifs} />
+            <NotifList
+              role={RolesDict.USER}
+              initialNotifs={subscriptionNotifs}
+            />
           )}
         </Flex>
       </Main>
