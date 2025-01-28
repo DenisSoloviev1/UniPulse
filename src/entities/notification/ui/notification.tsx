@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { Title, Text, Time, Status } from "./style";
 import { Container, Flex } from "../../../shared/ui";
 import { Tag } from "../../tag";
@@ -23,6 +23,18 @@ export const Notif: React.FC<NotifProps> = (notificationProp) => {
   const formattedDate = formatDate(time);
 
   const slider = SlidersFactory(notificationProp);
+
+  const TagsArr = useMemo(
+    () =>
+      tags.reduce((acc, tag) => {
+        if (!(tag && typeof tag === "object" && "id" in tag)) return acc;
+        return [
+          ...acc,
+          <Tag key={tag.id} id={tag.id} name={tag.name} style={"light"} />,
+        ];
+      }, [] as ReactNode[]),
+    [tags]
+  );
 
   return (
     <Modal
@@ -69,19 +81,7 @@ export const Notif: React.FC<NotifProps> = (notificationProp) => {
             $align={"center"}
           >
             <Flex $direction={"row"} $align={"center"} $wrap={true}>
-              {tags.reduce((acc, tag) => {
-                if (!(tag && typeof tag === "object" && "id" in tag))
-                  return acc;
-                return [
-                  ...acc,
-                  <Tag
-                    key={tag.id}
-                    id={tag.id}
-                    name={tag.name}
-                    style={"light"}
-                  />,
-                ];
-              }, [] as ReactNode[])}
+              {TagsArr}
             </Flex>
 
             <Icons files={files} />

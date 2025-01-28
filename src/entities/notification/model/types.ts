@@ -10,6 +10,7 @@ export interface INotif {
   files: IFile[] | null;
   tags: ITag[];
   creator: string;
+  media: string[];
 }
 
 type StatusNotif = {

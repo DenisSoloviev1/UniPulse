@@ -6,7 +6,7 @@ export const SlidersFactory = (notifProp: NotifProps) => {
   return {
     USER: (
       <Slider $padding={5}>
-        <MoreInfo notifData={notifProp} />
+        <MoreInfo {...notifProp} />
       </Slider>
     ),
     MEDIA: (
