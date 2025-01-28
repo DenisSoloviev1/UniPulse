@@ -32,7 +32,6 @@ export const NotifList: React.FC<NotifListProps> = ({
   initialNotifs,
   role,
 }) => {
-  console.log({ initialNotifs });
   const { filteredArr, setGroupId, setSort } = useFilters(initialNotifs);
 
   return (

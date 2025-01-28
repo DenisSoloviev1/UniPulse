@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { INotif } from "../../entities/notification";
 
-type sortType = 'desc' | 'asc'; 
+export type sortType = 'desc' | 'asc'; 
 
 export const useFilters = (arr: INotif[]) => {
     const [groupId, setGroupId] = useState(1);
@@ -16,5 +16,11 @@ export const useFilters = (arr: INotif[]) => {
         setFilteredArr(prev => prev.slice().reverse());
     }, [sort])
 
-    return { filteredArr, setGroupId, setSort };
+    const s = (value: number) => {};
+
+    const s1 = (value: sortType) => {};
+
+    //пока так
+
+    return { filteredArr, setGroupId: s, setSort: s1 };
 };
