@@ -41,7 +41,7 @@ export const AddTag = () => {
           <Flex>
             <PlainTitle>Существующие теги</PlainTitle>
             <Slider
-              $height={role === RolesDict.MEDIA ? 100 : null}
+              $height={role === RolesDict.MEDIA ? "200px" : "400px"}
               $wrap={true}
             >
               {isLoadingTags ? (
@@ -82,7 +82,17 @@ export const AddTag = () => {
                   {isLoading ? <Loader size={"23px"} /> : "Создать"}
                 </CustomButton>
 
-                {error && <Error>{error}</Error>}
+                {error && (
+                  <ModalWindow
+                    onClick={() => closeModal("Error")}
+                    show={isOpenError}
+                    position={["", "", "30px", ""]}
+                    width={"250px"}
+                    height={"auto"}
+                  >
+                    <Error>{error}</Error>
+                  </ModalWindow>
+                )}
               </Flex>
             </Flex>
           )}

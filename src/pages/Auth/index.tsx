@@ -24,7 +24,7 @@ export const Auth = () => {
 
         <Callback />
         <CustomButton $style={"blue"} onClick={handleAuth}>
-          <LogoDSTU /> Войти через edu.donst.ru
+          <LogoDSTU /> Войти через edu.donstu.ru
         </CustomButton>
       </Message>
     </Wrapper>

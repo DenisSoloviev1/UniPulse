@@ -3,6 +3,7 @@ import { addTelegramChannel } from "../../entities/user";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../entities/auth";
 import { Loader } from "../../shared/ui";
+import { Routes } from "../../shared/types";
 
 export const AddChannel = () => {
   const navigate = useNavigate();
@@ -19,8 +20,10 @@ export const AddChannel = () => {
     if (!isAuth) {
       if (id != null) {
         setUserId(id);
+        localStorage.setItem("tgId", id);
       }
-      navigate("/");
+      void addTelegram();
+      navigate(Routes.AUTH);
     } else {
       void addTelegram();
     }
@@ -29,10 +32,9 @@ export const AddChannel = () => {
       try {
         const result = await addTelegramChannel(id);
 
-        console.log("Успех:", result);
         if (result.success) {
           // Если сервер вернул положительный ответ
-          navigate("/myNotif");
+          navigate(Routes.MYNOTIF);
         }
       } catch (error) {
         console.error("Ошибка при добавлении канала:", error);

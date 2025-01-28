@@ -75,3 +75,44 @@ export const Message = styled.div`
     animation: slide-x 1.5s;
   }
 `;
+
+export const SocialWeb = styled.a`
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  background-color: var(--color-background-container);
+  overflow: hidden; /* Скрывает выходящий за границы контент */
+  position: relative; /* Для управления внутренними элементами */
+
+  &::before {
+    content: "";
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(238.27deg, #11519c -4.32%, #288ad8 91.02%);
+    transform: translate(-100%, 100%);
+    transition: transform 0.5s ease-in-out;
+    z-index: 0; /* Поместить градиент под содержимым */
+  }
+
+  svg {
+    width: 36px;
+    height: 36px;
+    fill: var(--color-font-disable);
+    transition: fill 0.5s ease-in-out;
+    z-index: 1; /* Содержимое поверх градиента */
+  }
+
+  &:hover::before {
+    transform: translate(-10%, -20%); /* Показываем градиент */
+  }
+
+  &:hover svg {
+    fill: var(--color-background);
+  }
+`;

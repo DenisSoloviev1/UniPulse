@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Header from "../../widjets/Header";
 import Main from "../../widjets/Main";
 import {
-  Container,
   Flex,
   CustomButton,
   PlainTitle,
@@ -12,7 +11,13 @@ import {
 } from "../../shared/ui";
 import { NotifList } from "../../entities/notification";
 import { SubscriptionList } from "../../entities/subscription";
-import { Cat, ComplitedSvg, Plus } from "../../shared/ui/Icon";
+import {
+  Cat,
+  ComplitedSvg,
+  Plus,
+  TelegramSvg,
+  VKSvg,
+} from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
 import { RolesDict } from "../../shared/types";
 import { useFetchNotifs } from "../../shared/hooks/useFetchNotifs";
@@ -24,12 +29,10 @@ import { Error } from "../../widjets/Notif/style";
 import { useSubscribeToTag } from "../../shared/hooks/useSubscribeToTag";
 import { useFetchSubscriptionToTags } from "../../shared/hooks/useFetchSubscriptionToTags";
 import { ModalContent } from "../../shared/ui/ModalWindow/style";
+import { SocialWeb } from "../style";
 
 export const MyNotif = () => {
   const { userId, isAuth } = useAuthStore(); // Используем стор для получения userId
-
-  const [selectedPlatform, setSelectedPlatform] = useState("профиля");
-  const [inputUserId, setUserId] = useState("");
 
   //получение тегов, на которые подписан
   const { isLoading: isLoadingSubs } = useFetchSubscriptions();
@@ -63,40 +66,15 @@ export const MyNotif = () => {
           <Flex $gap={10}>
             <PlainTitle>Бот для рассылки</PlainTitle>
 
-            <Flex $direction={"row"}>
-              <Container $noActive={true}>
-                <label>
-                  <input
-                    type="radio"
-                    value="vk"
-                    defaultChecked={selectedPlatform === "vk"}
-                    // onChange={handlePlatformChange}
-                  />
-                  Вконтакте
-                </label>
-              </Container>
+            <Flex $direction={"row"} $gap={20}>
+              <SocialWeb href="https://t.me/unipulse_dstu_bot" target="_blanck">
+                <TelegramSvg />
+              </SocialWeb>
 
-              <Container>
-                <label>
-                  <input
-                    type="radio"
-                    value="telegram"
-                    defaultChecked={selectedPlatform === "telegram"}
-                    onChange={(e) => setSelectedPlatform(e.target.value)}
-                  />
-                  Телеграм
-                </label>
-              </Container>
+              <SocialWeb href="/" target="_blanck">
+                <VKSvg />
+              </SocialWeb>
             </Flex>
-
-            <Container>
-              <input
-                type="text"
-                placeholder={`Введите ID ${selectedPlatform}`}
-                value={inputUserId}
-                onChange={(e) => setUserId(e.target.value)}
-              />
-            </Container>
           </Flex>
 
           <Flex $gap={10}>

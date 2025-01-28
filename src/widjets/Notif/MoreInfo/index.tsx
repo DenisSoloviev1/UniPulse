@@ -1,7 +1,7 @@
 import React from "react";
 import { Time, INotif } from "../../../entities/notification";
 import { Tag } from "../../../entities/tag";
-import { formatDate } from "../../../shared/config";
+import { formatDate, isMobile } from "../../../shared/config";
 import { Flex, ShowFile } from "../../../shared/ui";
 import { TextMore, Title } from "../style";
 
@@ -26,8 +26,13 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({ notifData }) => {
     .split("\n");
 
   return (
-    <Flex $width={"100%"} $gap={10}>
-      <Flex $width={"100%"} $direction={"row"} $justify={"flex-end"} $gap={15}>
+    <Flex $width={"100%"} $gap={15}>
+      <Flex
+        $width={"100%"}
+        $direction={isMobile ? "column" : "row-reverse"}
+        $align={"end"}
+        $justify={"space-between"}
+      >
         <Time>{formattedDate}</Time>
       </Flex>
 

@@ -3,7 +3,7 @@ import { useAuthStore } from "../../entities/auth";
 import { getRole } from "../../entities/user";
 
 export const useFetchRole = () => {
-  const { setRole, setAuthStatus, resetAuth } = useAuthStore();
+  const { setRole, resetAuth } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   useEffect(() => {
@@ -12,7 +12,6 @@ export const useFetchRole = () => {
         setIsLoading(true);
         const role = await getRole();
         setRole(role);
-        setAuthStatus(true);
       } catch (error) {
         setIsError(true);
         console.error("Ошибка получения роли:", error);
@@ -22,7 +21,7 @@ export const useFetchRole = () => {
       }
     };
     fetchRole();
-  }, [resetAuth, setAuthStatus, setRole]);
+  }, [resetAuth, setRole]);
 
   return { isLoading, isError };
 };
