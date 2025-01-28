@@ -6,9 +6,10 @@ import { RolesDict, Roles } from "../../../shared/types";
 import { useAuthStore } from "../model/store";
 import { baseUrl } from "../../../shared/config";
 import { Routes } from "../../../shared/types";
+import { IUser } from "../../user";
 
 export const Callback: React.FC = () => {
-  const { role, setRole } = useAuthStore();
+  const { role, setRole, user, setUser } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -28,6 +29,7 @@ export const Callback: React.FC = () => {
           if (Object.values(RolesDict).includes(role)) {
             localStorage.setItem("authToken", access_token);
             setRole(role as Roles);
+            setUser(user as IUser);
             setIsRoleSaved(true);
           } else {
             console.error("Неверная роль, полученная с сервера:", role);
@@ -39,7 +41,7 @@ export const Callback: React.FC = () => {
     } else {
       setIsLoading(false);
     }
-  }, [location, setRole]);
+  }, [location, setRole, setUser]);
 
   useEffect(() => {
     if (isRoleSaved) {

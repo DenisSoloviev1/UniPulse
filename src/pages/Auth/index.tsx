@@ -3,8 +3,13 @@ import { CustomButton } from "../../shared/ui";
 import { Wrapper, Message } from "../style";
 import { WalcomingSvg, LogoDSTU } from "../../shared/ui/Icon";
 import { Callback } from "../../entities/auth/api/callback";
+import { useAuthStore } from "../../entities/auth";
 
 export const Auth = () => {
+  const { setRole, setUser } = useAuthStore();
+  setRole()
+  setUser()
+  
   return (
     <Wrapper>
       <WalcomingSvg />

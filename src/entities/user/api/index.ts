@@ -31,3 +31,15 @@ export const getRole = async (): Promise<IUser["role"]> => {
   }
   return response.data.role;
 };
+/**
+ * Получение пользователя при обновлении страницы.
+ * @returns Promise с объектом пользователя.
+ */
+export const getUser = async (): Promise<IUser> => {
+  const response = await apiRequest<IUser>("GET", "/api/users/profile");
+
+  if (!response.success) {
+    throw new Error(response.error || "Ошибка получения роли");
+  }
+  return response.data;
+};

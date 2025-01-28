@@ -32,7 +32,7 @@ import { ModalContent } from "../../shared/ui/ModalWindow/style";
 import { SocialWeb } from "../style";
 
 export const MyNotif = () => {
-  const { userId, isAuth } = useAuthStore(); // Используем стор для получения userId
+  const { userId, isAuth, user } = useAuthStore(); // Используем стор для получения userId
 
   //получение тегов, на которые подписан
   const { isLoading: isLoadingSubs } = useFetchSubscriptions();
@@ -58,6 +58,8 @@ export const MyNotif = () => {
   }, [addTelegram, isAuth, userId]); // не пон зачем это и что делает
   // мне кажется эта функция должна вызываться где-то выше
 
+  const telegramLink = `https://t.me/unipulse_dstu_bot?start=${user.eduCode}`
+
   return (
     <>
       <Header />
@@ -67,7 +69,7 @@ export const MyNotif = () => {
             <PlainTitle>Бот для рассылки</PlainTitle>
 
             <Flex $direction={"row"} $gap={20}>
-              <SocialWeb href="https://t.me/unipulse_dstu_bot" target="_blanck">
+              <SocialWeb href={telegramLink} target="_blanck">
                 <TelegramSvg />
               </SocialWeb>
 
