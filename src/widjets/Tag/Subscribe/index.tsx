@@ -99,7 +99,7 @@ export const SubscribeTag: React.FC = () => {
         <>
           <Flex $width={"100%"}>
             <PlainTitle>Доступные теги</PlainTitle>
-            <Slider $height={200} $wrap={true}>
+            <Slider $height={"200px"} $wrap={true}>
               {isLoadingTags ? (
                 Array.from({ length: 7 }).map((_, index) => (
                   <Skeleton key={index} $width="125px" />

@@ -18,7 +18,9 @@ export const AddChannel: React.FC = () => {
     if (!isAuth) {
       if (id != null) {
         setUserId(id);
+        localStorage.setItem("tgId", id);
       }
+      void addTelegram();
       navigate(Routes.AUTH);
     } else {
       void addTelegram();

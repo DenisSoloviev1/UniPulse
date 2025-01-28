@@ -3,7 +3,7 @@ import { Time, INotif } from "../../../entities/notification";
 import { Tag } from "../../../entities/tag";
 import { formatDate, isMobile } from "../../../shared/config";
 import { Flex, ShowFile } from "../../../shared/ui";
-import { TextMore, Title, Creator } from "../style";
+import { TextMore, Title } from "../style";
 
 interface MoreInfoProps {
   notifData: INotif;
@@ -23,8 +23,6 @@ export const MoreInfo: React.FC<MoreInfoProps> = ({ notifData }) => {
         $justify={"space-between"}
       >
         <Time>{formattedDate}</Time>
-
-        <Creator>{notifData.creator}</Creator>
       </Flex>
 
       <Title>{notifData.title}</Title>

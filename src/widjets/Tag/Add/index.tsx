@@ -17,7 +17,6 @@ import { useTagStore, getTags } from "../../../entities/tag";
 import { Error } from "../../Notif/style";
 import { useAuthStore } from "../../../entities/auth";
 import { RolesDict } from "../../../shared/types";
-import { isMobile } from "../../../shared/config";
 
 export const AddTag: React.FC = () => {
   const { role } = useAuthStore();
@@ -84,7 +83,6 @@ export const AddTag: React.FC = () => {
     <ModalWindow
       show={isOpenAddTag}
       onClick={() => closeModal("AddTag")}
-      height={isMobile ? "auto" : "490px"}
     >
       {isSuccess ? (
         <ComplitedSvg />
@@ -93,7 +91,7 @@ export const AddTag: React.FC = () => {
           <Flex>
             <PlainTitle>Существующие теги</PlainTitle>
             <Slider
-              $height={role === RolesDict.MEDIA ? 200 : null}
+              $height={role === RolesDict.MEDIA ? "200px" : "400px"}
               $wrap={true}
             >
               {isLoadingTags ? (
