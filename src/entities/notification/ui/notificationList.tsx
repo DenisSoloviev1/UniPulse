@@ -1,25 +1,12 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Notif } from "../";
 import { INotif } from "../model";
 import { Roles } from "../../../shared/types";
 import { Flex } from "../../../shared/ui";
 import { Message, WrapperFilters } from "./style";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import { useFilters } from "../../../shared/hooks/useFilters";
-
-const MOCK_SUBS = [
-  { id: 1, name: "Все" },
-  { id: 529, name: "Опорный вуз" },
-  { id: 530, name: "Наука" },
-  { id: 531, name: "Образование" },
-  { id: 532, name: "Международная деятельность" },
-  { id: 533, name: "Спорт" },
-  { id: 534, name: "Интервью" },
-  { id: 535, name: "СМИ о нас" },
-  { id: 539, name: "Жизнь университета" },
-];
-// потом привязаться к тому что приходит с апи
+import { StyledMenuItem, StyledSelect } from "../../../shared/ui/Select/Select";
+import { useTagStore } from "../../tag";
 
 const MOCK_SORTS = ["Сначала новые", "Сначала старые"];
 
@@ -34,32 +21,44 @@ export const NotifList: React.FC<NotifListProps> = ({
 }) => {
   const { filteredArr, setGroupId, setSort } = useFilters(initialNotifs);
 
+  const { subscriptionToTags } = useTagStore();
+
+  const subscriptedTags = useMemo(() => {
+    const res = subscriptionToTags.map((tag) => {
+      return { id: tag.id, name: tag.name };
+    });
+    res.unshift({ id: 1, name: "Всё" });
+    return res;
+  }, [subscriptionToTags]);
+
   return (
     <article style={{ width: "100%" }}>
       <Flex $gap={10}>
         <WrapperFilters>
-          <Select
+          <StyledSelect
             onChange={(e) => {
-              setGroupId(+e.target.value);
+              setGroupId(e.target.value as number);
             }}
             defaultValue={1} // 1 это айди для группы все
           >
-            {MOCK_SUBS.map(({ id, name }) => (
-              <MenuItem key={name + "_" + id} value={id}>
+            {subscriptedTags.map(({ id, name }) => (
+              <StyledMenuItem key={name + "_" + id} value={id}>
                 {name}
-              </MenuItem>
+              </StyledMenuItem>
             ))}
-          </Select>
-          <Select
-            onChange={(e) => setSort(+e.target.value === 0 ? "desc" : "asc")}
+          </StyledSelect>
+          <StyledSelect
+            onChange={(e) =>
+              setSort((e.target.value as number) === 0 ? "desc" : "asc")
+            }
             defaultValue={0}
           >
             {MOCK_SORTS.map((sortElem, i) => (
-              <MenuItem key={sortElem + i} value={i}>
+              <StyledMenuItem key={sortElem + i} value={i}>
                 {sortElem}
-              </MenuItem>
+              </StyledMenuItem>
             ))}
-          </Select>
+          </StyledSelect>
         </WrapperFilters>
 
         {!!initialNotifs.length &&

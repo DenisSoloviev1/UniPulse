@@ -21,6 +21,7 @@ export const useFilters = (arr: INotif[]) => {
 
         setFilteredArr(prev => prev.slice().reverse());
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sort])
 
     return { filteredArr, setGroupId, setSort };
