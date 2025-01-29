@@ -90,7 +90,7 @@ export const MyNotif = () => {
                   isSuccess ? (
                     <ComplitedSvg />
                   ) : (
-                    <ModalContent>
+                    <ModalContent onClick={(e) => e.stopPropagation()}>
                       <Flex $width={"100%"}>
                         <PlainTitle>Доступные теги</PlainTitle>
                         <Slider $wrap={true}>

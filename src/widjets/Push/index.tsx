@@ -15,7 +15,7 @@ const Push = () => {
   return (
     <Modal
       renderProp={() => (
-        <ModalContent>
+        <ModalContent onClick={(e) => e.stopPropagation()}>
           <PlainTitle>Неподтвержденные пульсы</PlainTitle>
 
           <Slider $padding={5}>
@@ -24,7 +24,11 @@ const Push = () => {
                 <Skeleton key={index} $height="150px" />
               ))
             ) : (
-              <NotifList role={RolesDict.MEDIA} initialNotifs={pushNotifs} />
+              <NotifList
+                hasFilters={false}
+                role={RolesDict.MEDIA}
+                initialNotifs={pushNotifs}
+              />
             )}
           </Slider>
         </ModalContent>
