@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Auth, NotFound } from "../../index";
 import { useAuthStore } from "../../../entities/auth";
 import { Roles, Routes } from "../../../shared/types";
+import Layout from "../../../widjets/Layout";
 
 interface IPrivateRoute {
   element: ComponentType;
@@ -42,5 +43,9 @@ export const PrivateRoute: FC<IPrivateRoute> = ({
   }
 
   // Если пользователь авторизован и его роль совпадает с одной из разрешенных, рендерим компонент страницы
-  return <RouteComponent />;
+  return (
+    <Layout>
+      <RouteComponent />
+    </Layout>
+  );
 };

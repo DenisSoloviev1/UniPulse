@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import Header from "../../widjets/Header";
-import Main from "../../widjets/Main";
 import {
   Flex,
   CustomButton,
@@ -62,92 +60,86 @@ export const MyNotif = () => {
 
   return (
     <>
-      <Header />
-      <Main>
-        <Flex $gap={20}>
-          <Flex $gap={10}>
-            <PlainTitle>Бот для рассылки</PlainTitle>
+      <Flex $gap={20}>
+        <Flex $gap={10}>
+          <PlainTitle>Бот для рассылки</PlainTitle>
 
-            <Flex $direction={"row"} $gap={20}>
-              <SocialWeb href={telegramLink} target="_blanck">
-                <TelegramSvg />
-              </SocialWeb>
+          <Flex $direction={"row"} $gap={20}>
+            <SocialWeb href={telegramLink} target="_blanck">
+              <TelegramSvg />
+            </SocialWeb>
 
-              <SocialWeb href="/" target="_blanck">
-                <VKSvg />
-              </SocialWeb>
-            </Flex>
-          </Flex>
-
-          <Flex $gap={10}>
-            <PlainTitle>Мои подписки</PlainTitle>
-
-            <Flex $direction={"row"} $align={"center"} $gap={10}>
-              <SubscriptionList />
-
-              <Modal
-                renderProp={() =>
-                  isSuccess ? (
-                    <ComplitedSvg />
-                  ) : (
-                    <ModalContent onClick={(e) => e.stopPropagation()}>
-                      <Flex $width={"100%"}>
-                        <PlainTitle>Доступные теги</PlainTitle>
-                        <Slider $wrap={true}>
-                          {isLoadingTags ? (
-                            Array.from({ length: 7 }).map((_, index) => (
-                              <Skeleton key={index} $width="125px" />
-                            ))
-                          ) : (
-                            <TagList initialTags={subscriptionToTags} />
-                          )}
-                        </Slider>
-                      </Flex>
-
-                      <Cat />
-
-                      <Flex $align={"center"} $width={"100%"}>
-                        <CustomButton
-                          onClick={handleSubscriptionTag}
-                          $style={"blue"}
-                          $width={"70%"}
-                        >
-                          {isLoadingNotifs ? (
-                            <Loader size={"23px"} />
-                          ) : (
-                            "Подписаться"
-                          )}
-                        </CustomButton>
-
-                        {error && <Error>{error}</Error>}
-                      </Flex>
-                    </ModalContent>
-                  )
-                }
-              >
-                <CustomButton type={"button"} $style={"blue"}>
-                  <Plus />
-                </CustomButton>
-              </Modal>
-            </Flex>
+            <SocialWeb href="/" target="_blanck">
+              <VKSvg />
+            </SocialWeb>
           </Flex>
         </Flex>
 
-        <Flex $gap={10} $width={"100%"}>
-          <PlainTitle>Полученные пульсы</PlainTitle>
+        <Flex $gap={10}>
+          <PlainTitle>Мои подписки</PlainTitle>
 
-          {isLoadingNotifs || isLoadingSubs ? (
-            Array.from({ length: 3 }).map((_, index) => (
-              <Skeleton key={index} $height="150px" />
-            ))
-          ) : (
-            <NotifList
-              role={RolesDict.USER}
-              initialNotifs={subscriptionNotifs}
-            />
-          )}
+          <Flex $direction={"row"} $align={"center"} $gap={10}>
+            <SubscriptionList />
+
+            <Modal
+              renderProp={() =>
+                isSuccess ? (
+                  <ComplitedSvg />
+                ) : (
+                  <ModalContent onClick={(e) => e.stopPropagation()}>
+                    <Flex $width={"100%"}>
+                      <PlainTitle>Доступные теги</PlainTitle>
+                      <Slider $wrap={true}>
+                        {isLoadingTags ? (
+                          Array.from({ length: 7 }).map((_, index) => (
+                            <Skeleton key={index} $width="125px" />
+                          ))
+                        ) : (
+                          <TagList initialTags={subscriptionToTags} />
+                        )}
+                      </Slider>
+                    </Flex>
+
+                    <Cat />
+
+                    <Flex $align={"center"} $width={"100%"}>
+                      <CustomButton
+                        onClick={handleSubscriptionTag}
+                        $style={"blue"}
+                        $width={"70%"}
+                      >
+                        {isLoadingNotifs ? (
+                          <Loader size={"23px"} />
+                        ) : (
+                          "Подписаться"
+                        )}
+                      </CustomButton>
+
+                      {error && <Error>{error}</Error>}
+                    </Flex>
+                  </ModalContent>
+                )
+              }
+            >
+              <CustomButton type={"button"} $style={"blue"}>
+                <Plus />
+              </CustomButton>
+            </Modal>
+          </Flex>
         </Flex>
-      </Main>
+      </Flex>
+
+      <Flex $gap={10} $width={"100%"}>
+        <PlainTitle>Полученные пульсы</PlainTitle>
+
+        {isLoadingNotifs || isLoadingSubs ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton key={index} $height="150px" />
+          ))
+        ) : (
+          <NotifList role={RolesDict.USER} initialNotifs={subscriptionNotifs} />
+        )}
+      </Flex>
     </>
   );
 };
