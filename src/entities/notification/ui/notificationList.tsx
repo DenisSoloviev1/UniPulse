@@ -61,6 +61,7 @@ export const NotifList: React.FC<NotifListProps> = ({
             ))}
           </Select>
         </WrapperFilters>
+
         {!!initialNotifs.length &&
           filteredArr.map((notifItem, i) => (
             <Notif

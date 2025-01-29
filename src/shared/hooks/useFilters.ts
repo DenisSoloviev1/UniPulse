@@ -16,11 +16,8 @@ export const useFilters = (arr: INotif[]) => {
         setFilteredArr(prev => prev.slice().reverse());
     }, [sort])
 
-    const s = (value: number) => {};
 
-    const s1 = (value: sortType) => {};
+    // const s1 = (value: sortType) => {};
 
-    //пока так
-
-    return { filteredArr, setGroupId: s, setSort: s1 };
+    return { filteredArr, setGroupId, setSort };
 };

@@ -38,6 +38,7 @@ export const Notif: React.FC<NotifProps> = (notificationProp) => {
 
   return (
     <Modal
+      width="100%"
       renderProp={() => (
         <ModalContent
           onClick={(e) => e.stopPropagation()}

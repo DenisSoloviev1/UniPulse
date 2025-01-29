@@ -19,9 +19,11 @@ const Button = styled.button`
 export const Modal = ({
   children,
   renderProp,
+  width = "unset",
 }: {
   children: ReactNode;
   renderProp: () => ReactNode;
+  width?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,6 +43,7 @@ export const Modal = ({
           document.body
         )}
       <button
+        style={{ width }}
         onClick={() => {
           setIsOpen(true);
           document.body.style.overflow = "hidden";
