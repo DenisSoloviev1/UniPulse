@@ -113,14 +113,15 @@ export const useSendForm = () => {
 
 type FlexInputProps = {
   title: string;
+  rows?: number;
 } & InputHTMLAttributes<HTMLTextAreaElement>;
 
-const FlexInput: React.FC<FlexInputProps> = ({ title, ...props }) => {
+const FlexInput: React.FC<FlexInputProps> = ({ rows = 1, title, ...props }) => {
   return (
     <Flex>
       <PlainTitle>{title}</PlainTitle>
       <Container $border={16} $width={isMobile ? "100%" : "50%"}>
-        <Textarea rows={1} {...props} />
+        <Textarea rows={rows} {...props} />
       </Container>
     </Flex>
   );
@@ -161,6 +162,7 @@ export const CreatNotif = () => {
       <FlexInput title="Название" onChange={(e) => setTitle(e.target.value)} />
       <FlexInput
         title="Текст"
+        rows={10}
         onChange={(e) => setDescription(e.target.value)}
       />
 
