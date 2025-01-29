@@ -24,7 +24,11 @@ const Push = () => {
                 <Skeleton key={index} $height="150px" />
               ))
             ) : (
-              <NotifList role={RolesDict.MEDIA} initialNotifs={pushNotifs} />
+              <NotifList
+                hasFilters={false}
+                role={RolesDict.MEDIA}
+                initialNotifs={pushNotifs}
+              />
             )}
           </Slider>
         </ModalContent>

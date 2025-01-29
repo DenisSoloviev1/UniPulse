@@ -13,11 +13,13 @@ const MOCK_SORTS = ["Сначала новые", "Сначала старые"];
 interface NotifListProps {
   initialNotifs: INotif[];
   role: Roles;
+  hasFilters?: boolean;
 }
 
 export const NotifList: React.FC<NotifListProps> = ({
   initialNotifs,
   role,
+  hasFilters = true,
 }) => {
   const { filteredArr, setGroupId, setSort } = useFilters(initialNotifs);
 
@@ -34,32 +36,34 @@ export const NotifList: React.FC<NotifListProps> = ({
   return (
     <article style={{ width: "100%" }}>
       <Flex $gap={10}>
-        <WrapperFilters>
-          <StyledSelect
-            onChange={(e) => {
-              setGroupId(e.target.value as number);
-            }}
-            defaultValue={1} // 1 это айди для группы все
-          >
-            {subscriptedTags.map(({ id, name }) => (
-              <StyledMenuItem key={name + "_" + id} value={id}>
-                {name}
-              </StyledMenuItem>
-            ))}
-          </StyledSelect>
-          <StyledSelect
-            onChange={(e) =>
-              setSort((e.target.value as number) === 0 ? "desc" : "asc")
-            }
-            defaultValue={0}
-          >
-            {MOCK_SORTS.map((sortElem, i) => (
-              <StyledMenuItem key={sortElem + i} value={i}>
-                {sortElem}
-              </StyledMenuItem>
-            ))}
-          </StyledSelect>
-        </WrapperFilters>
+        {hasFilters && (
+          <WrapperFilters>
+            <StyledSelect
+              onChange={(e) => {
+                setGroupId(e.target.value as number);
+              }}
+              defaultValue={1} // 1 это айди для группы все
+            >
+              {subscriptedTags.map(({ id, name }) => (
+                <StyledMenuItem key={name + "_" + id} value={id}>
+                  {name}
+                </StyledMenuItem>
+              ))}
+            </StyledSelect>
+            <StyledSelect
+              onChange={(e) =>
+                setSort((e.target.value as number) === 0 ? "desc" : "asc")
+              }
+              defaultValue={0}
+            >
+              {MOCK_SORTS.map((sortElem, i) => (
+                <StyledMenuItem key={sortElem + i} value={i}>
+                  {sortElem}
+                </StyledMenuItem>
+              ))}
+            </StyledSelect>
+          </WrapperFilters>
+        )}
 
         {!!initialNotifs.length &&
           filteredArr.map((notifItem, i) => (
