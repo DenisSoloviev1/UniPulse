@@ -130,7 +130,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+    @media screen and (min-width: 1321px) {
+      padding: 20px 0;
+    }
   }
 }
