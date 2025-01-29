@@ -58,7 +58,7 @@ export const MyNotif = () => {
   }, [addTelegram, isAuth, userId]); // не пон зачем это и что делает
   // мне кажется эта функция должна вызываться где-то выше
 
-  const telegramLink = `https://t.me/unipulse_dstu_bot?start=${user.eduCode}`
+  const telegramLink = `https://t.me/unipulse_dstu_bot?start=${user.eduCode}`;
 
   return (
     <>

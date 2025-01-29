@@ -41,7 +41,6 @@ export const Modal = ({
           document.body
         )}
       <button
-        style={{ width: "100%" }}
         onClick={() => {
           setIsOpen(true);
           document.body.style.overflow = "hidden";
