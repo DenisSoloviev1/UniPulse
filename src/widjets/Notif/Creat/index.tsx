@@ -133,9 +133,9 @@ export const CreatNotif = () => {
   const [tagName, setTagName] = useState("");
 
   const { role } = useAuthStore();
-  const { isLoadingTags } = useFetchTags();
+  const { data: tags, isLoadingTags } = useFetchTags();
 
-  const { tags } = useTagStore();
+  // const { tags } = useTagStore();
 
   const {
     error,
@@ -175,9 +175,10 @@ export const CreatNotif = () => {
         <PlainTitle>Получатели</PlainTitle>
         <Flex $direction={"row"} $align={"center"} $gap={10}>
           <TagList initialTags={selectedTags} />
+
           <Modal
             renderProp={() => (
-              <ModalContent>
+              <ModalContent onClick={(e) => e.stopPropagation()}>
                 {isSuccess ? (
                   <ComplitedSvg />
                 ) : (
@@ -239,7 +240,11 @@ export const CreatNotif = () => {
               </ModalContent>
             )}
           >
-            <CustomButton type="button" $style="blue">
+            <CustomButton
+              type="button"
+              $style="blue"
+              onClick={(e) => e.preventDefault()}
+            >
               <Plus />
             </CustomButton>
           </Modal>

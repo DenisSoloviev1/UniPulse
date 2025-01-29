@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getTags, useTagStore } from "../../entities/tag";
+import { getTags, ITag, useTagStore } from "../../entities/tag";
 
 export const useFetchTags = () => {
   const [isLoadingTags, setIsLoadingTags] = useState(false);
-
+  const [data, setData] = useState<ITag[]>([])
   const { setTags } = useTagStore();
 
   useEffect(() => {
@@ -11,8 +11,8 @@ export const useFetchTags = () => {
       setIsLoadingTags(true);
       try {
         const responseData = await getTags();
+        setData(responseData)
         setTags(responseData);
-        // console.log("Загруженные теги:", responseData);
       } catch (error) {
         console.error("Ошибка загрузки тегов:", error);
       } finally {
@@ -23,5 +23,5 @@ export const useFetchTags = () => {
     fetchTags();
   }, [setTags]);
 
-  return { isLoadingTags };
+  return { isLoadingTags, data };
 };
