@@ -23,7 +23,7 @@ export const Subscription: React.FC<ISubscription> = ({
     <SubscriptionContainer id={`${id}`}>
       <Modal
         renderProp={() => (
-          <ModalContent $height="120px">
+          <ModalContent onClick={(e) => e.stopPropagation()} $height="120px">
             {subscriptable ? (
               <>
                 <p>

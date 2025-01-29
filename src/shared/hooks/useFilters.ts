@@ -6,7 +6,7 @@ export type SortType = 'desc' | 'asc';
 export const useFilters = (arr: INotif[]) => {
     const [groupId, setGroupId] = useState(1);
     const [sort, setSort] = useState<SortType>('desc'); 
-    const [filteredArr, setFilteredArr] = useState<INotif[]>([]);
+    const [filteredArr, setFilteredArr] = useState<INotif[]>([]);    
     const [initializedSort, setInitializedSort] = useState(false);
 
     // Функция для фильтрации массива по groupId

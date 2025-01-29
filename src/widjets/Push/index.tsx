@@ -15,7 +15,7 @@ const Push = () => {
   return (
     <Modal
       renderProp={() => (
-        <ModalContent>
+        <ModalContent onClick={(e) => e.stopPropagation()}>
           <PlainTitle>Неподтвержденные пульсы</PlainTitle>
 
           <Slider $padding={5}>
