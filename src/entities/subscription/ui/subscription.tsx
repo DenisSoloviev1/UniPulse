@@ -23,7 +23,7 @@ export const Subscription: React.FC<ISubscription> = ({
     <SubscriptionContainer id={`${id}`}>
       <Modal
         renderProp={() => (
-          <ModalContent>
+          <ModalContent $height="120px">
             {subscriptable ? (
               <>
                 <p>

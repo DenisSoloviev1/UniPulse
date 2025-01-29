@@ -20,7 +20,7 @@ export const ModalContent = styled.div<{
   $position?: string[];
 }>`
   width: ${(props) => (props.$width ? props.$width : `450px`)};
-  height: ${(props) => (props.$height ? props.$height : `490px`)};
+  height: ${(props) => (props.$height || `490px`)};
   display: flex;
   flex-direction: column;
   align-items: center;
