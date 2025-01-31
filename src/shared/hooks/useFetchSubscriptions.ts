@@ -12,7 +12,7 @@ export const useFetchSubscriptions = () => {
             setIsLoading(true)
             const responseData = await getSubscriptions();
             setSubscriptions(responseData);
-            console.log('Сабки прошли')
+            // console.log('Сабки прошли')
         } catch (error) {
             setIsError(true);
             console.error("Ошибка загрузки подписок:", error);

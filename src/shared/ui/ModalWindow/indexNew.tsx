@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
@@ -14,6 +14,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   text-align: left;
+  cursor: auto;
 `;
 
 export const Modal = ({
@@ -25,17 +26,35 @@ export const Modal = ({
   renderProp: () => ReactNode;
   width?: string;
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpenRef = useRef(false);
+
+  useEffect(() => {
+    if (isOpenRef.current) {
+      document.documentElement.style.overflow = "hidden";
+    }
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [isOpenRef.current]);
+
+  const openModal = () => {
+    isOpenRef.current = true;
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    isOpenRef.current = false;
+    document.body.style.overflow = "unset";
+  };
 
   return (
     <>
-      {isOpen &&
+      {isOpenRef.current &&
         createPortal(
           <Button
             onClick={(e) => {
               e.stopPropagation();
-              setIsOpen(false);
-              document.body.style.overflow = "unset";
+              closeModal();
             }}
           >
             {renderProp()}
@@ -45,8 +64,7 @@ export const Modal = ({
       <button
         style={{ width }}
         onClick={() => {
-          setIsOpen(true);
-          document.body.style.overflow = "hidden";
+          openModal();
         }}
       >
         {children}

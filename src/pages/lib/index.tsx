@@ -71,7 +71,7 @@ export const privateRoutes: IPrivateRoute[] = [
     ),
     isPublic: false,
     roles: [
-      // RolesDict.ADMIN,
+      RolesDict.ADMIN,
       RolesDict.MEDIA,
       RolesDict.CREATOR,
       RolesDict.USER,
@@ -85,10 +85,19 @@ export const privateRoutes: IPrivateRoute[] = [
     ),
     isPublic: true,
     roles: [
-      // RolesDict.ADMIN,
+      RolesDict.ADMIN,
       RolesDict.MEDIA,
       RolesDict.CREATOR,
       RolesDict.USER,
     ],
+  },
+  {
+    id: 6,
+    path: Routes.ADMIN,
+    component: lazy(() =>
+      import("../Admin").then((module) => ({ default: module.Admin }))
+    ),
+    isPublic: false,
+    roles: [RolesDict.ADMIN],
   },
 ];

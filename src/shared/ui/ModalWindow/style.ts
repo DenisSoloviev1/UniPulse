@@ -17,10 +17,13 @@ export const Modal = styled.div`
 export const ModalContent = styled.div<{
   $width?: string;
   $height?: string;
+  $minHeight?: string;
   $position?: string[];
+  $maxHeight?: string;
 }>`
   width: ${(props) => (props.$width ? props.$width : `450px`)};
   height: ${(props) => (props.$height || `490px`)};
+  min-height: ${(props) => (props.$minHeight || "unset")};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,7 +34,10 @@ export const ModalContent = styled.div<{
   border: 1px solid var(--color-font-disable);
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
   position: ${(props) => (props.$position ? `absolute` : `relative`)};
-  z-index: 4;
+  z-index: 100;
+  overflow-x: scroll;
+  max-height: ${(props) => (props.$maxHeight || 'unset')};
+
 
   ${(props) => {
     const [top, left, bottom, right] = props.$position || [];

@@ -19,6 +19,7 @@ export enum Routes {
   ADDNOTIF = "/addNotif",
   MYNOTIF = "/myNotif",
   ADDCHANNEL = "/addChannel/:platform",
+  ADMIN = "/admin",
 }
 
 // roles
@@ -36,6 +37,7 @@ export interface IPrivateRoute {
   id: number;
   path: string;
   isPublic: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: LazyExoticComponent<React.FC<any>>; 
   // по возможности не стоит использовать any никогда лучше используй unknown
   // но и то и то на моей практике используется когда не справились с ts

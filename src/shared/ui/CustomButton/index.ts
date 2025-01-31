@@ -2,8 +2,9 @@ import styled from "styled-components";
 import "../../variables.scss";
 
 export const CustomButton = styled.button<{
-  $style?: "gray" | "blue" | "close";
+  $style?: "gray" | "blue" | "close" | "red";
   $width?: string;
+  $background?: string;
 }>`
   display: flex;
   width: ${(props) => (props.$width ? `${props.$width}` : ``)};
@@ -32,8 +33,9 @@ export const CustomButton = styled.button<{
     props.$style === "blue" &&
     `
       color: var(--color-background);
-      background-color: var(--color-action);
+      background-color:  var(--color-action);
       border: 2px solid var(--color-action);
+      z-index: 10;
 
       svg {
         fill: var(--color-background);
@@ -41,6 +43,23 @@ export const CustomButton = styled.button<{
 
       &:hover {
         background-color: #167ff6;
+      }
+  `}
+
+${(props) =>
+    props.$style === "red" &&
+    `
+      color: var(--color-background);
+      background-color:  var(--color-delete);
+      border: 2px solid var(--color-delete);
+      z-index: 10;
+
+      svg {
+        fill: var(--color-background);
+      }
+
+      &:hover {
+        background-color:rgb(253, 137, 137);
       }
   `}
 
