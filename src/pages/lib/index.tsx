@@ -98,6 +98,6 @@ export const privateRoutes: IPrivateRoute[] = [
       import("../Admin").then((module) => ({ default: module.Admin }))
     ),
     isPublic: false,
-    roles: [RolesDict.ADMIN, RolesDict.MEDIA],
+    roles: [RolesDict.ADMIN],
   },
 ];

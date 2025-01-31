@@ -7,10 +7,13 @@ interface SearchInputProps {
   setSearchQuery: (query: string) => void;
 }
 
-const StyledTextField = styled(TextField)<TextFieldProps>`
+export const StyledTextField = styled(TextField)<TextFieldProps>`
   && {
     background-color: var(--color-background-container);
     font-family: "Golos Text", sans-serif;
+    position: sticky;
+    top: 0;
+    margin: 20px 0 0 0;
   }
   && .MuiInputBase-root {
     border-radius: 16px;

@@ -37,6 +37,15 @@ export const NavItems: INav[] = [
     ],
   },
   {
+    id: 3,
+    path: Routes.ADMIN,
+    label: "Админка",
+    svg: ExitSvg,
+    allowedRoles: [
+      RolesDict.ADMIN,
+    ],
+  },
+  {
     id: 2,
     path: Routes.AUTH,
     label: "Выйти",

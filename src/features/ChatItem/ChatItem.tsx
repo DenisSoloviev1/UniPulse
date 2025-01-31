@@ -1,4 +1,5 @@
-import React from "react";
+// src/features/admin/components/ChatItem.tsx
+import React, { useCallback, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -10,116 +11,164 @@ import {
 import { IChat } from "../../entities/admin/model";
 import { ModalContent } from "../../shared/ui/ModalWindow/style";
 import { Modal } from "../../shared/ui/ModalWindow/indexNew";
-import { Plus } from "../../shared/ui/Icon";
+import { Pen } from "../../shared/ui/Icon";
 import { CustomButton, Flex } from "../../shared/ui";
 import styled from "styled-components";
-import { useChats } from "../../shared/hooks/useChats";
+import useChatStore from "../admin/store/chatStore";
+import { StyledTextField } from "../SearchInput/SearchInput";
+import { deleteChat, editMainChat } from "../../entities/admin/api";
+import { ChildrenChatItem } from "./childrenChatItem";
+
+export const ChatLabel = styled.div`
+  padding: 10px;
+  box-shadow: 0 0 5px 1px #adb5bd;
+  border-radius: 10px;
+  width: 100%;
+  background-color: var(--color-background-container);
+`;
 
 interface ChatItemProps {
-  chat: IChat & { secondaryChats: IChat[] };
-  selectedChats: number[];
-  handleCheckboxChange: (chatId: number) => void;
+  chat: IChat;
 }
 
 const StyledAccordio = styled(Accordion)<AccordionProps>`
   width: 100%;
 `;
 
-export const ChatItem: React.FC<ChatItemProps> = ({
-  chat,
-  selectedChats,
-  handleCheckboxChange,
-}) => {
-  const [expanded, setExpanded] = React.useState(false);
+export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
+  const { allChats } = useChatStore();
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const { allChats } = useChats();
+  const filteredChats = allChats.filter((chat) =>
+    chat.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
+  );
 
-  const handleAccordionChange = (isExpanded: boolean) => {
-    setExpanded(isExpanded);
-    if (isExpanded && chat.is_main && !selectedChats.includes(chat.chat_id)) {
-      handleCheckboxChange(chat.chat_id);
-    } else if (
-      !isExpanded &&
-      chat.is_main &&
-      selectedChats.includes(chat.chat_id)
-    ) {
-      handleCheckboxChange(chat.chat_id);
-    }
+  const secondChats = useChatStore().getSecondChats(chat.chats);
+
+  const [selectedChatsId, setSelectedChatsId] = useState<number[]>(
+    secondChats.map((el) => el.chat_id)
+  );
+
+  const handleChange = useCallback((id: number, checked: boolean) => {
+    setSelectedChatsId((prev) => {
+      if (checked) {
+        return [...prev, id];
+      } else {
+        return prev.filter((ChatId) => ChatId !== id);
+      }
+    });
+  }, []);
+
+  const handleSaveConfigChat = async () => {
+    await editMainChat(chat.chat_id, selectedChatsId);
   };
 
-  const handleSecondaryChatChange = (secondaryChat: IChat) => {
-    handleCheckboxChange(secondaryChat.chat_id);
+  const handleDeleteSettingsChat = async () => {
+    await deleteChat(chat.chat_id);
   };
 
   return (
-    <StyledAccordio
-      expanded={expanded}
-      onChange={(_, isExpanded) => handleAccordionChange(isExpanded)}
-    >
-      <AccordionSummary>
-        <Flex
-          $width="100%"
-          $direction="row"
-          $justify="space-between"
-          $align="center"
-        >
-          {chat.name}
-          <Modal
-            renderProp={() => (
-              <ModalContent onClick={(e) => e.stopPropagation()}>
-                <h3>Выбор всех чатов</h3>
-                <Flex $direction="column" $gap={10}>
-                  {allChats.map((chat) => (
-                    <div key={chat.chat_id}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={selectedChats.includes(chat.chat_id)}
-                            onChange={() => handleCheckboxChange(chat.chat_id)}
-                          />
-                        }
-                        label={chat.name}
-                      />
-                    </div>
-                  ))}
-                </Flex>
-              </ModalContent>
-            )}
+    <Flex $width="100%" $align="center" $gap={10} $direction="row">
+      <StyledAccordio onClick={(e) => e.stopPropagation()}>
+        <AccordionSummary onClick={(e) => e.stopPropagation()}>
+          <Flex
+            $width="100%"
+            $direction="row"
+            $justify="space-between"
+            $align="center"
           >
-            <CustomButton $style="blue">
-              <Plus />
-            </CustomButton>
-          </Modal>
-        </Flex>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Flex $direction="column" $gap={15}>
-          {chat.is_main ? (
-            chat.secondaryChats.map((secondaryChat) => (
-              <FormControlLabel
-                key={secondaryChat.chat_id}
-                control={
-                  <Checkbox
-                    checked={selectedChats.includes(secondaryChat.chat_id)}
-                    onChange={() => handleSecondaryChatChange(secondaryChat)}
-                  />
-                }
-                label={secondaryChat.name}
-              />
-            ))
-          ) : (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={selectedChats.includes(chat.chat_id)}
-                  onChange={() => handleCheckboxChange(chat.chat_id)}
-                />
-              }
-              label={chat.name}
+            {chat.name}
+          </Flex>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Flex $direction="column" $padding="10px" $gap={15}>
+            {secondChats?.map((secondaryChat, i) => (
+              <ChatLabel key={i + "_label_" + chat.chat_id}>
+                {secondaryChat.name}
+              </ChatLabel>
+            ))}
+          </Flex>
+        </AccordionDetails>
+      </StyledAccordio>
+      <Modal
+        renderProp={() => (
+          <ModalContent
+            $position={["relative"]}
+            $height="auto"
+            $max-height="700px"
+            $width="70%"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Настройка чата: {chat.name}</h3>
+            <StyledAccordio>
+              <AccordionSummary>
+                <h3>Добавленные чаты:</h3>
+              </AccordionSummary>
+              <AccordionDetails>
+                {secondChats.map((chat) => (
+                  <Flex
+                    key={chat.chat_id + "__"}
+                    $overflow="overlay"
+                    $direction="column"
+                    $width="90%"
+                    $gap={10}
+                    $padding="10px"
+                  >
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked={true}
+                          checked={selectedChatsId.includes(chat.chat_id)}
+                          onChange={(e) =>
+                            handleChange(chat.chat_id, e.target.checked)
+                          }
+                        />
+                      }
+                      label={chat.name}
+                    />
+                  </Flex>
+                ))}
+              </AccordionDetails>
+            </StyledAccordio>
+            <StyledTextField
+              label="Поиск чатов"
+              variant="outlined"
+              fullWidth
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-          )}
-        </Flex>
-      </AccordionDetails>
-    </StyledAccordio>
+            <h3>Выбор всех чатов </h3>
+            <Flex
+              $overflow="overlay"
+              $direction="column"
+              $width="90%"
+              $gap={10}
+              $padding="10px"
+            >
+              {filteredChats.map((chat) => (
+                <ChildrenChatItem
+                  key={chat.chat_id}
+                  handleChange={handleChange}
+                  selectedChatsId={selectedChatsId}
+                  {...chat}
+                />
+              ))}
+            </Flex>
+            <Flex $direction="row" $width="100%" $gap={50} $justify="center">
+              <CustomButton onClick={handleDeleteSettingsChat} $style="red">
+                Сбросить настройки
+              </CustomButton>
+              <CustomButton onClick={handleSaveConfigChat} $style="blue">
+                Сохранить
+              </CustomButton>
+            </Flex>
+          </ModalContent>
+        )}
+      >
+        <CustomButton $style="blue">
+          <Pen />
+        </CustomButton>
+      </Modal>
+    </Flex>
   );
 };
