@@ -50,34 +50,39 @@ export const Admin = () => {
         <>
           <Modal
             renderProp={(setIsOpen) => (
-              <ModalContent $height="auto" onClick={(e) => e.stopPropagation()}>
+              <ModalContent
+                $height="auto"
+                $maxHeight="800px"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <h3>Список всех чатов</h3>
                 <Flex
                   $width="100%"
                   $align="center"
                   $direction="column"
                   $gap={10}
+                  $overflow="hidden"
                 >
                   <SearchInput
                     searchQuery={searchQueryInModal}
-                    setSearchQuery={(query: string) =>
-                      setSearchQueryInModal(query)
-                    }
+                    setSearchQuery={setSearchQueryInModal}
                   />
-                  {filteredChats.length > 0 &&
-                    filteredChats.map((chat) => (
-                      <CustomButton
-                        $style="blue"
-                        key={"btn_" + chat.chat_id}
-                        $width="70%"
-                        onClick={() => {
-                          handleToggleChatToMain(chat.chat_id);
-                          setIsOpen((prev) => !prev);
-                        }}
-                      >
-                        {chat.name}
-                      </CustomButton>
-                    ))}
+                  <Flex $width="100%" $align="center">
+                    {filteredChats.length > 0 &&
+                      filteredChats.map((chat) => (
+                        <CustomButton
+                          $style="blue"
+                          key={"btn_" + chat.chat_id}
+                          $width="70%"
+                          onClick={() => {
+                            handleToggleChatToMain(chat.chat_id);
+                            setIsOpen((prev) => !prev);
+                          }}
+                        >
+                          {chat.name}
+                        </CustomButton>
+                      ))}
+                  </Flex>
                 </Flex>
               </ModalContent>
             )}

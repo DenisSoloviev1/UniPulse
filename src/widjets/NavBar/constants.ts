@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Routes, RolesDict } from "../../shared/types";
-import { CreateSvg, ProfileSvg, ExitSvg } from "../../shared/ui/Icon";
+import { CreateSvg, ProfileSvg, ExitSvg, AdminSvg } from "../../shared/ui/Icon";
 
 export interface INav {
   id: number;
@@ -40,7 +40,7 @@ export const NavItems: INav[] = [
     id: 3,
     path: Routes.ADMIN,
     label: "Админка",
-    svg: ExitSvg,
+    svg: AdminSvg,
     allowedRoles: [
       RolesDict.ADMIN,
     ],

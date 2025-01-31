@@ -35,7 +35,7 @@ export const ModalContent = styled.div<{
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
   position: ${(props) => (props.$position ? `absolute` : `relative`)};
   z-index: 100;
-  overflow-x: scroll;
+  overflow-x: hidden;
   max-height: ${(props) => (props.$maxHeight || 'unset')};
 
 
@@ -51,5 +51,6 @@ export const ModalContent = styled.div<{
 
   @media screen and (max-width: 551px) {
   width: ${(props) => (props.$width ? props.$width : `90%`)};
+  padding: 8px;
   }
 `;

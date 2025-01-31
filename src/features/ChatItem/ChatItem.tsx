@@ -10,7 +10,13 @@ import {
 import { IChat } from "../../entities/admin/model";
 import { ModalContent } from "../../shared/ui/ModalWindow/style";
 import { Modal } from "../../shared/ui/ModalWindow/indexNew";
-import { ComplitedSvg, NotFoundSvg, Pen } from "../../shared/ui/Icon";
+import {
+  ComplitedSvg,
+  FileSvg,
+  NotFoundSvg,
+  Pen,
+  Reset,
+} from "../../shared/ui/Icon";
 import { CustomButton, Flex } from "../../shared/ui";
 import styled from "styled-components";
 import useChatStore from "../admin/store/chatStore";
@@ -18,6 +24,7 @@ import { SearchInput } from "../SearchInput/SearchInput";
 import { deleteChat, editMainChat } from "../../entities/admin/api";
 import { ChildrenChatItem } from "./childrenChatItem";
 import { toast } from "react-toastify";
+import { useIsMobile } from "../../shared/hooks/useIsMobile";
 
 export const ChatLabel = styled.div`
   padding: 10px;
@@ -38,6 +45,7 @@ const StyledAccordio = styled(Accordion)<AccordionProps>`
 export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
   const { allChats, loadChats } = useChatStore();
   const [searchQuery, setSearchQuery] = useState("");
+  const { isMobile } = useIsMobile();
 
   const notify = (isSuccesse: boolean) =>
     toast(
@@ -112,7 +120,6 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
       <Modal
         renderProp={(setIsOpen) => (
           <ModalContent
-            $position={["relative"]}
             $height="800px"
             $width="70%"
             onClick={(e) => e.stopPropagation()}
@@ -169,7 +176,14 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
                 />
               ))}
             </Flex>
-            <Flex $direction="row" $width="100%" $gap={50} $justify="center">
+            <Flex
+              $direction="row"
+              $width="100%"
+              $gap={isMobile ? 20 : 50}
+              $justify="center"
+              $align="center"
+              $height={isMobile ? "64px" : "unset"}
+            >
               <CustomButton
                 onClick={() => {
                   handleDeleteSettingsChat();
@@ -177,7 +191,7 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
                 }}
                 $style="red"
               >
-                Сбросить настройки
+                {isMobile ? <Reset /> : "Сбросить настройки "}
               </CustomButton>
               <CustomButton
                 onClick={() => {
@@ -186,7 +200,11 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
                 }}
                 $style="blue"
               >
-                Сохранить
+                {isMobile ? (
+                  <FileSvg color="#fff" height="24" width="24" />
+                ) : (
+                  "Сохранить"
+                )}
               </CustomButton>
             </Flex>
           </ModalContent>
