@@ -9,13 +9,7 @@ import {
 } from "../../shared/ui";
 import { NotifList } from "../../entities/notification";
 import { SubscriptionList } from "../../entities/subscription";
-import {
-  Cat,
-  ComplitedSvg,
-  Plus,
-  TelegramSvg,
-  VKSvg,
-} from "../../shared/ui/Icon";
+import { Cat, Plus, TelegramSvg, VKSvg } from "../../shared/ui/Icon";
 import { useAuthStore } from "../../entities/auth";
 import { RolesDict } from "../../shared/types";
 import { useFetchNotifs } from "../../shared/hooks/useFetchNotifs";
@@ -23,11 +17,11 @@ import { useAddTelegram } from "../../shared/hooks/useAddTelegram";
 import { useFetchSubscriptions } from "../../shared/hooks/useFetchSubscriptions";
 import { Modal } from "../../shared/ui/ModalWindow/indexNew";
 import { TagList } from "../../entities/tag";
-import { Error } from "../../widjets/Notif/style";
 import { useSubscribeToTag } from "../../shared/hooks/useSubscribeToTag";
 import { useFetchSubscriptionToTags } from "../../shared/hooks/useFetchSubscriptionToTags";
 import { ModalContent } from "../../shared/ui/ModalWindow/style";
 import { SocialWeb } from "../style";
+import { toast } from "react-toastify";
 
 export const MyNotif = () => {
   const { userId, isAuth, user } = useAuthStore(); // Используем стор для получения userId
@@ -58,6 +52,15 @@ export const MyNotif = () => {
 
   const telegramLink = `https://t.me/unipulse_dstu_bot?start=${user.eduCode}`;
 
+  if (error) {
+    toast.error(error);
+  }
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(isSuccess);
+    }
+  }, [isSuccess]);
+
   return (
     <>
       <Flex $gap={20}>
@@ -82,44 +85,38 @@ export const MyNotif = () => {
             <SubscriptionList />
 
             <Modal
-              renderProp={() =>
-                isSuccess ? (
-                  <ComplitedSvg />
-                ) : (
-                  <ModalContent onClick={(e) => e.stopPropagation()}>
-                    <Flex $width={"100%"}>
-                      <PlainTitle>Доступные теги</PlainTitle>
-                      <Slider $wrap={true}>
-                        {isLoadingTags ? (
-                          Array.from({ length: 7 }).map((_, index) => (
-                            <Skeleton key={index} $width="125px" />
-                          ))
-                        ) : (
-                          <TagList initialTags={subscriptionToTags} />
-                        )}
-                      </Slider>
-                    </Flex>
+              renderProp={() => (
+                <ModalContent onClick={(e) => e.stopPropagation()}>
+                  <Flex $width={"100%"}>
+                    <PlainTitle>Доступные теги</PlainTitle>
+                    <Slider $wrap={true}>
+                      {isLoadingTags ? (
+                        Array.from({ length: 7 }).map((_, index) => (
+                          <Skeleton key={index} $width="125px" />
+                        ))
+                      ) : (
+                        <TagList initialTags={subscriptionToTags} />
+                      )}
+                    </Slider>
+                  </Flex>
 
-                    <Cat />
+                  <Cat />
 
-                    <Flex $align={"center"} $width={"100%"}>
-                      <CustomButton
-                        onClick={handleSubscriptionTag}
-                        $style={"blue"}
-                        $width={"70%"}
-                      >
-                        {isLoadingNotifs ? (
-                          <Loader size={"23px"} />
-                        ) : (
-                          "Подписаться"
-                        )}
-                      </CustomButton>
-
-                      {error && <Error>{error}</Error>}
-                    </Flex>
-                  </ModalContent>
-                )
-              }
+                  <Flex $align={"center"} $width={"100%"}>
+                    <CustomButton
+                      onClick={handleSubscriptionTag}
+                      $style={"blue"}
+                      $width={"70%"}
+                    >
+                      {isLoadingNotifs ? (
+                        <Loader size={"23px"} />
+                      ) : (
+                        "Подписаться"
+                      )}
+                    </CustomButton>
+                  </Flex>
+                </ModalContent>
+              )}
             >
               <CustomButton type={"button"} $style={"blue"}>
                 <Plus />

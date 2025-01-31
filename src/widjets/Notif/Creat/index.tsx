@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes, useState } from "react";
-import { Error, Form, Textarea } from "../style.ts";
+import { Form, Textarea } from "../style.ts";
 import {
   Container,
   Flex,
@@ -157,6 +157,12 @@ export const CreatNotif = () => {
     isSuccess,
   } = useCreateTag(description, tagName);
 
+  if (error) {
+    toast.error(error);
+  }
+  if (errorCreatTag) {
+    toast.error(errorCreatTag);
+  }
   return (
     <Form onSubmit={handleCreat}>
       <FlexInput title="Название" onChange={(e) => setTitle(e.target.value)} />
@@ -230,8 +236,6 @@ export const CreatNotif = () => {
                               "Создать"
                             )}
                           </CustomButton>
-
-                          {errorCreatTag && <Error>{errorCreatTag}</Error>}
                         </Flex>
                       </Flex>
                     )}
@@ -268,8 +272,6 @@ export const CreatNotif = () => {
             {isLoading ? <Loader size={"23px"} /> : <Arrow />}
           </CustomButton>
         </Flex>
-
-        {error && <Error>{error}</Error>}
       </Flex>
     </Form>
   );

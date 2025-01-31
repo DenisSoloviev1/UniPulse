@@ -5,6 +5,7 @@ import { formatDate } from "../../../shared/config";
 import { CustomButton, Flex, Loader, ShowFile } from "../../../shared/ui";
 import { Error, TextMore, Title } from "../style.ts";
 import { Arrow } from "../../../shared/ui/Icon/index.tsx";
+import { toast } from "react-toastify";
 
 interface SubmitNotifProps {
   notifData: INotif;
@@ -49,6 +50,9 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
     }
   };
 
+  if (error) {
+    toast.error(error);
+  }
   return (
     <>
       <Flex $width={"100%"} $gap={10}>
@@ -83,7 +87,7 @@ export const SubmitNotif: React.FC<SubmitNotifProps> = ({ notifData }) => {
         {error && <Error>{error}</Error>}
       </Flex>
 
-      {/* <ModпппппalWindow show={isComplited} onClick={() => closeModal("Complited")}>
+      {/* <ModalWindow show={isComplited} onClick={() => closeModal("Complited")}>
         <ComplitedSvg />
       </ModalWindow> */}
     </>

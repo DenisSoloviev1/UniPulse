@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Error, Form, Textarea } from "../style.ts";
+import { Form, Textarea } from "../style.ts";
 import {
   Container,
   Flex,
@@ -121,6 +121,9 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
     }
   };
 
+  if (error) {
+    toast.error(error);
+  }
   return (
     <Form onSubmit={handleEdit}>
       <Flex>
@@ -179,8 +182,6 @@ export const EditNotif: React.FC<EditNotifProps> = ({ notifData }) => {
             {isLoading ? <Loader size={"23px"} /> : <Arrow />}
           </CustomButton>
         </Flex>
-
-        {error && <Error>{error}</Error>}
       </Flex>
     </Form>
   );

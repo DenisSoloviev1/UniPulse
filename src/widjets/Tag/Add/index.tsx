@@ -11,12 +11,12 @@ import {
 import { TagList } from "../../../entities/tag";
 import { ComplitedSvg } from "../../../shared/ui/Icon";
 import { useTagStore } from "../../../entities/tag";
-import { Error } from "../../Notif/style";
 import { useAuthStore } from "../../../entities/auth";
 import { RolesDict } from "../../../shared/types";
 import { useFetchTags } from "../../../shared/hooks/useFetchTags";
 import { InputText } from "../../../shared/ui/InputText/InputText";
 import { useCreateTag } from "../../../shared/hooks/useCreateTag";
+import { toast } from "react-toastify";
 
 export const AddTag = () => {
   const [tagName, setTagName] = useState("");
@@ -33,8 +33,8 @@ export const AddTag = () => {
   );
 
   const [show, setShow] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(!!error);
 
+  toast.error(error);
   return (
     <ModalWindow show={show} onClick={() => setShow(false)}>
       {isSuccess ? (
@@ -84,18 +84,6 @@ export const AddTag = () => {
                 >
                   {isLoading ? <Loader size={"23px"} /> : "Создать"}
                 </CustomButton>
-
-                {error && (
-                  <ModalWindow
-                    onClick={() => setIsError(false)}
-                    show={isError}
-                    position={["", "", "30px", ""]}
-                    width={"250px"}
-                    height={"auto"}
-                  >
-                    <Error>{error}</Error>
-                  </ModalWindow>
-                )}
               </Flex>
             </Flex>
           )}
