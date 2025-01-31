@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 interface SearchInputProps {
   searchQuery: string;
-  setSearchQuery: (query: string) => void;
+  setSearchQuery: (value: string) => void;
 }
 
 export const StyledTextField = styled(TextField)<TextFieldProps>`
@@ -31,7 +31,15 @@ export const SearchInput: React.FC<SearchInputProps> = ({
       variant="outlined"
       fullWidth
       value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === " ") {
+          e.preventDefault();
+          setSearchQuery(searchQuery + " ");
+        }
+      }}
+      onChange={(e) => {
+        setSearchQuery(e.target.value);
+      }}
     />
   );
 };

@@ -744,12 +744,15 @@ export const WalcomingSvg: React.FC = () => (
   </svg>
 );
 
-export const NotFoundSvg: React.FC = () => (
+export const NotFoundSvg: React.FC<{ width?: string; height?: string }> = ({
+  height,
+  width,
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     data-name="Layer 1"
-    width="1000"
-    height="500"
+    width={width || "1000"}
+    height={height || "500"}
     viewBox="0 0 672.5315 738.39398"
   >
     <path
@@ -984,11 +987,14 @@ export const NotFoundSvg: React.FC = () => (
   </svg>
 );
 
-export const ComplitedSvg: React.FC = () => (
+export const ComplitedSvg: React.FC<{ width?: string; height?: string }> = ({
+  width,
+  height,
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="100%"
-    height="100%"
+    width={width || "100%"}
+    height={height || "100%"}
     viewBox="0 0 717.67004 430.74265"
   >
     <path

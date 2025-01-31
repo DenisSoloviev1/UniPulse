@@ -1,5 +1,3 @@
-// src/features/admin/Admin.tsx
-
 import { useEffect, useMemo, useState } from "react";
 import useChatStore from "../../features/admin/store/chatStore";
 import { CustomButton, Flex, Loader } from "../../shared/ui";
@@ -11,9 +9,9 @@ import { IChat } from "../../entities/admin/model";
 
 export const Admin = () => {
   const {
+    toggleChatToMain: handleToggleChatToMain,
     allChats,
     loadChats,
-    toggleChatToMain: handleToggleChatToMain,
     searchQuery,
     setSearchQuery,
     isLoading,
@@ -26,12 +24,10 @@ export const Admin = () => {
   const [searchQueryInModal, setSearchQueryInModal] = useState("");
 
   const filteredChats = useMemo(() => {
-    const filteredChat = allChats.filter((chat) => !chat.is_main);
-    const res = filteredChat.reduce((acc, chat) => {
+    const res = allChats.reduce((acc, chat) => {
       if (
-        chat.name
-          .toLowerCase()
-          .includes(searchQueryInModal.trim().toLowerCase())
+        !chat.is_main &&
+        chat.name.toLowerCase().includes(searchQueryInModal.toLowerCase())
       ) {
         return [...acc, chat];
       }
@@ -50,36 +46,48 @@ export const Admin = () => {
       style={{ minHeight: "82vh" }}
     >
       <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <Modal
-        renderProp={() => (
-          <ModalContent $height="auto" onClick={(e) => e.stopPropagation()}>
-            <h3>Список всех чатов</h3>
-            <Flex $width="100%" $align="center" $direction="column" $gap={10}>
-              <SearchInput
-                searchQuery={searchQueryInModal}
-                setSearchQuery={setSearchQueryInModal}
-              />
-              {filteredChats.length > 0 &&
-                filteredChats.map((chat) => (
-                  <CustomButton
-                    $style="blue"
-                    key={"btn_" + chat.chat_id}
-                    $width="70%"
-                    onClick={() => {
-                      handleToggleChatToMain(chat.chat_id);
-                    }}
-                  >
-                    {chat.name}
-                  </CustomButton>
-                ))}
-            </Flex>
-          </ModalContent>
-        )}
-      >
-        <CustomButton $style="blue">Выбрать чат</CustomButton>
-      </Modal>
+      {!isLoading && (
+        <>
+          <Modal
+            renderProp={(setIsOpen) => (
+              <ModalContent $height="auto" onClick={(e) => e.stopPropagation()}>
+                <h3>Список всех чатов</h3>
+                <Flex
+                  $width="100%"
+                  $align="center"
+                  $direction="column"
+                  $gap={10}
+                >
+                  <SearchInput
+                    searchQuery={searchQueryInModal}
+                    setSearchQuery={(query: string) =>
+                      setSearchQueryInModal(query)
+                    }
+                  />
+                  {filteredChats.length > 0 &&
+                    filteredChats.map((chat) => (
+                      <CustomButton
+                        $style="blue"
+                        key={"btn_" + chat.chat_id}
+                        $width="70%"
+                        onClick={() => {
+                          handleToggleChatToMain(chat.chat_id);
+                          setIsOpen((prev) => !prev);
+                        }}
+                      >
+                        {chat.name}
+                      </CustomButton>
+                    ))}
+                </Flex>
+              </ModalContent>
+            )}
+          >
+            <CustomButton $style="blue">Выбрать чат</CustomButton>
+          </Modal>
+          <ChatList />
+        </>
+      )}
       {isLoading && <Loader size="" />}
-      {!isLoading && <ChatList />}
     </Flex>
   );
 };

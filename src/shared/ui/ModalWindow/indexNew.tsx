@@ -1,4 +1,10 @@
-import { ReactNode, useEffect, useRef } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
@@ -17,54 +23,61 @@ const Button = styled.button`
   cursor: auto;
 `;
 
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (
+    e.key === " " &&
+    !(
+      e.target instanceof HTMLInputElement ||
+      e.target instanceof HTMLTextAreaElement
+    )
+  ) {
+    e.preventDefault();
+  }
+};
+
 export const Modal = ({
   children,
   renderProp,
   width = "unset",
 }: {
   children: ReactNode;
-  renderProp: () => ReactNode;
+  renderProp: (setIsOpen: Dispatch<SetStateAction<boolean>>) => ReactNode;
   width?: string;
 }) => {
-  const isOpenRef = useRef(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (isOpenRef.current) {
+    if (isOpen) {
       document.documentElement.style.overflow = "hidden";
+      document.addEventListener("keydown", handleKeyDown);
     }
+
     return () => {
       document.documentElement.style.overflow = "";
+      document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpenRef.current]);
-
-  const openModal = () => {
-    isOpenRef.current = true;
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeModal = () => {
-    isOpenRef.current = false;
-    document.body.style.overflow = "unset";
-  };
+  }, [isOpen]);
 
   return (
     <>
-      {isOpenRef.current &&
+      {isOpen &&
         createPortal(
           <Button
             onClick={(e) => {
               e.stopPropagation();
-              closeModal();
+              setIsOpen(false);
+              document.body.style.overflow = "unset";
             }}
           >
-            {renderProp()}
+            {renderProp(setIsOpen)}
           </Button>,
           document.body
         )}
       <button
         style={{ width }}
         onClick={() => {
-          openModal();
+          setIsOpen(true);
+          document.body.style.overflow = "hidden";
         }}
       >
         {children}

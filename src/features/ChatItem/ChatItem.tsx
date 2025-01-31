@@ -1,4 +1,3 @@
-// src/features/admin/components/ChatItem.tsx
 import React, { useCallback, useState } from "react";
 import {
   Accordion,
@@ -11,13 +10,14 @@ import {
 import { IChat } from "../../entities/admin/model";
 import { ModalContent } from "../../shared/ui/ModalWindow/style";
 import { Modal } from "../../shared/ui/ModalWindow/indexNew";
-import { Pen } from "../../shared/ui/Icon";
+import { ComplitedSvg, NotFoundSvg, Pen } from "../../shared/ui/Icon";
 import { CustomButton, Flex } from "../../shared/ui";
 import styled from "styled-components";
 import useChatStore from "../admin/store/chatStore";
-import { StyledTextField } from "../SearchInput/SearchInput";
+import { SearchInput } from "../SearchInput/SearchInput";
 import { deleteChat, editMainChat } from "../../entities/admin/api";
 import { ChildrenChatItem } from "./childrenChatItem";
+import { toast } from "react-toastify";
 
 export const ChatLabel = styled.div`
   padding: 10px;
@@ -36,8 +36,23 @@ const StyledAccordio = styled(Accordion)<AccordionProps>`
 `;
 
 export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
-  const { allChats } = useChatStore();
+  const { allChats, loadChats } = useChatStore();
   const [searchQuery, setSearchQuery] = useState("");
+
+  const notify = (isSuccesse: boolean) =>
+    toast(
+      isSuccesse ? (
+        <>
+          Успешно изменено
+          <ComplitedSvg height="40px" width="40px" />
+        </>
+      ) : (
+        <div>
+          Что-то пошло не так <NotFoundSvg height="40px" width="40px" />
+        </div>
+      ),
+      { style: { width: "250px" } }
+    );
 
   const filteredChats = allChats.filter((chat) =>
     chat.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
@@ -60,11 +75,15 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
   }, []);
 
   const handleSaveConfigChat = async () => {
-    await editMainChat(chat.chat_id, selectedChatsId);
+    const isSuccesse = await editMainChat(chat.chat_id, selectedChatsId);
+    notify(isSuccesse);
+    loadChats();
   };
 
   const handleDeleteSettingsChat = async () => {
-    await deleteChat(chat.chat_id);
+    const isSuccesse = await deleteChat(chat.chat_id);
+    notify(isSuccesse);
+    loadChats();
   };
 
   return (
@@ -91,11 +110,10 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
         </AccordionDetails>
       </StyledAccordio>
       <Modal
-        renderProp={() => (
+        renderProp={(setIsOpen) => (
           <ModalContent
             $position={["relative"]}
-            $height="auto"
-            $max-height="700px"
+            $height="800px"
             $width="70%"
             onClick={(e) => e.stopPropagation()}
           >
@@ -130,12 +148,9 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
                 ))}
               </AccordionDetails>
             </StyledAccordio>
-            <StyledTextField
-              label="Поиск чатов"
-              variant="outlined"
-              fullWidth
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+            <SearchInput
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
             />
             <h3>Выбор всех чатов </h3>
             <Flex
@@ -155,10 +170,22 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
               ))}
             </Flex>
             <Flex $direction="row" $width="100%" $gap={50} $justify="center">
-              <CustomButton onClick={handleDeleteSettingsChat} $style="red">
+              <CustomButton
+                onClick={() => {
+                  handleDeleteSettingsChat();
+                  setIsOpen((prev) => !prev);
+                }}
+                $style="red"
+              >
                 Сбросить настройки
               </CustomButton>
-              <CustomButton onClick={handleSaveConfigChat} $style="blue">
+              <CustomButton
+                onClick={() => {
+                  handleSaveConfigChat();
+                  setIsOpen((prev) => !prev);
+                }}
+                $style="blue"
+              >
                 Сохранить
               </CustomButton>
             </Flex>

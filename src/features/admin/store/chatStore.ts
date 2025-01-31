@@ -25,7 +25,7 @@ type ChatState = {
 const useChatStore = create<ChatState>((set, get) => ({
   chats: [],
   isLoading: false,
-  searchQuery: ' ',
+  searchQuery: '',
   secondChats: [],
   mainChats: [],
   selectedChats: [],
@@ -57,23 +57,7 @@ const useChatStore = create<ChatState>((set, get) => ({
         chat.name.toLowerCase().includes(lowerCaseQuery)
       );
 
-      const foundSecondaryChats = get().allChats.filter(
-        (chat) =>
-          !chat.is_main && chat.name.toLowerCase().includes(lowerCaseQuery)
-      );
-
       const resultChats = new Set<IChat>([...foundMainChats]);
-
-      foundSecondaryChats.forEach((secondaryChat) => {
-        const parentMainChat = mainChats.find((mainChat) =>
-          mainChat.chats?.includes(secondaryChat.chat_id)
-        );
-        if (parentMainChat) {
-          resultChats.add(parentMainChat);
-        } else {
-          resultChats.add(secondaryChat);
-        }
-      });
 
       return Array.from(resultChats).filter(
         (chat, index, self) =>
@@ -115,7 +99,6 @@ const useChatStore = create<ChatState>((set, get) => ({
     }
   },
   getSecondChats: (idOfChats: number[] | null) =>{
-    // console.log(idOfChats)
     return idOfChats?.length ? get().allChats.filter(chat => idOfChats.includes(chat.chat_id)) : [] 
   },
   getChatById: (id: number) => {
